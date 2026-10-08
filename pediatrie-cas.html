@@ -1,0 +1,72 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#075985"><title>Étude de cas PEDIATRIE L1-L2-L3</title><link rel="manifest" href="manifest.webmanifest"><style>
+
+:root{--ink:#172d3c;--muted:#667985;--bg:#eef4f6;--paper:#fff;--blue:#075985;--cyan:#0e7490;--teal:#0f766e;--green:#15803d;--red:#b42318;--amber:#a15c00;--line:#d7e3e8;--shadow:0 12px 32px rgba(23,45,60,.11);--radius:18px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}button,input,select{font:inherit}button,a{touch-action:manipulation}a{color:inherit}.hidden{display:none!important}
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:12px;padding:10px 18px;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}.brand{display:flex;align-items:center;gap:10px;min-width:250px}.brand-logo{display:grid;place-items:center;width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,var(--blue),var(--teal));color:#fff;font-weight:950}.brand strong{display:block;color:var(--blue)}.brand small{display:block;color:var(--muted)}.topnav{margin-left:auto;display:flex;gap:7px;align-items:center;flex-wrap:wrap}.navlink,.ghost,.primary{border:1px solid var(--line);background:#fff;border-radius:11px;padding:9px 12px;text-decoration:none;font-weight:750;color:var(--ink);cursor:pointer}.navlink:hover,.ghost:hover{border-color:var(--teal)}.navlink.active,.primary{border-color:var(--teal);background:var(--teal);color:#fff}.primary:disabled{opacity:.5;cursor:not-allowed}.danger{color:var(--red)}
+.wrap{width:min(1180px,100%);margin:auto;padding:22px}.hero{padding:28px;border-radius:24px;background:linear-gradient(135deg,#075985,#0f766e);color:#fff;box-shadow:var(--shadow);margin-bottom:18px}.hero h1{margin:0 0 9px;font-size:clamp(27px,5vw,45px)}.hero p{margin:0;max-width:850px;line-height:1.6;opacity:.92}.stats{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}.stat{padding:8px 11px;border:1px solid rgba(255,255,255,.23);background:rgba(255,255,255,.13);border-radius:999px;font-weight:750;font-size:14px}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);margin-bottom:17px}.panel h2,.panel h3{margin-top:0}.muted{color:var(--muted)}.notice{padding:12px 14px;border-radius:12px;background:#fff7d6;border:1px solid #efd477;color:#6c5200;line-height:1.5}.grid{display:grid;gap:15px}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.field{display:grid;gap:6px}.field label{font-size:13px;font-weight:850;color:var(--muted)}.field select,.field input{width:100%;border:1px solid #b9ccd4;border-radius:11px;padding:11px 12px;background:#fff;outline:none}.field select:focus,.field input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(15,118,110,.12)}
+.crop-stack{display:grid;gap:9px}.crop{position:relative;overflow:hidden;width:100%;background:#fff;border:1px solid #dce6ea;border-radius:10px}.crop img{position:absolute;max-width:none;height:auto;user-select:none;-webkit-user-drag:none}.crop::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 0 1px rgba(0,0,0,.02)}
+.badge{display:inline-flex;align-items:center;border-radius:999px;padding:5px 9px;background:#e7f1f5;color:var(--blue);font-size:12px;font-weight:850}.badge.green{background:#e8f6ed;color:var(--green)}.badge.amber{background:#fff1d5;color:var(--amber)}.badge.red{background:#ffebe9;color:var(--red)}
+.toast{position:fixed;left:50%;bottom:22px;z-index:100;transform:translate(-50%,120px);opacity:0;background:#14313f;color:#fff;padding:11px 15px;border-radius:11px;box-shadow:var(--shadow);transition:.2s}.toast.show{transform:translate(-50%,0);opacity:1}
+@media(max-width:760px){.topbar{padding:8px 10px}.brand{min-width:auto}.brand small{display:none}.topnav .optional{display:none}.wrap{padding:13px}.hero{padding:21px}.panel{padding:15px}.grid.two,.grid.three{grid-template-columns:1fr}.navlink,.ghost,.primary{padding:8px 9px;font-size:14px}}
+
+</style><style>.case-pages{display:grid;gap:14px}.case-page{background:#dfe7ea;padding:10px;border-radius:13px}.case-page img{display:block;width:min(100%,850px);margin:auto;box-shadow:0 8px 25px rgba(0,0,0,.18)}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}</style><style id="revision-hub-pediatrie-style">
+.revision-hub-pediatrie{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 14px;background:#082f49;color:#fff;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:13px;position:relative;z-index:9999}
+.revision-hub-pediatrie .hub-left,.revision-hub-pediatrie .hub-right{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.revision-hub-pediatrie a,.revision-hub-pediatrie button{border:1px solid rgba(255,255,255,.55);border-radius:9px;padding:7px 10px;background:#fff;color:#075985;text-decoration:none;font:inherit;font-weight:800;cursor:pointer}.revision-hub-pediatrie button{background:transparent;color:#fff}.revision-hub-pediatrie .hub-user{font-weight:800}@media(max-width:640px){.revision-hub-pediatrie{align-items:flex-start;flex-direction:column}.revision-hub-pediatrie .hub-left,.revision-hub-pediatrie .hub-right{width:100%}.revision-hub-pediatrie a,.revision-hub-pediatrie button{flex:1;text-align:center}}
+</style>
+  <link rel="stylesheet" href="avertissement.css">
+</head><body>
+<script id="revision-hub-pediatrie-guard">
+(function(){
+  'use strict';
+  const KEY='revision-hub-session-v1';
+  let session=null;
+  try{session=JSON.parse(localStorage.getItem(KEY)||'null')}catch(_){session=null}
+  if(!session||!session.code){
+    localStorage.removeItem(KEY);
+    location.replace('index.html');
+    return;
+  }
+  window.PEDIATRIE_HUB_SESSION=session;
+})();
+</script>
+<div class="revision-hub-pediatrie" id="revisionHubPediatrie">
+  <div class="hub-left"><a href="index.html">← Choisir un autre site</a><span class="hub-user" id="revisionHubPediatrieUser">Étudiant</span></div>
+  <div class="hub-right"><button type="button" id="revisionHubPediatrieLogout">Déconnexion</button></div>
+</div>
+<script id="revision-hub-pediatrie-controls">
+document.addEventListener('DOMContentLoaded',function(){
+  const session=window.PEDIATRIE_HUB_SESSION||{};
+  const user=document.getElementById('revisionHubPediatrieUser');
+  if(user) user.textContent='👤 '+(session.name||'Étudiant');
+  const logout=document.getElementById('revisionHubPediatrieLogout');
+  if(logout) logout.addEventListener('click',function(){
+    localStorage.removeItem('revision-hub-session-v1');
+    localStorage.removeItem('quizPromoSession');
+    sessionStorage.removeItem('sp-site-access-v3');
+    sessionStorage.removeItem('sp-site-account-v3');
+    location.href='index.html';
+  });
+});
+</script><header class="topbar"><div class="brand"><div class="brand-logo">C</div><div><strong>Étude de cas</strong><small>Démarche de soins infirmiers</small></div></div><nav class="topnav"><a class="navlink" href="pediatrie.html">Document</a><a class="navlink" href="pediatrie-quiz.html">Quiz</a><a class="navlink optional" href="pediatrie-qroc.html">QROC</a><a class="navlink active" href="pediatrie-cas.html">Étude de cas</a></nav></header><main class="wrap"><section class="hero"><h1>Cas clinique de Thermalys</h1><p>Démarche diagnostique, diagnostic infirmier, besoins fondamentaux et plan de soins.</p><div class="stats"><span class="stat">Énoncé page 79</span><span class="stat">Corrigé pages 152 à 154</span></div></section><section class="panel"><div class="tabs"><button class="primary" id="statementBtn">Énoncé</button><button class="ghost" id="answerBtn">Corrigé complet</button></div><div id="casePages" class="case-pages"></div></section></main><script>
+
+window.PedApp=(()=>{
+ const PAGE_W=595.32;
+ const pathFor=p=>`page-${String(p).padStart(3,'0')}.webp`;
+ function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+ function renderSegments(container,segments,{link=true}={}){
+   container.innerHTML='';
+   const pages=[...new Set((segments||[]).map(s=>s.page))];
+   if(!pages.length)return;
+   pages.forEach(p=>{
+     const a=document.createElement('a');a.className='ghost';a.href=`document-pediatrie.pdf#page=${p}`;a.target='_blank';a.rel='noopener';a.textContent=`Voir la page ${p} du PDF`;container.appendChild(a);
+   });
+ }
+ function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+ function toast(msg){let el=document.getElementById('toast');if(!el){el=document.createElement('div');el.id='toast';el.className='toast';document.body.appendChild(el)}el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),2300)}
+ function fmtDate(iso){try{return new Intl.DateTimeFormat('fr-FR',{dateStyle:'short',timeStyle:'short'}).format(new Date(iso))}catch{return iso}}
+ return{PAGE_W,pathFor,esc,renderSegments,shuffle,toast,fmtDate};
+})();
+
+</script><script>const box=document.getElementById('casePages');function show(pages,answer){box.innerHTML='';pages.forEach(p=>{const d=document.createElement('a');d.className='case-page';d.href=`index.html#page-${p}`;d.innerHTML=`<img loading="lazy" src="${PedApp.pathFor(p)}" alt="Page ${p}">`;box.appendChild(d)});document.getElementById('statementBtn').className=answer?'ghost':'primary';document.getElementById('answerBtn').className=answer?'primary':'ghost'}document.getElementById('statementBtn').onclick=()=>show([79],false);document.getElementById('answerBtn').onclick=()=>show([152,153,154],true);show([79],false);</script>  <script src="avertissement.js"></script>
+</body></html>

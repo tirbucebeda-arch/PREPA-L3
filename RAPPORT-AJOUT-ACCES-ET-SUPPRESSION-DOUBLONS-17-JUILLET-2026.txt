@@ -1,0 +1,58 @@
+RAPPORT — AJOUT/CONSERVATION DES ACCÈS ET SUPPRESSION DES DOUBLONS
+17 JUILLET 2026
+====================================================================================================
+
+Comptes avant nettoyage : 865
+Doublons évidents fusionnés : 33
+Comptes uniques après nettoyage : 832
+Codes utilisables après nettoyage : 865
+Les anciens codes des fiches supprimées restent acceptés comme codes secondaires.
+Les 25 comptes ajoutés le 16 juillet 2026 sont tous présents dans la base finale.
+
+FUSIONS EFFECTUÉES
+----------------------------------------------------------------------------------------------------
+- Conservé ID 65: AMIAN AMIAN BERNARD (AA249) | fusionné ID 66: AMIAN BERNARD (AB249)
+- Conservé ID 723: ATSE ATSE GUY SERGE (AA147) | fusionné ID 101: ATSE GUY SERGE (AG147)
+- Conservé ID 114: BABE BOUAYE MARIE ANGE (BB833) | fusionné ID 115: BABE MARIE ANGE (BM833)
+- Conservé ID 341: KOSSAN DOUEU (KD710) | fusionné ID 157: BOSSANT DOUEU (BD710)
+- Conservé ID 665: KODIA BROU YAA MARIE PAULE (KB526) | fusionné ID 291: KODIA MARIE PAULE (KM526)
+- Conservé ID 340: KONKONZA KOUAME KRA NESTOR (KK586) | fusionné ID 383: KOUAME KRA NESTOR (KK586A)
+- Conservé ID 399: KOUASSI GERAUD DELIMA (KG892A) | fusionné ID 705: KOUASSI DELIMA (KD892)
+- Conservé ID 426: M'BOLLO OKORE GERARD (MO441) | fusionné ID 660: M'BOILO CKORE GERARD (MC441)
+- Conservé ID 711: TIA WONSEU EUNICE ANDREE (TW395) | fusionné ID 557: TIA EUNICE (TE395)
+- Conservé ID 731: Titi LOBO madeleine ANDREYA (TL301) | fusionné ID 558: Titi Yasmine (TY301)
+- Conservé ID 37: ADOU SEKA VANCESLAS (AS833) | fusionné ID 649: ADOU SEKA VANCESLAS (AS833A)
+- Conservé ID 46: AHIN BAH FAVIANA DE VALENCIA (AB718) | fusionné ID 676: AHIN BAH FAVIANA DE VALENCIA (AB618)
+- Conservé ID 53: AKE N'DA MARIE CLAUDIA (AN932) | fusionné ID 658: AKE N'DA MARIE CLAUDIA (AN932A)
+- Conservé ID 108: ATTA N DA INNOCENT (AN016) | fusionné ID 635: ATTA N DA INNOCENT (AN016A)
+- Conservé ID 116: BABO SARA EVELYNE (BS497) | fusionné ID 667: BABO SARA EVELYNE (BS497A)
+- Conservé ID 165: BOUO SALAMATA (BS248) | fusionné ID 646: BOUO SALAMATA (BS248A)
+- Conservé ID 222: EKISSI SOPI RUTH (ES452) | fusionné ID 629: EKISSI SOPI RUTH (ES452A)
+- Conservé ID 321: kONAN ADJO YAH CÉCILE (KA045) | fusionné ID 685: KONAN ADJO YAH CECILE (KA045A)
+- Conservé ID 328: KONAN KOUMOÉ AMOIN PASCALINE (KK034) | fusionné ID 655: KONAN KOUMOE AMOIN PASCALINE (KK034A)
+- Conservé ID 372: KOUAKOU YAH MARIE FRÉDÉRIQUE (KY046) | fusionné ID 666: Kouakou yah Marie frédérique (KY045)
+- Conservé ID 400: KOUASSI HENRI JOEL (KH900) | fusionné ID 640: KOUASSI HENRI JOEL (KH900A)
+- Conservé ID 412: Kra koffi Aimé (KK472) | fusionné ID 678: KRA KOFFI AIME (KK472A)
+- Conservé ID 414: KRA YAO MAIZAN LAURENT (KY866) | fusionné ID 691: KRA YAO MAIZAN LAURENT (KY865A)
+- Conservé ID 416: LAHOURY LYDIE MARCELLE (LL657) | fusionné ID 628: LAHOURY LYDIE MARCELLE (LL657A)
+- Conservé ID 422: MADEHI SERY STEPHANE LANDRY (MS527) | fusionné ID 698: MADEHI SERY STEPHANE LANDRY (MS527A)
+- Conservé ID 429: N' GUESSAN AFFOUO Ivette (NG788) | fusionné ID 454: N'GUESSAN AFFOUO Ivette (NA688)
+- Conservé ID 433: N'CHO CONSTANCE PRISCA GINETTE (NC736) | fusionné ID 679: N'CHO CONSTANCE PRISCA GINETTE (NC736A)
+- Conservé ID 480: Olafa ELISABETH (OE868) | fusionné ID 481: OLAFA ELISABETH (OE868A)
+- Conservé ID 513: Seka lesly CLAUDIA (SL023) | fusionné ID 677: SEKA LESLY CLAUDIA (SL023A)
+- Conservé ID 516: SEVEDE NAMAHOUA (SN928) | fusionné ID 662: SEVEDE N'AMA HOUA (SN928A)
+- Conservé ID 520: Sidibe Alima (SA800) | fusionné ID 656: SIDIBE ALIMA (SA800A)
+- Conservé ID 617: ZADI BEHI PRIVAT (ZB127) | fusionné ID 688: Zadi Behi Privat (ZB137)
+- Conservé ID 587: Yao kouté akissi reine épouse sea (YK158) | fusionné ID 713: YAO KOUTÉ AKISSI REINE ÉPOUSE SEA (YK886)
+
+FICHIERS DE COMPTES SYNCHRONISÉS
+----------------------------------------------------------------------------------------------------
+- codes-acces.js
+- shared-accounts.js
+- comptes.js
+- index.html
+- quiz-promo-p8.html
+- sante-publique.html
+- sante-publique-quiz.html
+- session-plateforme.js et ses copies intégrées : prise en charge des anciens codes alias
+- sw.js : nouveau cache hors connexion

@@ -1,0 +1,1521 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DIPLÔME D'ÉTAT BLANC 2024-2025-2026</title>
+  <link rel="icon" href="icone-l3-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="icone-l3-192.png">
+    <link rel="stylesheet" href="quiz-promo-p8.css" />
+    <link rel="stylesheet" href="avertissement.css">
+</head>
+  <body>
+    <div id="quiz-loading-screen" style="position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;background:#f8fafc;color:#0c4a6e;font-family:Arial,sans-serif;text-align:center;padding:24px">
+      <div style="font-size:38px">⏳</div>
+      <strong>Ouverture du Diplôme d'État blanc…</strong>
+      <span>Veuillez patienter quelques secondes.</span>
+    </div>
+    <header class="app-header">
+      <button id="admin-open-btn" type="button" class="admin-top-btn">Admin</button>
+      <h1>DIPLÔME D'ÉTAT BLANC 2024-2025-2026</h1>
+      <p>Reviser ensemble, progresser ensemble.</p>
+    </header>
+
+    <main class="container">
+
+      <section class="card hidden" id="subjects-card">
+        <div class="card-nav">
+          <button id="back-subjects-btn" class="nav-btn">← Déconnexion</button>
+          <div class="nav-actions">
+            <button id="settings-subjects-btn" type="button" class="small-btn secondary-btn">⚙ Paramètres</button>
+            <button id="my-notes-subjects-btn" type="button" class="small-btn">Mes notes</button>
+          </div>
+        </div>
+        <h2>Choix de la matière</h2>
+        <p class="muted">
+          Ordre de sélection :
+          <br>1. Matière
+          <br>2. Sujet
+          <br>3. Mode d'affichage
+        </p>
+        <p class="muted" id="portal-subtitle">Choisis une matière, puis un sujet de D.E. blanc.</p>
+        <label for="subject-choice">Matiere</label>
+        <select id="subject-choice" disabled></select>
+        <label for="topic-choice">Sujet</label>
+        <select id="topic-choice" disabled></select>
+        <label for="display-mode-choice">Mode d'Affichage du sujet</label>
+        <select id="display-mode-choice" disabled>
+          <option value="">Choisir un Mode d'Affichage pour commencer</option>
+          <option value="all">Toutes les questions</option>
+          <option value="one">Question par question</option>
+        </select>
+        <p id="subject-message" class="muted"></p>
+        <p id="selected-question-count" class="muted"></p>
+        <div class="button-group">
+          <button id="begin-quiz-btn" type="button" class="hidden">Commencer</button>
+        </div>
+      </section>
+
+      <section class="card hidden" id="settings-card">
+        <div class="card-nav">
+          <button id="back-settings-btn" class="nav-btn">← Retour</button>
+          <span class="nav-text">Paramètres de révision</span>
+        </div>
+        <h2>Paramètres</h2>
+        <p class="muted">Personnalise ta révision. Ces choix sont enregistrés uniquement pour ton profil sur cet appareil.</p>
+
+        <h3 class="settings-section-title">Caméra et sécurité</h3>
+        <div class="setting-item">
+          <div class="setting-copy">
+            <strong>Activer la photo avant la révision</strong>
+            <span>Si cette option est activée, une photo sera demandée avant chaque quiz.</span>
+          </div>
+          <label class="switch" for="camera-setting-toggle" aria-label="Activer ou désactiver la caméra pour les révisions">
+            <input id="camera-setting-toggle" type="checkbox" />
+            <span class="switch-slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-item">
+          <div class="setting-copy">
+            <strong>Validation automatique en quittant la page</strong>
+            <span>Active cette protection pour envoyer automatiquement le devoir en cas d’appel, de changement d’application ou de fermeture de la page.</span>
+          </div>
+          <label class="switch" for="auto-submit-exit-toggle" aria-label="Activer ou désactiver la validation automatique en quittant">
+            <input id="auto-submit-exit-toggle" type="checkbox" />
+            <span class="switch-slider"></span>
+          </label>
+        </div>
+
+        <h3 class="settings-section-title">Organisation du quiz</h3>
+        <div class="setting-field">
+          <label for="default-display-mode-setting">Mode d’affichage préféré</label>
+          <select id="default-display-mode-setting">
+            <option value="">Toujours me demander</option>
+            <option value="all">Toutes les questions</option>
+            <option value="one">Question par question</option>
+          </select>
+          <span class="setting-help">Ce choix sera présélectionné, mais tu pourras toujours le modifier avant de commencer.</span>
+        </div>
+
+        <div class="setting-field">
+          <label for="question-limit-setting">Nombre de questions par révision</label>
+          <select id="question-limit-setting">
+            <option value="all">Toutes les questions du sujet</option>
+            <option value="10">10 questions</option>
+            <option value="20">20 questions</option>
+            <option value="30">30 questions</option>
+            <option value="50">50 questions</option>
+          </select>
+        </div>
+
+        <div class="setting-item">
+          <div class="setting-copy">
+            <strong>Mélanger l’ordre des questions</strong>
+            <span>Les questions seront présentées dans un ordre différent à chaque nouvelle révision.</span>
+          </div>
+          <label class="switch" for="shuffle-questions-toggle" aria-label="Mélanger ou conserver l’ordre des questions">
+            <input id="shuffle-questions-toggle" type="checkbox" />
+            <span class="switch-slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-item">
+          <div class="setting-copy">
+            <strong>Mélanger les propositions de réponses</strong>
+            <span>Les réponses A, B, C et D changent d’ordre sans modifier la bonne réponse.</span>
+          </div>
+          <label class="switch" for="shuffle-options-toggle" aria-label="Mélanger ou conserver l’ordre des propositions">
+            <input id="shuffle-options-toggle" type="checkbox" />
+            <span class="switch-slider"></span>
+          </label>
+        </div>
+
+        <h3 class="settings-section-title">Chronomètre et correction</h3>
+        <div class="setting-item">
+          <div class="setting-copy">
+            <strong>Activer le chronomètre</strong>
+            <span>Tu peux réviser avec une limite de temps ou sans chronomètre.</span>
+          </div>
+          <label class="switch" for="timer-setting-toggle" aria-label="Activer ou désactiver le chronomètre">
+            <input id="timer-setting-toggle" type="checkbox" />
+            <span class="switch-slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-field">
+          <label for="seconds-per-question-setting">Temps accordé par question</label>
+          <select id="seconds-per-question-setting">
+            <option value="15">15 secondes</option>
+            <option value="30">30 secondes</option>
+            <option value="45">45 secondes</option>
+            <option value="60">60 secondes</option>
+          </select>
+        </div>
+
+        <div class="setting-item">
+          <div class="setting-copy">
+            <strong>Afficher les explications dans la correction</strong>
+            <span>La bonne réponse reste visible, mais les explications détaillées peuvent être masquées.</span>
+          </div>
+          <label class="switch" for="show-explanations-toggle" aria-label="Afficher ou masquer les explications">
+            <input id="show-explanations-toggle" type="checkbox" />
+            <span class="switch-slider"></span>
+          </label>
+        </div>
+
+        <h3 class="settings-section-title">Affichage</h3>
+        <div class="setting-item">
+          <div class="setting-copy">
+            <strong>Mode sombre</strong>
+            <span>Réduit l’éblouissement pendant les révisions de nuit.</span>
+          </div>
+          <label class="switch" for="dark-mode-toggle" aria-label="Activer ou désactiver le mode sombre">
+            <input id="dark-mode-toggle" type="checkbox" />
+            <span class="switch-slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-field">
+          <label for="font-size-setting">Taille du texte</label>
+          <select id="font-size-setting">
+            <option value="small">Petite</option>
+            <option value="normal">Normale</option>
+            <option value="large">Grande</option>
+            <option value="xlarge">Très grande</option>
+          </select>
+        </div>
+
+        <p id="camera-setting-status" class="setting-status"></p>
+        <p id="settings-save-status" class="setting-save-status" aria-live="polite"></p>
+        <div class="button-group settings-actions">
+          <button id="settings-done-btn" type="button">Enregistrer et retourner</button>
+          <button id="reset-settings-btn" type="button" class="secondary-btn">Réinitialiser les paramètres</button>
+        </div>
+      </section>
+
+      <section class="card hidden" id="start-card">
+        <div class="card-nav">
+          <button id="back-camera-btn" class="nav-btn">← Retour</button>
+          <button id="my-notes-btn" type="button" class="small-btn">Mes notes</button>
+        </div>
+        <h2>Photo avant composition</h2>
+        <p class="muted">La composition commence automatiquement après la photo.</p>
+        <p id="session-label" class="muted"></p>
+        <p id="user-name-display" class="user-name-display"></p>
+        <p id="camera-warning" class="camera-warning">
+          Photo obligatoire : active la camera et prends une photo pour lancer cette composition.
+        </p>
+
+        <div class="camera-actions">
+          <button id="enable-camera-btn" type="button">Activer la camera</button>
+          <button id="take-photo-btn" class="secondary-btn" type="button">Prendre une photo</button>
+        </div>
+        <video id="camera-preview" class="camera-preview hidden" autoplay playsinline></video>
+        <canvas id="camera-canvas" class="hidden"></canvas>
+        <img id="photo-preview" class="photo-preview hidden" alt="Photo etudiant" />
+        <p id="camera-message" class="muted"></p>
+
+        <div class="button-group">
+          <button id="logout-btn" class="secondary-btn small-btn">Se deconnecter</button>
+        </div>
+      </section>
+
+      <section class="card hidden" id="quiz-card">
+        <div class="card-nav">
+          <span id="quiz-user-name" class="nav-text"></span>
+        </div>
+        <div class="quiz-top">
+          <span id="question-count">Questions: 0</span>
+          <span id="score-live">Score: -</span>
+          <span id="timer-display">Temps restant: 60:00</span>
+        </div>
+        <h2 id="question-text"></h2>
+        <div id="answers" class="answers"></div>
+        <div id="single-question-nav" class="button-group hidden">
+          <button id="prev-question-btn" type="button" class="secondary-btn small-btn">← Précédent</button>
+          <button id="next-question-btn" type="button" class="small-btn">Suivant →</button>
+        </div>
+        <button id="submit-answers-btn">Valider mes reponses</button>
+      </section>
+
+      <section class="card hidden" id="result-card">
+        <div class="card-nav">
+          <button id="home-btn" class="nav-btn">🏠 Accueil</button>
+        </div>
+        <h2>Resultat</h2>
+        <p id="final-message"></p>
+        <div id="review-list" class="hidden"></div>
+        <button id="show-correction-btn">Voir la correction</button>
+        <button id="restart-btn">Rejouer</button>
+      </section>
+
+      <section class="card hidden" id="leaderboard-card">
+        <div class="card-nav">
+          <button id="back-leaderboard-btn" class="nav-btn">← Retour</button>
+        </div>
+        <h2>Classement local</h2>
+        <p class="muted">Sauvegarde dans ce navigateur.</p>
+        <ol id="leaderboard-list"></ol>
+      </section>
+
+      <section class="card hidden" id="student-space-card">
+        <div class="card-nav">
+          <button id="back-space-btn" class="nav-btn">← Retour</button>
+        </div>
+        <h2>Mon espace</h2>
+        <p class="muted">Tes differentes notes par matiere et sujet.</p>
+        <div id="student-summary" class="stats-grid"></div>
+        <ol id="student-history-list"></ol>
+      </section>
+
+
+      <section class="card hidden" id="admin-login-card">
+        <div class="card-nav">
+          <button id="back-admin-login-btn" class="nav-btn">← Retour</button>
+        </div>
+        <h2>Espace ADMIN</h2>
+        <label for="admin-password">Mot de passe admin</label>
+        <input id="admin-password" type="password" placeholder="Mot de passe" />
+        <button id="admin-login-btn" type="button">Entrer</button>
+        <p id="admin-login-message" class="muted"></p>
+      </section>
+
+      <section class="card hidden" id="admin-card">
+        <div class="card-nav">
+          <button id="admin-logout-btn" class="nav-btn">← Quitter admin</button>
+          <span class="nav-text">Tableau de bord ADMIN</span>
+        </div>
+        <h2>Administration</h2>
+        <div class="stats-grid" id="admin-stats"></div>
+        <div class="button-group">
+          <button id="refresh-admin-btn" type="button" class="small-btn">Actualiser</button>
+          <button id="export-excel-btn" type="button" class="small-btn">Exporter Excel</button>
+          <button id="export-pdf-btn" type="button" class="small-btn">Exporter PDF</button>
+          <button id="clear-all-data-btn" type="button" class="small-btn danger-btn">Effacer toutes les donnees</button>
+        </div>
+
+        <h3>Creer un espace etudiant</h3>
+        <div class="admin-form-grid">
+          <div>
+            <label for="new-student-name">Nom et prenoms</label>
+            <input id="new-student-name" type="text" placeholder="Ex: KOUAME JOELLE STEPHANIE" />
+          </div>
+          <div>
+            <label for="new-student-phone">Numero</label>
+            <input id="new-student-phone" type="tel" placeholder="Ex: 0700000000" />
+          </div>
+          <div>
+            <label for="new-student-code">Code d'acces</label>
+            <input id="new-student-code" type="text" placeholder="Généré automatiquement" readonly aria-readonly="true" /><small class="muted">Deux initiales des deux premiers mots + trois derniers chiffres du numéro.</small>
+          </div>
+        </div>
+        <button id="create-student-btn" type="button" class="small-btn">Creer l'espace etudiant</button>
+        <p id="create-student-message" class="muted"></p>
+
+        <h3>Liste des etudiants</h3>
+        <div class="table-wrap">
+          <table id="students-table">
+            <thead><tr><th>Code</th><th>Nom et prenoms</th><th>Telephone</th><th>Nb notes</th><th>Moyenne</th><th>Derniere connexion</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <h3>Historique par jour des etudiants connectes</h3>
+        <p class="muted">Ici l'admin voit l'historique regroupe par jour, uniquement pour les etudiants qui se sont connectes ce jour-la.</p>
+        <div id="admin-history-list" class="admin-history-list"></div>
+        <div class="table-wrap">
+          <table id="student-full-history-table">
+            <thead><tr><th>Date</th><th>Code</th><th>Nom</th><th>Type</th><th>Details</th><th>Score</th><th>Appareil</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+      </section>
+
+    </main>
+<script>
+/* ===== CODES D’ACCÈS COMMUNS — intégré directement dans la page ===== */
+// Liste commune des comptes autorisés.
+window.SHARED_SITE_ACCOUNTS=[
+{"id":1,"name":"ABA DIANE CLAVERIE","phone":"0747386779","code":"AD779"},
+{"id":2,"name":"ABAKA JEAN MARIE VIANNEY","phone":"0160802373","code":"AJ373"},
+{"id":3,"name":"ABBE Michelle-Ella","phone":"0777751140","code":"AM140"},
+{"id":4,"name":"ABE N'DRIN DELIMA DORIANE","phone":"0759028107","code":"AN107","filiere":"IDE","nameAliases":["ABE N'DRIN DELIMA","ABE"]},
+{"id":5,"name":"Abeu reine","phone":"0749126482","code":"AR482"},
+{"id":6,"name":"abi ange dominique","phone":"0502461581","code":"AA581"},
+{"id":7,"name":"ABI ANGEDOMINIQUE ANISSA","phone":"50246181","code":"AA181"},
+{"id":8,"name":"ABLE GUY MARTIAL YANNICK","phone":"0767472310","code":"AG310"},
+{"id":9,"name":"ABOA AWOBI JULIANA","phone":"0747762334","code":"AA334"},
+{"id":10,"name":"ABOU CHILE MARIE JOSÉE 0789874768","phone":"0789874768","code":"AC768"},
+{"id":11,"name":"ABY AGOA ARSÈNE DIEU DONNÉ","phone":"0789191243","code":"AA243"},
+{"id":12,"name":"ACHI CARINE","phone":"0546755936","code":"AC936"},
+{"id":13,"name":"ACHi JOEL CYRILLE GHISLAIN","phone":"0102051428","code":"AJ428"},
+{"id":14,"name":"ACHY KOUADIO RENAULD BENJAMIN","phone":"0798814258","code":"AK258"},
+{"id":15,"name":"ADAGBA DETCHIO EMMANUELA","phone":"0152387103","code":"AD103"},
+{"id":16,"name":"ADEPO AXELLE Emmanuella","phone":"0565361173","code":"AA173"},
+{"id":17,"name":"ADIKO ATSE FRANCK ALEX","phone":"0556719328","code":"AA328","filiere":"IDE"},
+{"id":18,"name":"ADIKO MARIUS TRÉSOR","phone":"0143916110","code":"AM110"},
+{"id":19,"name":"ADINGRA KESSIA ELLA","phone":"0767829004","code":"AK004"},
+{"id":20,"name":"ADJEI KOFFI DAVID","phone":"0143344748","code":"AK748"},
+{"id":21,"name":"ADJEMIAN KOUASSI DJOBENE ISAC","phone":"0710838022","code":"AK022"},
+{"id":22,"name":"ADJEMIN KOUANIN GENEVIEVRE","phone":"0584074725","code":"AK725"},
+{"id":23,"name":"ADJOUMANI AKUA ADJEPOMAH SOPHIE","phone":"0778339466","code":"AA466"},
+{"id":24,"name":"ADOM ASSIEDOUA EUGÉNIE","phone":"0172785141","code":"AA141"},
+{"id":25,"name":"ADOMPO GILLES ARMAND","phone":"0767391560","code":"AG560"},
+{"id":26,"name":"ADON CHARLE ANNELLE","phone":"0720500587","code":"AC587"},
+{"id":27,"name":"ADON THÈCLE JOËLLE","phone":"0769791345","code":"AT345"},
+{"id":28,"name":"ADOU ABENAN JOSIANE","phone":"0759953697","code":"AA697"},
+{"id":29,"name":"ADOU ADJO ANGE PATRICIA","phone":"0748355113","code":"AA113"},
+{"id":30,"name":"ADOU AFFOUA FROUWA MONIQUE","phone":"0777927662","code":"AA662"},
+{"id":31,"name":"ADOU AKUA N’KETIA","phone":"0749114995","code":"AA995"},
+{"id":32,"name":"ADOU HOMAH MADELEINE SOPHIE","phone":"0709901717","code":"AH717"},
+{"id":33,"name":"ADOU MAURICETTE","phone":"0170923294","code":"AM294"},
+{"id":34,"name":"Adou Mauricette","phone":"0747654744","code":"AM744"},
+{"id":35,"name":"ADOU NAH CHARLOTTE","phone":"0789335578","code":"AN578"},
+{"id":36,"name":"ADOU RAÏSSA N'GUESSAN VÉRONIQUE","phone":"0749389791","code":"AR791"},
+{"id":37,"name":"ADOU SEKA VANCESLAS","phone":"0594079833","code":"AS833","codeAliases":["AS833A"],"secondaryPhones":["0594070833"]},
+{"id":38,"name":"ADOU THECLE TATIANA","phone":"0749953819","code":"AT819"},
+{"id":39,"name":"ADZA MARIE ELVICA CHIEPO","phone":"0505074774","code":"AM774"},
+{"id":40,"name":"AGBATOU KPATTA STANISLAS","phone":"0586585838","code":"AK838"},
+{"id":41,"name":"AGBEDJE N' TAHO CALISTE ROLANDE","phone":"0504185965","code":"AN965"},
+{"id":42,"name":"AGBOLI PITIOH ISABELLE-DANIELLE","phone":"0768533034","code":"AP034"},
+{"id":43,"name":"AGNISSAN HENRY STEPHANE","phone":"0769895982","code":"AH982"},
+{"id":44,"name":"AGNISSAN KOUASSI LÉONCE","phone":"0768540748","code":"AK748A"},
+{"id":45,"name":"AGUIE CACHY VICTORINE","phone":"0718426377","code":"AC377","filiere":"IDE"},
+{"id":46,"name":"AHIN BAH FAVIANA DE VALENCIA","phone":"0759456718","code":"AB718","codeAliases":["AB618"],"secondaryPhones":["0759457618"],"filiere":"IDE"},
+{"id":47,"name":"AHOSSO KOUADJA FABRICE","phone":"0161510620","code":"AK620"},
+{"id":48,"name":"AHOUA BROU JEAN","phone":"0759125404","code":"AB404"},
+{"id":49,"name":"AHUA NICOLAS DIEUDONNE","phone":"0102453126","code":"AN126"},
+{"id":50,"name":"AKAFFOU STÉPHANIE CHANNELLE","phone":"0545585057","code":"AS057"},
+{"id":51,"name":"AKANJI MARIETTE","phone":"0103921168","code":"AM168"},
+{"id":52,"name":"AKE BOTI AGNÈS","phone":"0769954012","code":"AB012"},
+{"id":53,"name":"AKE N'DA MARIE CLAUDIA","phone":"0575599932","code":"AN932","codeAliases":["AN932A"],"secondaryPhones":["0575959932"]},
+{"id":54,"name":"Akesse ange Marilyne Judith","phone":"0708435999","code":"AA999"},
+{"id":55,"name":"AKESSE EHUI STANISLAS YANNICK","phone":"0747070623","code":"AE623"},
+{"id":56,"name":"Akissi SOPIE MARIE ESPÉRANCE","phone":"0595052603","code":"AS603"},
+{"id":57,"name":"AKOCHI AGBE SAMUEL","phone":"0747244945","code":"AA945"},
+{"id":58,"name":"AKOUN SOPIE ORPHEE CORINE","phone":"0716007935","code":"AS935"},
+{"id":59,"name":"AKPA EMELINE","phone":"0787832814","code":"AE814"},
+{"id":60,"name":"Allé amon debora","phone":"0103022701","code":"AA701"},
+{"id":61,"name":"ALLE YANNICK-SAINT-CLAVER","phone":"0140814564","code":"AY564"},
+{"id":62,"name":"ALLOU AFFOUA BERNADETTE CYNTHIA","phone":"0748266388","code":"AA388","filiere":"SFM"},
+{"id":63,"name":"AMALAMAN ALLOU ADRIENNE","filiere":"IDE","phone":"0748479280","code":"AA280"},
+{"id":64,"name":"AMAN KOUADIO FABRICE","phone":"0555537924","code":"AK924"},
+{"id":65,"name":"AMIAN AMIAN BERNARD","phone":"0502208249","code":"AA249","codeAliases":["AB249","AB264"],"nameAliases":["AMIAN BERNARD"],"filiere":"IDE","secondaryPhones":["0777780264"]},
+{"id":67,"name":"AMOA KANGA BERNADETTE","phone":"0748487037","code":"AK037"},
+{"id":68,"name":"AMOAKON ADJOUA FRÉDÉRIQUE LARISSA","phone":"0757476644","code":"AA644"},
+{"id":69,"name":"AMOIKON AKA BLANCHARD","phone":"0717794759","code":"AA759"},
+{"id":70,"name":"ANANI BLANDINE","phone":"0505805987","code":"AB987"},
+{"id":71,"name":"ANDETCHI KADJO ANDERSON","phone":"0748097948","code":"AK948"},
+{"id":72,"name":"ANE ASSAMA DIANE","phone":"0102447642","code":"AA642"},
+{"id":73,"name":"ANGBO KOUSSO CLAIRE TELOR","phone":"0767930481","code":"AK481"},
+{"id":74,"name":"ANGORA FRANCK KOFFI ANDERSON","phone":"0747955950","code":"AF950"},
+{"id":75,"name":"ANIN EPIE ROSEMONDE","phone":"0749833935","code":"AE935"},
+{"id":76,"name":"ANIN SONAN STÉPHANIE CHRISTELLE","phone":"0709779977","code":"AS977"},
+{"id":77,"name":"ANOH MARLENE LYDIA","phone":"0707333984","code":"AM984"},
+{"id":78,"name":"Anon KOUASSY LIONEL","phone":"0152421533","code":"AK533"},
+{"id":79,"name":"AQUESSE N’GORAN FREDERIC","phone":"0708670388","code":"AN388"},
+{"id":80,"name":"ARRIA CHAYE AMANDINE","phone":"0748726219","code":"AC219"},
+{"id":81,"name":"ASSAMOA AKOUA TCHOUMASSIWA","phone":"0749285014","code":"AA014"},
+{"id":82,"name":"ASSAMOI CHADON SANDRINE","phone":"0789288452","code":"AC452"},
+{"id":83,"name":"ASSANDE MANOU MARTINE","phone":"0546737090","code":"AM090"},
+{"id":85,"name":"ASSANVO KOFFI JEAN BAPTISTE","phone":"0586636101","code":"AK101"},
+{"id":87,"name":"ASSEMIEN SOMALA YOLANDE","phone":"0706527240","code":"AS240"},
+{"id":88,"name":"ASSEUFI GUY CYRILLE","phone":"0170318444","code":"AG444"},
+{"id":89,"name":"Assi Api Béatrice","phone":"0706819423","code":"AA423"},
+{"id":90,"name":"ASSI CACHIA HERMINE LESLIE","phone":"0711138833","code":"AC833"},
+{"id":91,"name":"ASSI CHABEL PONCE KOUASSI","phone":"0779546650","code":"AC650"},
+{"id":92,"name":"ASSI Estelle Epiphanie","phone":"0789978003","code":"AE003"},
+{"id":93,"name":"ASSI ESTELLE EPIPHANIE","phone":"0749310181","code":"AE181","filiere":"SFM"},
+{"id":94,"name":"ASSI KOUSSO MARIE FRANCE","phone":"0779469745","code":"AK745"},
+{"id":95,"name":"ASSI SOPIE OLGA","phone":"0709717007","code":"AS007"},
+{"id":96,"name":"ASSIE EBA ÉPIPHANIE LAURE","phone":"0777523323","code":"AE323"},
+{"id":97,"name":"ASSIEKRO GANH MARINA STÉPHANIE","phone":"O759439389","code":"AG389"},
+{"id":98,"name":"ATHEBA AKABLALO MELISSA KEVINE","phone":"0787392823","code":"AA823"},
+{"id":99,"name":"ATSE AMBEU THIBAUT","phone":"0102222567","code":"AA567"},
+{"id":100,"name":"ATSE FERRAND","phone":"0757742041","code":"AF041"},
+{"id":102,"name":"ATSE JEAN FRANÇOIS RÉGIS","phone":"0768650676","code":"AJ676"},
+{"id":103,"name":"ATSE MICHAEL-DÉSIRÉ","phone":"0758446451","code":"AM451"},
+{"id":104,"name":"ATSE RODRIGUE DECAS","phone":"0705616904","code":"AR904"},
+{"id":105,"name":"ATSE SOPIE CELESTE","phone":"0747303725","code":"AS725"},
+{"id":106,"name":"ATTA DANIEL ROMARIC","phone":"0769988659","code":"AD659","filiere":"IDE"},
+{"id":107,"name":"ATTA KOFFI PRUDENCE","phone":"0748753973","code":"AK973"},
+{"id":108,"name":"ATTA N DA INNOCENT","phone":"0747586016","code":"AN016","codeAliases":["AN016A"],"secondaryPhones":["0747580016"]},
+{"id":109,"name":"ATTE GRACE BÉNÉDICTE ESTHER","phone":"0544921230","code":"AG230"},
+{"id":110,"name":"AYE EDMONDE","phone":"0788247262","code":"AE262"},
+{"id":111,"name":"AYENON SOPIE LAURETTE ANGELA","phone":"0596844217","code":"AS217"},
+{"id":112,"name":"AYEWO N'TAKPE EVARISTE","phone":"0545222505","code":"AN505"},
+{"id":113,"name":"AZOUMANA WASS YAH MARAMA","phone":"0748042614","code":"AW614","filiere":"IDE"},
+{"id":114,"name":"BABE BOUAYE MARIE ANGE","phone":"0788704833","code":"BB833","codeAliases":["BM833"],"nameAliases":["BABE MARIE ANGE"]},
+{"id":116,"name":"BABO SARA EVELYNE","phone":"0702970497","code":"BS497","codeAliases":["BS497A"],"secondaryPhones":["0702910497"]},
+{"id":117,"name":"BADOU AKOUA MARIE MADELEINE","phone":"0502987251","code":"BA251"},
+{"id":118,"name":"BADOU YAO KOUNADOU","phone":"0748452311","code":"BY311","filiere":"SFM"},
+{"id":119,"name":"BAH OUEBE MONDESIRE","phone":"0566241142","code":"BO142"},
+{"id":120,"name":"BAHI DREBA PERSIDE","phone":"0709872782","code":"BD782"},
+{"id":121,"name":"BAKAYOKO FATOUMATA","phone":"0788126326","code":"BF326"},
+{"id":122,"name":"BAKUI ADJA ANNE-MARIE","phone":"0777070271","code":"BA271"},
+{"id":123,"name":"BALE GUY SERGE","phone":"0757576865","code":"BG865"},
+{"id":124,"name":"BALLO ABOULAYE","phone":"0789455575","code":"BA575"},
+{"id":125,"name":"BAMBA AMINAN","phone":"0769523280","code":"BA280"},
+{"id":126,"name":"BAMBA GRÂCE","phone":"0103432942","code":"BG942"},
+{"id":127,"name":"BANGOULI youa Lauriane","phone":"0759878634","code":"BY634"},
+{"id":128,"name":"BARRY TENIN","phone":"0545752755","code":"BT755"},
+{"id":129,"name":"Batoua wahameu Edwige","phone":"0749742701","code":"BW701"},
+{"id":130,"name":"BAYORO TITI EVARIST","phone":"0507230852","code":"BT852"},
+{"id":131,"name":"BECHE AKICHI FLORA","phone":"0151985795","code":"BA795"},
+{"id":132,"name":"BECHET LISE LORRAINE AKICHI","phone":"0787042325","code":"BL325"},
+{"id":133,"name":"BEDA CHIEPO CHRISTELLE","phone":"0759636747","code":"BC747"},
+{"id":134,"name":"BEDA TIRBUCE PATERNE","phone":"0708190886","code":"BT886"},
+{"id":135,"name":"Bekoin Lydie","phone":"0707987805","code":"BL805"},
+{"id":136,"name":"BEKOU MARIA","phone":"0709394961","code":"BM961"},
+{"id":137,"name":"BEKOULINDJO KROU Lambert","phone":"0758052344","code":"BK344"},
+{"id":138,"name":"BELI N'GUESSAN ROLANDE","phone":"0708635442","code":"BN442"},
+{"id":139,"name":"BENE YAWA MARIE ANGE","phone":"0748469991","code":"BY991"},
+{"id":140,"name":"BERTE ISSA","phone":"0574535583","code":"BI583","filiere":"IDE"},
+{"id":141,"name":"BEUGRE LATH LUTIA","phone":"0707298175","code":"BL175"},
+{"id":142,"name":"BIDIMA BARKISSA","phone":"0140671098","code":"BB098"},
+{"id":143,"name":"BIENVENU YAPOGA JUNIOR","phone":"0779653490","code":"BY490"},
+{"id":144,"name":"Bile koffi sylvestre","phone":"0778831635","code":"BK635"},
+{"id":145,"name":"BINI AMINATA","phone":"0575146335","code":"BA335","filiere":"IDE"},
+{"id":146,"name":"BINI ANZATA OUATTARA","phone":"0505273673","code":"BA673"},
+{"id":147,"name":"BINI YEBOUA KOFFI GUILLAUME","phone":"0758222405","code":"BY405","filiere":"IDE"},
+{"id":148,"name":"BITIE ODETTE","phone":"0707205374","code":"BO374"},
+{"id":149,"name":"Bitty clémence","phone":"0747424331","code":"BC331"},
+{"id":150,"name":"BLIN CHANTAL","phone":"0748636261","code":"BC261"},
+{"id":151,"name":"BOA ASSI YANNICK LAURENT","phone":"0575154726","code":"BA726"},
+{"id":152,"name":"BOA MALA CATHERINE","phone":"0747060601","code":"BM601"},
+{"id":153,"name":"BOKA APATA BRICE BENSON","phone":"0779566741","code":"BA741"},
+{"id":154,"name":"Boka Cynthia","phone":"0758866857","code":"BC857"},
+{"id":155,"name":"Boni Boussou Estelle","phone":"0717204098","code":"BB098A"},
+{"id":156,"name":"BONSSON N'GADI ERIC","phone":"0545913026","code":"BN026"},
+{"id":158,"name":"BOSSO MAINGOUMIN JEAN ELYSE","phone":"0142464948","code":"BM948"},
+{"id":159,"name":"BOSSON OI BOSSON PROSPER","phone":"0749470868","code":"BO868"},
+{"id":160,"name":"BOTTI AYA DORIANE-ESTHER MILENE","phone":"0768193241","code":"BA241"},
+{"id":161,"name":"BOUA AMON JEAN-YVES","phone":"0757488336","code":"BA336"},
+{"id":162,"name":"BOUA BOKA AFFO OLGA PALOMA","phone":"0502188627","code":"BB627"},
+{"id":163,"name":"BOUADOU KUMANSI HERVE","phone":"0704226080","code":"BK080"},
+{"id":164,"name":"BOUIKALO EPSE ZOHOULOUA LOU BOTTY OLGAS DE PAUL","phone":"0749835963","code":"BE963"},
+{"id":165,"name":"BOUO SALAMATA","phone":"0749880248","code":"BS248","codeAliases":["BS248A"],"secondaryPhones":["0749980248"]},
+{"id":166,"name":"BREDOU BENDE ARMAND","phone":"0847964679","code":"BB679"},
+{"id":167,"name":"BREDOUM ATTAWA","phone":"0777442880","code":"BA880"},
+{"id":168,"name":"BROU AHOUO PULCHÉRIE","phone":"0544554414","code":"BA414","filiere":"IDE"},
+{"id":169,"name":"BROU DIAMBRA ÉRIC","phone":"0140136683","code":"BD683","filiere":"IDE"},
+{"id":170,"name":"BROU KOUAME AHOU GENEVIÈVE","phone":"0584911157","code":"BK157"},
+{"id":171,"name":"BROU N’DOLI","phone":"0788246461","code":"BN461"},
+{"id":172,"name":"BROU OI BROU JEAN","phone":"0757566168","code":"BO168"},
+{"id":173,"name":"BROU SOPIE ARNOLD GWLADYS","phone":"0706836114","code":"BS114"},
+{"id":174,"name":"CAMARA AFFISSATA","phone":"0717612034","code":"CA034"},
+{"id":175,"name":"Coulibaly Abdoulaye","phone":"0504206281","code":"CA281"},
+{"id":176,"name":"COULIBALY MADJOUMA","phone":"0708900910","code":"CM910"},
+{"id":177,"name":"COULIBALY ZIE","phone":"0759478258","code":"CZ258"},
+{"id":178,"name":"DAFFOU DORIS AMÉDÉE D'ASSISE","phone":"0777084858","code":"DD858"},
+{"id":179,"name":"DAH TOTO JACQUES","phone":"0101041341","code":"DT341"},
+{"id":180,"name":"DAKON AKUA SONIA","phone":"0503430673","code":"DA673","filiere":"IDE"},
+{"id":181,"name":"DAMOUE AÏCHATOU","phone":"0757927929","code":"DA929","filiere":"SFM"},
+{"id":182,"name":"DAOU MARIAM FLAVIE VIERRA","phone":"0574771636","code":"DM636"},
+{"id":183,"name":"DASSE ZIKIDA AUDE HERMINE","phone":"0777104461","code":"DZ461"},
+{"id":184,"name":"DATTE ABENAN ATTAWA GENEVIÈVE","phone":"0595395830","code":"DA830"},
+{"id":185,"name":"DÉDÉ AIMLA AUDE MARIE MICHELLE","phone":"0757223830","code":"DA830A"},
+{"id":186,"name":"SEKA KOUSSO GISLAINE MANUELA","phone":"0758317555","code":"SK555","filiere":"IDE"},
+{"id":187,"name":"DERE FLORE ADELINE","phone":"0707291198","code":"DF198","filiere":"IDE"},
+{"id":188,"name":"DIAKITÉ AMINATA BEH","phone":"0748491895","code":"DA895"},
+{"id":189,"name":"DIALLO ASSETOU","phone":"0705051737","code":"DA737"},
+{"id":190,"name":"DIALLO Mariam","phone":"0747902203","code":"DM203","filiere":"IDE"},
+{"id":191,"name":"DIAMBRA BORIS","phone":"0142351698","code":"DB698","filiere":"IDE"},
+{"id":192,"name":"DIAN DIAN ARISTIDE","phone":"0788525436","code":"DD436"},
+{"id":193,"name":"DIARRA ADOU PACÔME","phone":"0709410394","code":"DA394"},
+{"id":194,"name":"DIARRA BRAKISSA","phone":"0709031372","code":"DB372"},
+{"id":195,"name":"DIARRA MANDJARA","phone":"0586055315","code":"DM315"},
+{"id":196,"name":"DIASSIN RUSSEL FRANKLIN","phone":"0545839169","code":"DR169"},
+{"id":197,"name":"DIBI AKISSI YVANNA PENIELLE","phone":"0171985667","code":"DA667"},
+{"id":198,"name":"Dieth Victoria Marie-Dominique Christelle","phone":"0747155867","code":"DV867"},
+{"id":199,"name":"DIOMANDÉ MANSOHODE CHRISTELLE","phone":"0799673241","code":"DM241"},
+{"id":200,"name":"DIOMANDE SOPOUDE WILFRIED","phone":"0714970571","code":"DS571"},
+{"id":201,"name":"DIZO LYDIE PATRICIA","phone":"0748473125","code":"DL125"},
+{"id":202,"name":"DJADOU DAMETE BÉATRICE","phone":"0707704580","code":"DD580","filiere":"IDE"},
+{"id":203,"name":"DJAHA N' GUESSAN VIRGINIE","phone":"0758860556","code":"DN556","filiere":"IDE","nameAliases":["DJAHA N' GUESSAN"]},
+{"id":204,"name":"DJANÉ AKOUA CHARLEINNE","phone":"0716481538","code":"DA538"},
+{"id":205,"name":"DJEDJI AGOA CHARLENE","phone":"0777947661","code":"DA661"},
+{"id":206,"name":"DJOMAN BONINBIE BENITA","phone":"0777775503","code":"DB503"},
+{"id":207,"name":"DJRO AKE AGATHE BERTINE","phone":"0708126197","code":"DA197"},
+{"id":208,"name":"DOFFOU KAMAN CLÉMENT","phone":"0767834003","code":"DK003"},
+{"id":209,"name":"DOLLO ANGODO JORESSE","phone":"0708436545","code":"DA545"},
+{"id":210,"name":"DONGNI ADJA JOSEE REBECCA","phone":"0777132771","code":"DA771"},
+{"id":211,"name":"DONGO KOSSIA","phone":"0500751575","code":"DK575"},
+{"id":212,"name":"DRO LOU MIREILLE","phone":"0103664224","code":"DL224","filiere":"SFM"},
+{"id":213,"name":"Ducasse","phone":"0585304009","code":"DU009"},
+{"id":214,"name":"EBA ANGE","phone":"0777196166","code":"EA166"},
+{"id":215,"name":"EBI N'DA N'GOUAN ÉRIC","phone":"0747263020","code":"EN020"},
+{"id":216,"name":"Ebrotie anoh ermane desire","phone":"0767888786","code":"EA786"},
+{"id":217,"name":"EDJA KANGAH BERNADETTE","phone":"0506862962","code":"EK962"},
+{"id":218,"name":"EDJA KANGAH BERNADETTE","phone":"0748748966","code":"EK966"},
+{"id":219,"name":"EHOUMAN ADJO IRENE","phone":"0141007123","code":"EA123","filiere":"IDE"},
+{"id":220,"name":"EHOUMAN GUILLAUME KUMOU","phone":"0757226446","code":"EG446"},
+{"id":221,"name":"EKISSI EKISSI SERGES","phone":"0564523193","code":"EE193"},
+{"id":222,"name":"EKISSI SOPI RUTH","phone":"0152856452","code":"ES452","codeAliases":["ES452A"],"secondaryPhones":["0152885452"]},
+{"id":223,"name":"EKORAN AFFOUÉ MARIE-JEANNE","phone":"0758488227","code":"EA227"},
+{"id":224,"name":"EKOU AYA MARIE -EDITH","phone":"0758512161","code":"EA161"},
+{"id":225,"name":"EKOU EHOUSSOU -BLA FLORA KERENE","phone":"0777570562","code":"EE562","filiere":"SFM","nameAliases":["EKOU EHOUSSOU -BLA FLORA"]},
+{"id":226,"name":"EKOUMANO KOUADIO DANIEL","phone":"0799138062","code":"EK062","filiere":"IDE"},
+{"id":227,"name":"EKOUMANO KOUAKOU HONORE","phone":"0101798146","code":"EK146"},
+{"id":228,"name":"Ekoun Amenan ALice","phone":"0505219804","code":"EA804"},
+{"id":229,"name":"EKRA VADJO JORDIE CORYNNE","phone":"0747934814","code":"EV814"},
+{"id":230,"name":"ELLOU Fleur","phone":"0747071358","code":"EF358"},
+{"id":231,"name":"ESSAN OI ESSAN ARMAND ANTOINE","phone":"0709784475","code":"EO475"},
+{"id":232,"name":"ESSI EVAH ESTHER","phone":"0709065611","code":"EE611"},
+{"id":233,"name":"ESSO AKOUA NADÈGE","phone":"0103000201","code":"EA201"},
+{"id":234,"name":"ETTIEN ADOUBLA DIANE BERTILLE","phone":"0789471388","code":"EA388"},
+{"id":235,"name":"FAMISSA AKISSI KOROTOUME","phone":"0777776054","code":"FA054"},
+{"id":236,"name":"FODJO ABENAN FIENI TATIANA","phone":"0708282576","code":"FA576"},
+{"id":237,"name":"FOFANA MARIAM","phone":"0789905242","code":"FM242"},
+{"id":238,"name":"FOKOUO","phone":"0788751322","code":"FO322"},
+{"id":239,"name":"GABA KOUGNON PRINCE OLIVIER","phone":"0749940751","code":"GK751"},
+{"id":240,"name":"GALET GRÂCE SYNTICHE","phone":"0141305628","code":"GG628"},
+{"id":241,"name":"GBANE MAGAMY NOURAH","phone":"0748806441","code":"GM441"},
+{"id":242,"name":"GBEHI GNOANROU OLIVIA VINCIANE","phone":"O767638506","code":"GG506"},
+{"id":243,"name":"GNALI KOSSA MÉLAINE GAËLLE","phone":"0757227139","code":"GK139"},
+{"id":244,"name":"GNALY Lynda Stéphanie Nadège","phone":"0747964959","code":"GL959"},
+{"id":245,"name":"GNANGUI ANDREA EVELYNE REGINA","phone":"0140319502","code":"GA502"},
+{"id":246,"name":"Gnimassoun abenan grace ines","phone":"0778129314","code":"GA314"},
+{"id":247,"name":"GOGOUA MONICA HERMANCE","phone":"0708049409","code":"GM409"},
+{"id":248,"name":"GOHI BI GUESSAN AUGUST -MONDESIR","phone":"0788263371","code":"GB371"},
+{"id":249,"name":"GOHOU MARIE-PAULE INES","phone":"0787778409","code":"GM409A"},
+{"id":250,"name":"GOUA SOBIE BENEDICTE","phone":"0556718683","code":"GS683"},
+{"id":251,"name":"GOUEU SADIA YANNICK","phone":"0709529695","code":"GS695"},
+{"id":252,"name":"GOULY ANGE CHRISTELLE","phone":"0757290586","code":"GA586"},
+{"id":253,"name":"GOUMO CLARISSE","phone":"0719363133","code":"GC133"},
+{"id":254,"name":"GUEPIE ADJESKA SOPIE CARINE","phone":"0703995580","code":"GA580"},
+{"id":255,"name":"GUEPIE EUDES LANDRY","phone":"0717138745","code":"GE745"},
+{"id":256,"name":"GUESSAN HENRI MICHEL GAURE D","phone":"0757809645","code":"GH645"},
+{"id":257,"name":"GUIGUI GBALENON EUNICE MEHETHABEEL 076899","phone":"0768991702","code":"GG702"},
+{"id":258,"name":"HIEN SANSAN","phone":"0545982205","code":"HS205","filiere":"IDE"},
+{"id":259,"name":"HOURA MOYAKAN ANNE DORCAS","phone":"0748593531","code":"HM531"},
+{"id":260,"name":"HOUSSOU ADOU KOUADIO JONAS","phone":"0747845808","code":"HA808"},
+{"id":261,"name":"IBADOMBORO KRA IBRAHIM","phone":"0788371576","code":"IK576","filiere":"IDE"},
+{"id":262,"name":"IGE OMA BOLADJI GRACE","phone":"0702091304","code":"IO304"},
+{"id":263,"name":"IKPO CONSTANCE DOMINIQUE","phone":"0748769697","code":"IC697"},
+{"id":264,"name":"IRIE LOU ZAN MAËVA CARMEN MANUELA","phone":"0709117880","code":"IL880"},
+{"id":265,"name":"IRIO YAO BADOU VINCENT","phone":"0100581575","code":"IY575"},
+{"id":266,"name":"Jean Dupont","phone":"0701234567","code":"JD567"},
+{"id":267,"name":"KABLAN BROU JONAS","phone":"0150709648","code":"KB648"},
+{"id":268,"name":"KABLAN OI KABLAN ALFRED","phone":"0767594458","code":"KO458"},
+{"id":269,"name":"KABRAN N'GOUAN HABRAHAM GABRIEL","phone":"0709961485","code":"KN485","secondaryPhones":["0709961495"],"filiere":"IDE"},
+{"id":270,"name":"KACOU AMOIN PRISCA EDWIGE","phone":"0708370531","code":"KA531"},
+{"id":271,"name":"KACOU ASSAH MARTINE","phone":"0787746253","code":"KA253","filiere":"SFM"},
+{"id":272,"name":"KACOU TANOH MARIE MADELEINE","phone":"0704120994","code":"KT994"},
+{"id":273,"name":"KADJO MAGNE MARIE THÉRÈSE","phone":"0789643741","code":"KM741","filiere":"SFM"},
+{"id":274,"name":"KADJO NATHALIE CHRISTIANE","phone":"0576192183","code":"KN183","filiere":"IDE"},
+{"id":275,"name":"Kakou boris","phone":"0747289798","code":"KB798"},
+{"id":277,"name":"KAMBOU DJEMI","phone":"0709613591","code":"KD591"},
+{"id":278,"name":"KAMBOU MINI FLORE","phone":"0504504979","code":"KM979"},
+{"id":279,"name":"KAMENAN HENRI JOEL","phone":"0171993593","code":"KH593"},
+{"id":280,"name":"KANGA EKOA HÉLÈNE DORIANE","phone":"0708511340","code":"KE340"},
+{"id":281,"name":"KANGA KOFFI THOMAS","phone":"0788462859","code":"KK859"},
+{"id":282,"name":"KASSI DADO DANIEL","phone":"0719917961","code":"KD961"},
+{"id":284,"name":"KASSI EHUI ALEXANDRE","phone":"0759486685","code":"KE685"},
+{"id":285,"name":"KEINGNA ABELIA","phone":"747828216","code":"KA216"},
+{"id":286,"name":"KEÏTA BAMOUSSA","phone":"0757071339","code":"KB339","filiere":"IDE"},
+{"id":287,"name":"KERE KOUASSI ADJOUMANI JEAN PIERRE","phone":"0576681100","code":"KK100"},
+{"id":288,"name":"KLO GNENATY STÉPHANIE LOVE","phone":"0787664384","code":"KG384"},
+{"id":289,"name":"KOBENAN ATTA KOUAKOU MICHAEL","phone":"0787796164","code":"KA164"},
+{"id":290,"name":"KOBENAN KOUASSI FIDELE","phone":"0546028741","code":"KK741"},
+{"id":292,"name":"KODJO BOMO PAULINE","phone":"0709550405","code":"KB405"},
+{"id":293,"name":"KOFFI ABRAN ANNE-MARIE","phone":"0709137725","code":"KA725"},
+{"id":294,"name":"KOFFI ADJA JEANNETTE","phone":"0777942306","code":"KA306"},
+{"id":295,"name":"KOFFI AGNON JULIETTE ÉLODIE","phone":"0584378628","code":"KA628"},
+{"id":296,"name":"Koffi ahou alexise","phone":"0718792452","code":"KA452"},
+{"id":297,"name":"KOFFI AHOU LÉA","phone":"0748757789","code":"KA789"},
+{"id":298,"name":"KOFFI AKISSI ANGE ESTELLE","phone":"0709325590","code":"KA590"},
+{"id":299,"name":"KOFFI AKISSI BARBARA BENIWA","phone":"0749316977","code":"KA977"},
+{"id":300,"name":"KOFFI AKISSI INES MELISSA","phone":"0779476868","code":"KA868"},
+{"id":301,"name":"KOFFI AKOUA EUGENIE","phone":"0142554691","code":"KA691"},
+{"id":302,"name":"KOFFI AKOUA MOROSSAN TATIANA","phone":"0554655868","code":"KA868A"},
+{"id":303,"name":"KOFFI GOZOWLI GRÂCE LISANGE DOLORES","phone":"0778270892","code":"KG892"},
+{"id":304,"name":"KOFFI HENRI JOEL ELYSE","phone":"0709399776","code":"KH776","filiere":"IDE"},
+{"id":305,"name":"KOFFI KONAN ARISTIDE","phone":"0748575219","code":"KK219"},
+{"id":306,"name":"KOFFI KOUAKOU","phone":"0575766562","code":"KK562"},
+{"id":307,"name":"KOFFI KOUAKOU jean marie","phone":"0749941265","code":"KK265"},
+{"id":308,"name":"KOFFI KOUAME ANICET","phone":"0507512012","code":"KK012"},
+{"id":309,"name":"KOFFI MARIE DANIELLE","phone":"0798659818","code":"KM818","filiere":"IDE"},
+{"id":310,"name":"KOFFI N' GUESSAN ANGELA SABINE","phone":"0565714716","code":"KN716","filiere":"IDE"},
+{"id":311,"name":"KOFFI N'GUESSAN JACQUELINE","phone":"0767350911","code":"KN911","filiere":"IDE"},
+{"id":312,"name":"KOFFI N'GUESSAN JACQUELINE","phone":"0544829426","code":"KN426"},
+{"id":313,"name":"KOFFI NGUESSAN KEVIN","phone":"0759469007","code":"KN007"},
+{"id":314,"name":"KOFFI YAH HELEINE","phone":"0769176398","code":"KY398"},
+{"id":315,"name":"KOFFI YAO FERDINAND","phone":"0757667912","code":"KY912","filiere":"IDE"},
+{"id":316,"name":"KOKO YAO FÉLIX","phone":"0709858207","code":"KY207"},
+{"id":317,"name":"KOKORA BOSSOMA VIRGINIE","phone":"0779288297","code":"KB297"},
+{"id":318,"name":"KOLIBIA ETCHE MIREILLE","phone":"0747551515","code":"KE515"},
+{"id":319,"name":"KOMAN DAVY","phone":"0173235908","code":"KD908"},
+{"id":320,"name":"KOMAN FRANCK ROLAND","phone":"0565018926","code":"KF926"},
+{"id":321,"name":"kONAN ADJO YAH CÉCILE","phone":"0788089045","code":"KA045","codeAliases":["KA045A"],"nameAliases":["KONAN ADJO YAH CECILE"],"secondaryPhones":["0780809045"]},
+{"id":322,"name":"KONAN ADJOUA LEONIE","phone":"0708658433","code":"KA433"},
+{"id":323,"name":"KONAN AKISSI CARELE","phone":"0788608056","code":"KA056"},
+{"id":324,"name":"KONAN AMENAN CYNTHIA DANIELLE","phone":"23P-2098IABG","code":"KA098","filiere":"IDE","secondaryPhones":["0789788305"]},
+{"id":325,"name":"KONAN AMENAN GENEVIÈVE","phone":"0713578839","code":"KA839"},
+{"id":326,"name":"KONAN AMENAN IRÈNE","phone":"0758398058","code":"KA058"},
+{"id":327,"name":"KONAN KOUAKOU OLIVIER","phone":"0576606971","code":"KK971","filiere":"IDE"},
+{"id":328,"name":"KONAN KOUMOÉ AMOIN PASCALINE","phone":"0758580034","code":"KK034","codeAliases":["KK034A"],"nameAliases":["KONAN KOUMOE AMOIN PASCALINE"],"secondaryPhones":["0758380034"]},
+{"id":329,"name":"KONAN YAO VENANCE BONAVENTURE","phone":"0707750788","code":"KY788","filiere":"IDE"},
+{"id":330,"name":"KONATE MAMADOU","phone":"0504343747","code":"KM747"},
+{"id":331,"name":"KONATE YSSOUF","phone":"0586341865","code":"KY865"},
+{"id":332,"name":"KONE AWA","phone":"07499461551","code":"KA551"},
+{"id":333,"name":"KONE KAFFO VANESSA INES","phone":"0707459284","code":"KK284"},
+{"id":334,"name":"KONÉ PIFUINE ROSE","phone":"0708786164","code":"KP164"},
+{"id":335,"name":"KONE ZELE","phone":"0506077749","code":"KZ749"},
+{"id":336,"name":"KONGA AMANI ANGE HORLY-TATIANA","phone":"0564301659","code":"KA659"},
+{"id":337,"name":"KONIN AKASSI NICOLE","phone":"0171582287","code":"KA287"},
+{"id":338,"name":"KONIN AMOIN INES","phone":"0798454550","code":"KA550","filiere":"IDE"},
+{"id":339,"name":"Konin olivier","phone":"0102556426","code":"KO426"},
+{"id":340,"name":"KONKONZA KOUAME KRA NESTOR","phone":"0574545586","code":"KK586","filiere":"IDE","codeAliases":["KK586A"],"nameAliases":["KOUAME KRA NESTOR"]},
+{"id":341,"name":"KOSSAN DOUEU","phone":"0715991710","code":"KD710","codeAliases":["BD710"],"nameAliases":["BOSSANT DOUEU"]},
+{"id":342,"name":"KOSSONOU AKOUA YVONNE","phone":"0747351336","code":"KA336"},
+{"id":343,"name":"KOSSONOU KOBENAN THIERRY","phone":"0769569802","code":"KK802"},
+{"id":344,"name":"KOSSONOU KOUAKOU DOMINIQUE","phone":"0708253546","code":"KK546"},
+{"id":345,"name":"KOUA AHOU JOSEPHINE","phone":"0788912870","code":"KA870"},
+{"id":346,"name":"KOUA ELLOBLA PATRICIA","phone":"0142709736","code":"KE736"},
+{"id":347,"name":"Koua marie","phone":"0777994075","code":"KM075"},
+{"id":348,"name":"KOUA OI KOUA BRICE ARMAND","phone":"0141628272","code":"KO272"},
+{"id":349,"name":"KOUA OI KOUA FRANCK","phone":"0779285066","code":"KO066","filiere":"IDE"},
+{"id":352,"name":"KOUADIO ADJOUA RITA ESMONDE","phone":"0102694023","code":"KA023","filiere":"IDE"},
+{"id":353,"name":"KOUADIO AFFOUE BOKO MARIE CHARLENE","phone":"0576377954","code":"KA954"},
+{"id":354,"name":"KOUADIO AKISSI RACHELLE","phone":"0595246339","code":"KA339"},
+{"id":355,"name":"KOUADIO ANOBLA SANDRINE","phone":"0758633088","code":"KA088"},
+{"id":356,"name":"KOUADIO AYA FLORE","phone":"0778775200","code":"KA200"},
+{"id":357,"name":"KOUADIO BILE ADAMA","phone":"0153686667","code":"KB667","filiere":"IDE"},
+{"id":358,"name":"KOUADIO CARINE","phone":"0565136547","code":"KC547"},
+{"id":359,"name":"KOUADIO DANIEL","phone":"0709503731","code":"KD731"},
+{"id":360,"name":"KOUADIO FODJO ODILON","phone":"0749715693","code":"KF693"},
+{"id":361,"name":"KOUADIO YAH FRANÇOISE","phone":"0544160916","code":"KY916","filiere":"IDE"},
+{"id":362,"name":"KOUADIO YAO HIPPOLYTE","phone":"0767727862","code":"KY862"},
+{"id":363,"name":"KOUADIO YAO HUBERT","phone":"0709933481","code":"KY481"},
+{"id":364,"name":"KOUAKOU ADJA VANESSA CAROLE","phone":"0152401758","code":"KA758"},
+{"id":365,"name":"KOUAKOU AFFOUA ANGE DAVILAS","phone":"0152091950","code":"KA950"},
+{"id":366,"name":"Kouakou Affoua Rose Geneviève","phone":"0576051424","code":"KA424"},
+{"id":367,"name":"KOUAKOU AMAN BRIGITTE","phone":"0769539356","code":"KA356"},
+{"id":368,"name":"KOUAKOU ANDJOU RAPHAEL","phone":"0779985128","code":"KA128","filiere":"IDE"},
+{"id":369,"name":"KOUAKOU BREDOU RAPHAËL","phone":"0757799342","code":"KB342"},
+{"id":370,"name":"KOUAKOU BROU ANDRÉ","phone":"0706435314","code":"KB314"},
+{"id":371,"name":"KOUAKOU ETCHE MARIE JEANNE","phone":"0151448446","code":"KE446","filiere":"IDE"},
+{"id":372,"name":"KOUAKOU YAH MARIE FRÉDÉRIQUE","phone":"0758207046","code":"KY046","codeAliases":["KY045"],"nameAliases":["Kouakou yah Marie frédérique"],"secondaryPhones":["0758207045"]},
+{"id":373,"name":"KOUAMÉ ABLAN EDWIGE","phone":"0153255852","code":"KA852"},
+{"id":374,"name":"KOUAME AGNÈS DÉSIRÉE ROSINE","phone":"0101287855","code":"KA855","filiere":"SFM","nameAliases":["KOUAME AGNÈS"]},
+{"id":375,"name":"KOUAME AHOU ALAMAN MINAN-DA","phone":"0769260785","code":"KA785"},
+{"id":376,"name":"KOUAME AKOUA AMA JOELLE","phone":"0576583153","code":"KA153"},
+{"id":377,"name":"KOUAME AKOUA CHANTAL","phone":"0757611599","code":"KA599"},
+{"id":378,"name":"KOUAME APOBI ROSINE","phone":"0709416237","code":"KA237"},
+{"id":379,"name":"KOUAME APPLA ALEXANDRA RAVELLE","phone":"152522927","code":"KA927"},
+{"id":380,"name":"KOUAME CHRISTELLE","phone":"0502268146","code":"KC146"},
+{"id":381,"name":"KOUAME KOSSIA VICTOIRE","phone":"0546609501","code":"KK501","filiere":"SFM"},
+{"id":382,"name":"KOUAMÉ KOUADIO VINCENT","phone":"0103297951","code":"KK951"},
+{"id":384,"name":"KOUAME MWAEKAN HIRA LYSIANAS","phone":"0596271091","code":"KM091"},
+{"id":385,"name":"KOUAME N'GUETTA AFFOUA MIREILLE","phone":"0709582485","code":"KN485A","filiere":"SFM"},
+{"id":386,"name":"KOUAO BROU GISÈLE","phone":"0503262887","code":"KB887"},
+{"id":387,"name":"KOUASSI ADJA HORTENSE","phone":"0172813544","code":"KA544"},
+{"id":388,"name":"KOUASSI ADJA N'ZIAN ROSINA","phone":"0749992178","code":"KA178"},
+{"id":389,"name":"KOUASSI AFFOUE ANGE SABINE","phone":"074777195799","code":"KA799"},
+{"id":390,"name":"KOUASSI affoue Elodie","phone":"0757253142","code":"KA142"},
+{"id":391,"name":"KOUASSI AFFOUÉ SIMONE","phone":"0564650938","code":"KA938"},
+{"id":392,"name":"KOUASSI AHOU BLÉ BIENVENUE","phone":"0797382729","code":"KA729"},
+{"id":393,"name":"KOUASSI AKOUA MARIAM","phone":"0759059859","code":"KA859"},
+{"id":394,"name":"KOUASSI AMOIN MARIE CHRISTINE","phone":"0748944678","code":"KA678"},
+{"id":395,"name":"KOUASSI ASSI JEAN BRICE","phone":"0718876231","code":"KA231"},
+{"id":396,"name":"KOUASSI DESQUELLE PRIVATE","phone":"0151095551","code":"KD551"},
+{"id":397,"name":"KOUASSI ESSY LYNDA","phone":"0747780233","code":"KE233"},
+{"id":398,"name":"KOUASSI FRANCK FARNESE","phone":"0749929075","code":"KF075"},
+{"id":399,"name":"KOUASSI GERAUD DELIMA","phone":"0759181892","code":"KG892A","codeAliases":["KD892"],"nameAliases":["KOUASSI DELIMA"]},
+{"id":400,"name":"KOUASSI HENRI JOEL","phone":"0749193900","code":"KH900","codeAliases":["KH900A"],"secondaryPhones":["0749199900"]},
+{"id":401,"name":"KOUASSI IKPE MEDARD","phone":"0545880836","code":"KI836","filiere":"IDE"},
+{"id":402,"name":"KOUASSI KOFFI ASSAMOI ARSÈNE","phone":"0759944426","code":"KK426"},
+{"id":403,"name":"KOUASSI KOFFI ERIC","phone":"0709960268","code":"KK268"},
+{"id":404,"name":"KOUASSI KOUADIO LEONCE","phone":"0700169480","code":"KK480"},
+{"id":405,"name":"KOUASSI MARY CHOU","phone":"0778480196","code":"KM196"},
+{"id":406,"name":"KOUASSI MIEZAN PASCAL","phone":"0747961232","code":"KM232"},
+{"id":407,"name":"KOUASSI N'GUESSAN JEAN-BAPTISTE","phone":"0759092722","code":"KN722"},
+{"id":408,"name":"KOUASSI N'GUESSAN OLIVIA","phone":"0717933831","code":"KN831"},
+{"id":409,"name":"KOUASSI YAO STEPHANE","phone":"0788710024","code":"KY024"},
+{"id":410,"name":"KOUASSI YAWA GERMAINE","phone":"0564932462","code":"KY462"},
+{"id":411,"name":"KRA ADJA EMMA","phone":"0759560074","code":"KA074"},
+{"id":412,"name":"Kra koffi Aimé","phone":"0708593472","code":"KK472","filiere":"IDE","codeAliases":["KK472A"],"nameAliases":["KRA KOFFI AIME"],"secondaryPhones":["0708553472"]},
+{"id":413,"name":"KRA YAO AMED","phone":"0748602523","code":"KY523"},
+{"id":414,"name":"KRA YAO MAIZAN LAURENT","phone":"0759181866","code":"KY866","codeAliases":["KY865A"],"secondaryPhones":["0759181865"]},
+{"id":415,"name":"KYA Ezéchiel","phone":"0708889961","code":"KE961"},
+{"id":416,"name":"LAHOURY LYDIE MARCELLE","phone":"0709614657","code":"LL657","codeAliases":["LL657A"],"secondaryPhones":["0709611657"]},
+{"id":417,"name":"LAMOUDOU JOËLLE STÉPHANIE","phone":"0142204478","code":"LJ478","filiere":"IDE"},
+{"id":418,"name":"LASME ESSOH NHOME MELAINE DIMITRI","phone":"0769714838","code":"LE838"},
+{"id":419,"name":"LEGRE MARINA","phone":"0757281465","code":"LM465"},
+{"id":420,"name":"LEMIAN ZRAMPIEU NATACHA","phone":"0757570386","code":"LZ386"},
+{"id":421,"name":"LOUKOU RICHARD","phone":"0707373123","code":"LR123"},
+{"id":422,"name":"MADEHI SERY STEPHANE LANDRY","phone":"0556855527","code":"MS527","codeAliases":["MS527A"],"secondaryPhones":["0556655527"]},
+{"id":423,"name":"MAHO CHRISTINE VANESSA","filiere":"SFM","phone":"0564098050","code":"MC050"},
+{"id":424,"name":"Marie CHRISTENE","phone":"0747082620","code":"MC620"},
+{"id":425,"name":"MASSEU SAH RODOLPH","phone":"0564666413","code":"MS413"},
+{"id":426,"name":"M'BOLLO OKORE GERARD","phone":"0757623441","code":"MO441","codeAliases":["MC441"],"nameAliases":["M'BOILO CKORE GERARD"]},
+{"id":427,"name":"MENZAN AFFOUA BADOU JACQUELINE","phone":"0703614820","code":"MA820"},
+{"id":428,"name":"MINI COMOÉ RODOLPHE","phone":"0758128673","code":"MC673"},
+{"id":429,"name":"N' GUESSAN AFFOUO Ivette","phone":"0748769788","code":"NG788","filiere":"SFM","codeAliases":["NA688"],"nameAliases":["N'GUESSAN AFFOUO Ivette","N' GUESSAN AFFOUO"],"secondaryPhones":["0748769688"]},
+{"id":430,"name":"N’GUETTIA YAO MOÏSE","phone":"0714215322","code":"NY322"},
+{"id":431,"name":"NASREDINE EMILE","phone":"0708909497","code":"NE497","filiere":"IDE"},
+{"id":432,"name":"N'CHO ATSE LANDRY WENVESLAS","filiere":"IDE","phone":"0152265997","code":"NA997"},
+{"id":433,"name":"N'CHO CONSTANCE PRISCA GINETTE","phone":"0759964736","code":"NC736","codeAliases":["NC736A"],"secondaryPhones":["0759904736"]},
+{"id":434,"name":"N'cho Ornela Stéphanie Vanessa","phone":"0777981793","code":"NO793"},
+{"id":436,"name":"N'DA DJEDOUA CHRISTELLE","phone":"0759433103","code":"ND103","filiere":"IDE"},
+{"id":437,"name":"N'DA OCRAME FLORA","phone":"0799136999","code":"NO999"},
+{"id":438,"name":"N'DAKOA MALA NADÈGE","phone":"0172809496","code":"NM496"},
+{"id":439,"name":"N'DEPO KOUSSO FLORA","filiere":"SFM","phone":"0789046826","code":"NK826"},
+{"id":440,"name":"N'DOGUIE MARJOLAINE","phone":"0769590927","code":"NM927"},
+{"id":441,"name":"N'DOYE APO STEPHANIE CANDICE","phone":"0778003071","code":"NA071"},
+{"id":442,"name":"N'DRI AYA PRUDENCE","filiere":"SFM","phone":"0748959840","code":"NA840"},
+{"id":443,"name":"N'DRI BOSSON ADÉLAÏDE","phone":"0758674847","code":"NB847"},
+{"id":444,"name":"N'DRI KOUAO ZACHARI","phone":"0501091600","code":"NK600"},
+{"id":445,"name":"N'DRI THECLE","phone":"0757315411","code":"NT411"},
+{"id":446,"name":"NESSEMON VALENCIA HERMANN MINHANSOU","phone":"0747213142","code":"NV142","filiere":"IDE"},
+{"id":447,"name":"N'gatta kouadio Jean Marc","phone":"0749205343","code":"NK343"},
+{"id":448,"name":"N'GBODY MOYA Jeannette Stéphanie","phone":"0799669972","code":"NM972"},
+{"id":449,"name":"N'GORAN BEDE MARTIAL","phone":"0709845344","code":"NB344"},
+{"id":450,"name":"N'GORAN FRANCIS","phone":"0758287874","code":"NF874"},
+{"id":451,"name":"N'gou savi grâce","phone":"0556450612","code":"NS612"},
+{"id":452,"name":"N'GROMAN KOSSIA KOUMAN","phone":"0757891230","code":"NK230"},
+{"id":453,"name":"N'GUESSAN AFFOUET MELAINE","phone":"0708365905","code":"NA905"},
+{"id":456,"name":"N'GUESSAN AMENAN ALBERTINE","phone":"0709028581","code":"NA581"},
+{"id":457,"name":"N'GUESSAN AMOIN LYDIE DANIELLE","phone":"0596762997","code":"NA997A"},
+{"id":458,"name":"N'GUESSAN ANIMA THÉRÈSE ÉPOUSE ANOH","phone":"0759540011","code":"NA011","filiere":"SFM"},
+{"id":459,"name":"N'GUESSAN PONGO DELIZIA","phone":"0758944255","code":"NP255"},
+{"id":461,"name":"N'GUESSAN YABA ROSE MARINA","phone":"0103432862","code":"NY862A","filiere":"SFM"},
+{"id":462,"name":"N'GUESSAN YAH LOHIS REBECA DE EHUI","phone":"0749963765","code":"NY765"},
+{"id":463,"name":"N'GUETTA ADIA MARIE CHRISTIANE","phone":"0789805372","code":"NA372","filiere":"IDE"},
+{"id":464,"name":"NIANGARAN ADJOBI AMOUAN RAÏSSA GEORGIA","phone":"0707510514","code":"NA514"},
+{"id":465,"name":"NIANGORAN CEDRIC RICHARD","phone":"0748751777","code":"NC777"},
+{"id":466,"name":"NIANGORAN CHIE NINA","phone":"0101442496","code":"NC496"},
+{"id":467,"name":"NIKIEMA AICHATOU RAHINATOU","phone":"0708648230","code":"NA230","filiere":"SFM"},
+{"id":469,"name":"NOBOU GRÂCE","phone":"0759153236","code":"NG236","filiere":"IDE"},
+{"id":470,"name":"N'TAKPE EMMANUELLA","phone":"0707761617","code":"NE617"},
+{"id":471,"name":"N'ZORE AMOUNOUA FRANCOISE","phone":"0544707843","code":"NA843"},
+{"id":472,"name":"OBO HOUSSOH FRANCESCA","phone":"0759170042","code":"OH042"},
+{"id":473,"name":"OBO MONOH ORNELLA","phone":"0787737681","code":"OM681"},
+{"id":474,"name":"OBROU JUNIOR","phone":"0544660024","code":"OJ024","filiere":"SFM"},
+{"id":476,"name":"OCHO OFFOSSÉ GISÈLE","phone":"0596397594","code":"OO594"},
+{"id":477,"name":"OCHO WILFRIED JUNIOR","phone":"702800017","code":"OW017"},
+{"id":478,"name":"ODI GHISLAINE ANASTASIE CARINE","phone":"0596541168","code":"OG168"},
+{"id":479,"name":"ODIACHO DOFFOU HYACINE MARIE","phone":"0709301348","code":"OD348","filiere":"IDE"},
+{"id":480,"name":"Olafa ELISABETH","phone":"0788872868","code":"OE868","codeAliases":["OE868A"],"nameAliases":["OLAFA ELISABETH"],"secondaryPhones":["078872868"]},
+{"id":482,"name":"OPONDJI MARIE ALEXANDRA","phone":"0709761141","code":"OM141"},
+{"id":483,"name":"ORE OUDY MIREILLE","phone":"0707691046","code":"OO046"},
+{"id":484,"name":"OTTRO DUAHON CHRISTELLE CHARLENE","phone":"0758643058","code":"OD058"},
+{"id":485,"name":"OUATTARA ABOUBACAR","phone":"0748513059","code":"OA059"},
+{"id":486,"name":"OUATTARA ADAYE AÏCHATOU","phone":"0767783475","code":"OA475"},
+{"id":487,"name":"OUATTARA AWA","phone":"0767390488","code":"OA488"},
+{"id":488,"name":"Ouattara Awa","phone":"0787865259","code":"OA259"},
+{"id":489,"name":"OUATTARA FATOUMATA","phone":"0768332030","code":"OF030"},
+{"id":490,"name":"OUATTARA FATOUMATA","phone":"0150087252","code":"OF252"},
+{"id":491,"name":"OUATTARA ISSIFOU","phone":"0708348388","code":"OI388"},
+{"id":492,"name":"OUATTARA KAFADIO ZENABOU","phone":"0769762659","code":"OK659"},
+{"id":493,"name":"Ouattara katy","phone":"0555183982","code":"OK982"},
+{"id":494,"name":"Ouattara KOUAKOU SEYDOU","phone":"0103652771","code":"OK771"},
+{"id":495,"name":"OUATTARA MARAMAN","phone":"0768626416","code":"OM416"},
+{"id":497,"name":"OUATTARA NADJOUMAN","phone":"0555649592","code":"ON592"},
+{"id":498,"name":"OUATTARA OUATAGAMBI","phone":"0708205233","code":"OO233"},
+{"id":499,"name":"OUATTARA SALAMATOU","phone":"0748527123","code":"OS123"},
+{"id":500,"name":"OUEDRAOGO AKISSI NADÈGE","phone":"0708890144","code":"OA144"},
+{"id":501,"name":"OURA AMOIN ÉLIANE","phone":"0505221073","code":"OA073"},
+{"id":502,"name":"PE ABINAN GENEVIÈVE","phone":"0102797609","code":"PA609"},
+{"id":503,"name":"Plean Michel Ange","phone":"0759181485","code":"PM485"},
+{"id":504,"name":"SADIBOU KARIDJA AMANY","phone":"170971137","code":"SK137"},
+{"id":505,"name":"SAKO CHININ ANNE GRACE","phone":"0779212000","code":"SC000"},
+{"id":506,"name":"SANOGO MAMALON MARIAME","phone":"0586976280","code":"SM280"},
+{"id":507,"name":"SANOGO MOUSTAPHA","phone":"0595995492","code":"SM492"},
+{"id":508,"name":"SAVADOGO BLANCHE ARRIANE WINDMY","phone":"0757247010","code":"SB010"},
+{"id":509,"name":"SEA MONNET SEPHORA DESIREE","phone":"0769750169","code":"SM169"},
+{"id":510,"name":"SEKA APIE ISABELLE-BETTY","phone":"0749630526","code":"SA526"},
+{"id":511,"name":"SEKA BECHIO JOELLE","phone":"0101089118","code":"SB118"},
+{"id":512,"name":"SEKA ESTHER","phone":"0788128804","code":"SE804"},
+{"id":513,"name":"Seka lesly CLAUDIA","phone":"0758474023","code":"SL023","codeAliases":["SL023A"],"nameAliases":["SEKA LESLY CLAUDIA"],"secondaryPhones":["0759544023"],"filiere":"IDE"},
+{"id":514,"name":"SEKA N'GUESSAN ARISTIDE GILDAS","phone":"0506514538","code":"SN538"},
+{"id":515,"name":"SENIN EHOUMAN REBECCA","phone":"0749967312","code":"SE312","filiere":"IDE"},
+{"id":516,"name":"SEVEDE NAMAHOUA","phone":"0777886928","code":"SN928","codeAliases":["SN928A"],"nameAliases":["SEVEDE N'AMA HOUA"],"secondaryPhones":["0777885928"]},
+{"id":517,"name":"SHEP ERI THÉRÈSE","phone":"0747524790","code":"SE790","filiere":"IDE"},
+{"id":518,"name":"SIALOU AFFOUE ROXANE","phone":"0709046247","code":"SA247"},
+{"id":519,"name":"SICA EBA MARIE ODETTE","phone":"0595708803","code":"SE803"},
+{"id":520,"name":"Sidibe Alima","phone":"0757398800","code":"SA800","codeAliases":["SA800A"],"nameAliases":["SIDIBE ALIMA"],"secondaryPhones":["0757390800"]},
+{"id":521,"name":"SIE Lydie","phone":"0778147843","code":"SL843"},
+{"id":522,"name":"SILGA HONORINE","phone":"0749638095","code":"SH095"},
+{"id":523,"name":"SISSOKO DJENEBA JOANA","phone":"0749738527","code":"SD527","filiere":"SFM"},
+{"id":524,"name":"SOM BOULI JACQUELINE","phone":"0768248844","code":"SB844"},
+{"id":525,"name":"SORO GOFAGA","phone":"0546853472","code":"SG472"},
+{"id":526,"name":"SORO TCHAKOUNGO","phone":"0153416733","code":"ST733"},
+{"id":527,"name":"SORO TCHONRONTCHA MARTINE","phone":"0747910815","code":"ST815"},
+{"id":528,"name":"SOUMAHORO CHEICK AMINATA","phone":"0565401028","code":"SC028"},
+{"id":529,"name":"SOUMAHORO KARIDJA","phone":"0720678278","code":"SK278"},
+{"id":530,"name":"SY MAIMOUNA","phone":"0707060678","code":"SM678"},
+{"id":531,"name":"SYLLA MORY","phone":"0566257679","code":"SM679"},
+{"id":532,"name":"TABRA ABIBA","phone":"0759517351","code":"TA351"},
+{"id":533,"name":"TABRY KOSSIA VICTOIRE","phone":"0777089251","code":"TK251"},
+{"id":534,"name":"TADA FLORENCE","phone":"0709913662","code":"TF662"},
+{"id":535,"name":"TAH KOUAKOU BOUO FERDINAND","phone":"0709710644","code":"TK644"},
+{"id":536,"name":"TANO AHISSAN LOUIS","phone":"0767472067","code":"TA067"},
+{"id":537,"name":"TANO BROU ADJO ANICK","phone":"0566164398","code":"TB398"},
+{"id":538,"name":"TANO N'DRI NARCISSE","phone":"0502990320","code":"TN320"},
+{"id":539,"name":"TANOH AYA Clarisse","phone":"0718005528","code":"TA528"},
+{"id":540,"name":"TANOH KOUADIO ALEXANDRE","phone":"0556201794","code":"TK794"},
+{"id":541,"name":"TANOH KOUADIO BENOIT","phone":"0709912092","code":"TK092"},
+{"id":542,"name":"TANOH KOUASSI N'GUETTIA CHRISTIAN","phone":"0506145755","code":"TK755","filiere":"IDE"},
+{"id":543,"name":"TANOH KRA KOSSIA AFFOUA MELAINE","phone":"0778015642","code":"TK642"},
+{"id":544,"name":"Tanoh Marie-France","phone":"0706058249","code":"TM249"},
+{"id":545,"name":"TANOH ROSALIE PRISCA","phone":"0777500055","code":"TR055"},
+{"id":546,"name":"TANOKAN AMA TANOE HELENE","phone":"0779899197","code":"TA197"},
+{"id":547,"name":"TAPE EPOUSE GONDO ANGE DANIELLE FLORA","phone":"0779202475","code":"TE475"},
+{"id":548,"name":"TCHAKPONTE SEGBEZOU ALBERT","phone":"0748666013","code":"TS013","filiere":"IDE"},
+{"id":549,"name":"TCHEI KOUTOUA N'GOSSAN LEONCE","phone":"0747765391","code":"TK391","filiere":"IDE"},
+{"id":550,"name":"TCHELLOU GUESSEND REGINA FLORA","phone":"0748638278","code":"TG278"},
+{"id":551,"name":"TCHERE GBANANO EDITHE","phone":"0102414643","code":"TG643"},
+{"id":552,"name":"TCHIMOU ANASSE URBAIN","phone":"0504524473","code":"TA473"},
+{"id":553,"name":"TEBILI SARA ÉLÉONORE SAHOUA","phone":"0759720710","code":"TS710"},
+{"id":554,"name":"TEKA N'DRI FLAURE","phone":"0708890816","code":"TN816"},
+{"id":555,"name":"TEYA KOSSIA JEANNE d'Arc","phone":"0757828099","code":"TK099"},
+{"id":556,"name":"THRE YAWA KRA MARIE -LAURE","phone":"0173271922","code":"TY922","filiere":"SFM"},
+{"id":559,"name":"Tohouri Axel Stephanie","phone":"0777495226","code":"TA226"},
+{"id":560,"name":"TOKOU TAKI SIMONE","phone":"0709566340","code":"TT340","filiere":"SFM","nameAliases":["TOKOU TAKI"]},
+{"id":561,"name":"TOKPA ZOH CARINE","phone":"0789503060","code":"TZ060"},
+{"id":562,"name":"TOTO APIE CHRISTELLE SANDRINE","phone":"0595657140","code":"TA140"},
+{"id":563,"name":"TOTO Cindy Valencia","phone":"0757124738","code":"TC738"},
+{"id":564,"name":"TOURE NANCOMNAN","phone":"0586868639","code":"TN639"},
+{"id":565,"name":"Toure Yeli Assetou","phone":"0101782147","code":"TY147"},
+{"id":566,"name":"TOUZOU KOUADIO HERMANN","phone":"0505682446","code":"TK446"},
+{"id":567,"name":"Tra Bi Ange Emmanuel","phone":"0749839781","code":"TB781"},
+{"id":568,"name":"Traoré Ami","phone":"0504781724","code":"TA724","filiere":"IDE"},
+{"id":569,"name":"TRAORE ASSITA","phone":"0576072874","code":"TA874"},
+{"id":570,"name":"TRAORE ISMAEL","phone":"0709978484","code":"TI484"},
+{"id":571,"name":"TRAORE NASSIETOU","phone":"0709004284","code":"TN284","filiere":"IDE"},
+{"id":572,"name":"Traoré phelie","phone":"0140509335","code":"TP335"},
+{"id":573,"name":"Wawa Gnamien Florent","phone":"0140327525","code":"WG525"},
+{"id":574,"name":"YACOUBA AKA DANIEL","phone":"0101105943","code":"YA943","filiere":"IDE"},
+{"id":575,"name":"YAO ADJO ALINE","phone":"0788605568","code":"YA568"},
+{"id":576,"name":"YAO AHOU AUDREY DOMINIQUE","phone":"0707831435","code":"YA435"},
+{"id":577,"name":"YAO AHOU MARIE PAULE ASHLEY","phone":"0759777040","code":"YA040"},
+{"id":578,"name":"YAO AHOUO EMMANUELLA","phone":"0769381314","code":"YA314"},
+{"id":579,"name":"YAO AKISSI ROSE EDWIGE","phone":"0787838357","code":"YA357"},
+{"id":580,"name":"YAO AKISSI SYNTHIA","phone":"0768121418","code":"YA418"},
+{"id":581,"name":"YAO Annick","phone":"0788573253","code":"YA253"},
+{"id":582,"name":"YAO APO AUDREY CAMEL","phone":"0594400529","code":"YA529"},
+{"id":583,"name":"YAO BIENVENUE","phone":"0140415739","code":"YB739"},
+{"id":584,"name":"YAO KOFFI LUCIEN","phone":"0103054542","code":"YK542"},
+{"id":585,"name":"YAO KOUAKOU CEDRIQUE STEPHANE","phone":"0749030749","code":"YK749"},
+{"id":586,"name":"YAO KOUAME ATTA MARCELIN","phone":"0757441964","code":"YK964"},
+{"id":587,"name":"Yao kouté akissi reine épouse sea","phone":"0757304158","code":"YK158","codeAliases":["YK886"],"nameAliases":["YAO KOUTÉ AKISSI REINE ÉPOUSE SEA"]},
+{"id":588,"name":"YAO LOUKOU HENRIETTE","phone":"0777372934","code":"YL934"},
+{"id":589,"name":"YAO N'DRI VANESSA EPSE KOMENAN","phone":"0748456281","code":"YN281"},
+{"id":590,"name":"YAO STEPHANIE ELLA","phone":"0788357037","code":"YS037"},
+{"id":591,"name":"YAPI ABOUEU ANICK TATIANA","phone":"0555582121","code":"YA121"},
+{"id":592,"name":"YAPI ADJIMAN ANGE-ELIE CASIMIR","phone":"0777377009","code":"YA009"},
+{"id":593,"name":"YAPI CHIEDA ANGE ELISIANE","phone":"0779268445","code":"YC445"},
+{"id":594,"name":"YAPI ELVIS KEVIN","phone":"143842830","code":"YE830","filiere":"IDE","secondaryPhones":["0143842830"]},
+{"id":595,"name":"YAPI KOUSSO LAUREINE FLORE","phone":"0702482784","code":"YK784"},
+{"id":596,"name":"YAPI SOPIE CHANCELLE ANDREA","phone":"0779089305","code":"YS305"},
+{"id":597,"name":"YAPI STEPHANIE EDWIGE MELINE","phone":"0103038651","code":"YS651","filiere":"IDE"},
+{"id":598,"name":"YAPO YABAH LYDIE NADÈGE","phone":"0702008320","code":"YY320","filiere":"IDE"},
+{"id":599,"name":"YAPO ANOMAND STÉPHANE SAMSON","phone":"0576895757","code":"YA757"},
+{"id":600,"name":"YAPO APIE VERRAH JUDITH","phone":"0757767204","code":"YA204","filiere":"IDE"},
+{"id":601,"name":"YAPO CARINE API","phone":"0709855272","code":"YC272"},
+{"id":602,"name":"YAPO DIETRICH CRÉPIN GEOFFROY","phone":"0769651623","code":"YD623"},
+{"id":603,"name":"YAPO KOUSSO ANNE-MARIETTE","phone":"0749593394","code":"YK394"},
+{"id":604,"name":"YAPO KOUSSO HERMINE","phone":"0789560924","code":"YK924"},
+{"id":605,"name":"YAPO KOUSSO LILIANE ÉPOUSE AMBÉ","phone":"0545694184","code":"YK184"},
+{"id":606,"name":"YAPO MOBIO JEAN-BAPTISTE","phone":"0151606071","code":"YM071"},
+{"id":607,"name":"YAPO OSSEY-BAH JULIE BILLARD","phone":"0788326385","code":"YO385","filiere":"IDE"},
+{"id":608,"name":"YAPO ROSELINE FLEUR","phone":"0173110006","code":"YR006"},
+{"id":609,"name":"Yapo Wilfried senior","phone":"0151738398","code":"YW398"},
+{"id":610,"name":"YAPO YABA SANDRINE FRANCISCA","phone":"0717977599","code":"YY599","filiere":"SFM"},
+{"id":611,"name":"YAPOGA NELSON THIERRY","phone":"0749506588","code":"YN588"},
+{"id":612,"name":"YEBOUA KOSSIA KOKO NINA","phone":"0566874869","code":"YK869"},
+{"id":613,"name":"YEBOUE AHOU MOD ALINE","phone":"0779282669","code":"YA669"},
+{"id":614,"name":"Yeo Kpintia Martine","phone":"0708802548","code":"YK548"},
+{"id":615,"name":"YOBOA OI YOBOA BRUNO","phone":"0575214412","code":"YO412"},
+{"id":616,"name":"ZADE TINKPON NADEGE","phone":"0545403668","code":"ZT668","filiere":"IDE"},
+{"id":617,"name":"ZADI BEHI PRIVAT","phone":"0506453127","code":"ZB127","codeAliases":["ZB137"],"nameAliases":["Zadi Behi Privat"],"secondaryPhones":["0506452137"]},
+{"id":618,"name":"ZAH LOU TRA LAURENTINE","phone":"0758204943","code":"ZL943"},
+{"id":619,"name":"ZAHUI NATACHA HELENE","phone":"0709668765","code":"ZN765"},
+{"id":620,"name":"ZAMBLE AMENA ARMELLE INNOCENTE","phone":"0779192263","code":"ZA263"},
+{"id":621,"name":"Zegbolo Bitty","phone":"0747836477","code":"ZB477"},
+{"id":622,"name":"ZERE KOUAKOU AHOU NINA","phone":"0757159576","code":"ZK576"},
+{"id":623,"name":"ZOH MOMINÉ BLAISE","phone":"0584855086","code":"ZM086"},
+{"id":624,"name":"EDI HONORA","phone":"0719997773","code":"EH773"},
+{"id":625,"name":"SORO ICHAKOUNGO","phone":"0748717905","code":"SI905"},
+{"id":626,"name":"ACHY YAPO ELYSEE","phone":"0594740522","code":"AY522"},
+{"id":627,"name":"KOUADIO RAPHAEL","phone":"0759848462","code":"KR462"},
+{"id":630,"name":"ESSI YAO KRA THIERRY MARTIAL","phone":"0545835289","code":"EY289"},
+{"id":631,"name":"KOUASSI BOSSON PIERRE","phone":"0788811191","code":"KB191"},
+{"id":632,"name":"ACHOU SOPIE ADELINE","phone":"0778985976","code":"AS976","filiere":"SFM","matricule":"23P-2161SBG","secondaryPhones":["23P-2161SBG"]},
+{"id":633,"name":"COULIBALY GNIME ADRIELLE ERICA","phone":"0109655855","code":"CG855"},
+{"id":634,"name":"BECHE AKICHI JEANNE FLORA","phone":"0546452014","code":"BA014"},
+{"id":636,"name":"N'GATTA YAZIAN JEANNETTE","phone":"0748291031","code":"NY031"},
+{"id":638,"name":"BOA ASSI YANNICK LAURENT","phone":"0595484149","code":"BA149"},
+{"id":639,"name":"DUIRE SALIMATA","phone":"0777243839","code":"DS839","filiere":"SFM","nameAliases":["DJIRE SALIMATA"]},
+{"id":641,"name":"AMANE EDIBOU STEPHANIE","phone":"0797925943","code":"AE943"},
+{"id":642,"name":"KOUAKOU AMAH ATTAWA SANDRINE","phone":"0545546303","code":"KA303","filiere":"SFM"},
+{"id":643,"name":"DOSSO MAKEMIN","phone":"0708323981","code":"DM981","filiere":"IDE"},
+{"id":644,"name":"KOUADIO JEAN MODESTE","phone":"0596879106","code":"KJ106","filiere":"IDE"},
+{"id":645,"name":"NOUFE TCHOUNITE","phone":"0504268501","code":"NT501"},
+{"id":647,"name":"BOSSON ANDJOU PACOME","phone":"0799047359","code":"BA359"},
+{"id":648,"name":"KOUASSI BORIS SIDOINE","phone":"0143673853","code":"KB853","filiere":"IDE","secondaryPhones":["0143678853"],"codeAliases":["KB853A"],"nameAliases":[]},
+{"id":650,"name":"DIE KOFFI SCSTHIENE","phone":"0758710162","code":"DK162"},
+{"id":651,"name":"TAPE EPOUSE GONDO ANGE DANIELLE F","phone":"0779200475","code":"TE475A"},
+{"id":652,"name":"KOUADIO OVO PATRICIA","phone":"0712348452","code":"KO452"},
+{"id":653,"name":"ETCHIMAN ADJO ANGE","phone":"0714232737","code":"EA737"},
+{"id":654,"name":"BOUATIA HÉLOÏSE","phone":"0788932766","code":"BH766"},
+{"id":657,"name":"ADOU MAWA NINA","phone":"0757639643","code":"AM643","filiere":"SFM"},
+{"id":659,"name":"KOUADIO MANOU ESTELLE","phone":"0779254257","code":"KM257","filiere":"SFM"},
+{"id":661,"name":"NIKEMA AICHATOU RAHINATOU","phone":"0708618230","code":"NA230A"},
+{"id":663,"name":"KAMBIRI SANSAN ANDRÉ","phone":"0778270485","code":"KS485"},
+{"id":664,"name":"ASSAMOI ASSAMOI BORIS","phone":"0103292383","code":"AA383"},
+{"id":665,"name":"KODIA BROU YAA MARIE PAULE","phone":"0778133526","code":"KB526","codeAliases":["KM526"],"nameAliases":["KODIA MARIE PAULE"]},
+{"id":668,"name":"YAO KOFFI GÉRARD","phone":"0778174741","code":"YK741","filiere":"IDE","secondaryPhones":["0778176741"]},
+{"id":669,"name":"KOFFI KOUAKOU JUSTIN","phone":"0709747604","code":"KK604"},
+{"id":670,"name":"KOFFI KOUAKOU JUSTIN","phone":"0575765622","code":"KK622"},
+{"id":671,"name":"GNOUAN HONAN KPE","phone":"0207002749","code":"GH749"},
+{"id":672,"name":"N'GUESSAN AFFOUO YVETTE","phone":"0748767788","code":"NA788A"},
+{"id":673,"name":"KOUADIO KOUAME DANIEL","phone":"0799503731","code":"KK731"},
+{"id":674,"name":"BEDA AKPO XAVIER","phone":"0747594785","code":"BA785"},
+{"id":675,"name":"ALLA ASSIE GUILLAUME","phone":"0787627488","code":"AA488"},
+{"id":680,"name":"N'DAKOA MALA NADEGE","phone":"0707812728","code":"NM728"},
+{"id":681,"name":"Koffi kouakou armel","phone":"0708953467","code":"KK467"},
+{"id":682,"name":"KOUADJO AMOAN N'DONKO CLARISSE","phone":"0102049817","code":"KA817","filiere":"IDE"},
+{"id":683,"name":"KOSSONOU ADJOUA SOMIYA YVETTE","phone":"0151638512","code":"KA512"},
+{"id":684,"name":"AMAN KOFFI BLA NADÈGE","phone":"0716552441","code":"AK441","filiere":"IDE"},
+{"id":686,"name":"ATSE KOUSSO SYLVIANE","phone":"0758212431","code":"AK431","filiere":"SFM"},
+{"id":687,"name":"K N","phone":"0967350911","code":"KN911A"},
+{"id":689,"name":"YAPO ATSE ROMARIC","phone":"865781","code":"YA781","filiere":"IDE","secondaryPhones":["0565865781"]},
+{"id":690,"name":"KOUA EDWIGE CLEMENCE MAHI","phone":"0708427584","code":"KE584"},
+{"id":692,"name":"KOUMAN AFFOUA ELISABETH","phone":"0789249610","code":"KA610"},
+{"id":693,"name":"KOFFI KOFFI ROMARIC","phone":"0758224791","code":"KK791"},
+{"id":694,"name":"GOULE OU IRIS SOLANGE","phone":"0787056531","code":"GO531"},
+{"id":695,"name":"ANDECHI SERGÉ-ALAIN","phone":"0709813231","code":"AS231"},
+{"id":696,"name":"KOUASSI ADJA HORTENSE","phone":"0749292261","code":"KA261"},
+{"id":697,"name":"SEKA JACQUELINE TANO","phone":"0759951510","code":"SJ510"},
+{"id":699,"name":"KOUADIO NGUESSAN REBECA","phone":"0767697483","code":"KN483","filiere":"IDE"},
+{"id":700,"name":"DA LOPEZ JOSEPH","phone":"0789068535","code":"DL535"},
+{"id":701,"name":"YOUAN BI FAIZAN ARNOLD","phone":"0769563314","code":"YB314"},
+{"id":702,"name":"KOUAME KONAN HERMANN","phone":"0546806764","code":"KK764","filiere":"IDE"},
+{"id":703,"name":"KONE RAMATOU","phone":"0556228041","code":"KR041"},
+{"id":704,"name":"BOYÉ LOU","phone":"0709711395","code":"BL395"},
+{"id":706,"name":"DOSSO ALIMA","phone":"0757224972","code":"DA972"},
+{"id":707,"name":"ANOH ANOH PENIEL JUNIOR","phone":"0788262862","code":"AA862"},
+{"id":708,"name":"OUATTARA MARIAM","phone":"0544079243","code":"OM243"},
+{"id":709,"name":"SORO TCHAKOUNGO","phone":"0748717096","code":"ST096"},
+{"id":710,"name":"ANOUGBA NIANKON JEANNE MIREILLE","phone":"0757419987","code":"AN987"},
+{"id":711,"name":"TIA WONSEU EUNICE ANDREE","phone":"0787974395","code":"TW395","codeAliases":["TE395"],"nameAliases":["TIA EUNICE"]},
+{"id":712,"name":"KONAN KOUADIO ANGE SEVERIN","phone":"0777217097","code":"KK097"},
+{"id":714,"name":"SALIA N’DA ROSINE","phone":"0564807208","code":"SN208","filiere":"SFM"},
+{"id":715,"name":"N'DOLY AFFOUA AMESSAH","phone":"0709810427","code":"NA427"},
+{"id":716,"name":"ADOPO CHO HERMINE DEBORAH","phone":"0585774025","code":"AC025"},
+{"id":717,"name":"COULIBALY KADY MYRIAM","phone":"0777461382","code":"CK382"},
+{"id":718,"name":"ESSAN KOUAME HERVE DELMAS","phone":"0173037703","code":"EK703","filiere":"IDE"},
+{"id":719,"name":"EDJA DIBY HÉLÈNE","phone":"0748467873","code":"ED873"},
+{"id":720,"name":"GBOCHO CHI-ADOU DOMINIQUE NANCY","phone":"0503679428","code":"GC428","secondaryPhones":["0555023286"],"filiere":"IDE"},
+{"id":721,"name":"YAO AFFOUE DÉBORAH","phone":"0708761647","code":"YA647"},
+{"id":722,"name":"MENZAN AKOUA HÉLÈNE","phone":"0779697569","code":"MA569"},
+{"id":723,"name":"ATSE ATSE GUY SERGE","phone":"0143277147","code":"AA147","codeAliases":["AG147"],"nameAliases":["ATSE GUY SERGE"]},
+{"id":724,"name":"N'GUETTA YAH NELLY GRACE","phone":"0747515924","code":"NY924"},
+{"id":725,"name":"YEBOUA ANGE TATIANA","phone":"0707630054","code":"YA054"},
+{"id":726,"name":"ASSOUMOU MEA BLA FELICITE","phone":"0596407055","code":"AM055","filiere":"IDE"},
+{"id":727,"name":"BOUATINI Affoua","phone":"0707932760","code":"BA760"},
+{"id":728,"name":"GUELAPOHO RUTH PARFAITE","phone":"0769573472","code":"GR472"},
+{"id":729,"name":"OUATTARA ZILEBAHE AMADOU","phone":"0506477347","code":"OZ347","filiere":"IDE"},
+{"id":730,"name":"KOFFI ALEXANDRINE MIREILLE","phone":"0574732774","code":"KA774"},
+{"id":731,"name":"Titi LOBO madeleine ANDREYA","phone":"0709755301","code":"TL301","codeAliases":["TY301"],"nameAliases":["Titi Yasmine"]},
+{"id":732,"name":"ANE ASSOUMOU TITE","phone":"0749861658","code":"AA658"},
+{"id":733,"name":"DOUMBIA MARIAM","phone":"0778216164","code":"DM164"},
+{"id":734,"name":"KOBENAN YAWA AGNES","phone":"0708782456","code":"KY456"},
+{"id":735,"name":"AHOUSSY FIDEL","phone":"0709221536","code":"AF536"},
+{"id":736,"name":"N'CHO AYA EDWIGE","phone":"0708102201","code":"NA201"},
+{"id":737,"name":"TRAORE MARIAM","phone":"0768185639","code":"TM639"},
+{"id":738,"name":"KOUAME YAO MOKAN AURELIE","phone":"0748367660","code":"KY660"},
+{"id":739,"name":"N'DRI ALLICO SIMPLICE","phone":"0709302546","code":"NA546"},
+{"id":740,"name":"KOUADIO YEDIDIA","phone":"0153892966","code":"KY966"},
+{"id":741,"name":"AKA AHOU","phone":"0709382961","code":"AA961"},
+{"id":742,"name":"AKA TEWA THIERRY STÉPHANE","phone":"0748849147","code":"AT147"},
+{"id":743,"name":"AHUA AFFOUA DELPHINE TATIANA","phone":"0777166344","code":"AA344"},
+{"id":744,"name":"MADOU MARIE-FRANCE","phone":"0574598414","code":"MM414"},
+{"id":745,"name":"AUHOU FREJUS","phone":"0778705624","code":"AF624"},
+{"id":746,"name":"MAM MICHELE DELISE OYOUROU","phone":"0708882957","code":"MM957","filiere":"IDE"},
+{"id":748,"name":"KPRIE KOUASSI DESTHER ARTHUR","phone":"0798313735","code":"KK735","filiere":"IDE"},
+{"id":749,"name":"N'GORAN KOUASSI AIME","filiere":"IDE","phone":"0709636351","code":"NK351"},
+{"id":750,"name":"YAO NATHALIE","phone":"0779205271","code":"YN271"},
+{"id":751,"name":"IRIÉ LOU TRANAN NADÈGE","phone":"0758672626","code":"IL626","filiere":"SFM"},
+{"id":752,"name":"BINI ADOU YAO WILFRED","filiere":"IDE","phone":"0584472758","code":"BA758"},
+{"id":753,"name":"KOFFI GRACE ANGE LAETITIA","filiere":"SFM","phone":"0719368806","code":"KG806"},
+{"id":754,"name":"ACHI APIE GRACE BÉNÉDICTE","filiere":"SFM","phone":"0757122041","code":"AA041"},
+{"id":755,"name":"KOFFI LAETITIA","filiere":"SFM","phone":"0788379916","code":"KL916","nameAliases":["KOFFI GRACE"]},
+{"id":756,"name":"KOUASSI KOUASSI CONSTANTIN WILFRIED","filiere":"IDE","phone":"0140850087","code":"KK087"},
+{"id":757,"name":"ATSE STÉPHANE JOSEPH","filiere":"IDE","phone":"0799999238","code":"AS238"},
+{"id":758,"name":"NIANGORAN CYPRIEN","filiere":"IDE","phone":"0787315651","code":"NC651","secondaryPhones":["23P1551IABG"]},
+{"id":759,"name":"KAKOU AKA PARFAIT","filiere":"IDE","phone":"0151122658","code":"KA658"},
+{"id":760,"name":"KOUAME GERTRUDE-LAETHICIA","filiere":"IDE","phone":"0711372315","code":"KG315"},
+{"id":761,"name":"YAPO AMON LYDIE ESTELLE","filiere":"SFM","phone":"0101331509","code":"YA509"},
+{"id":762,"name":"KOFFI M'MAN ROSALIE NINON","filiere":"SFM","phone":"0757823253","code":"KM253"},
+{"id":763,"name":"AYECHIEN DURAND","filiere":"IDE","phone":"0788114529","code":"AD529"},
+{"id":764,"name":"ANGBO ASSI GHISLAIN","filiere":"IDE","phone":"0758602991","code":"AA991"},
+{"id":765,"name":"KOBENA ABENA JACQUELINE","filiere":"IDE","phone":"0566900172","code":"KA172"},
+{"id":766,"name":"TCHIMOU YABA DOLORESSE","filiere":"SFM","phone":"0502277225","code":"TY225"},
+{"id":767,"name":"BONY OKIE SOPIE DANIELLE","filiere":"IDE","phone":"0720273712","code":"BO712"},
+{"id":768,"name":"AFFOUMOU AHOUBA MARIE MADELEINE","filiere":"IDE","phone":"0142949698","code":"AA698"},
+{"id":769,"name":"ADOU BENIER HARRY WILFRIED","filiere":"IDE","phone":"0747754040","code":"AB040"},
+{"id":770,"name":"SINAYOKO MAMADOU","filiere":"IDE","phone":"0748376618","code":"SM618"},
+{"id":771,"name":"KAMAGATE HADJA MAWA","filiere":"IDE","phone":"0778666126","code":"KH126"},
+{"id":772,"name":"N'GAZA AGOH CELINE","filiere":"SFM","phone":"0747793225","code":"NA225"},
+{"id":773,"name":"GBERI MECHE ELINA","filiere":"IDE","phone":"0574545790","code":"GM790"},
+{"id":774,"name":"ADAYE ABIBA OUATTARA","filiere":"IDE","phone":"0757485792","code":"AA792"},
+{"id":775,"name":"EGNANKON MARIE FLORE","filiere":"SFM","phone":"0787002016","code":"EM016"},
+{"id":776,"name":"GNAMI ELISABETH","filiere":"SFM","phone":"0769690169","code":"GE169"},
+{"id":777,"name":"DOSSO ZENAB CARMELLE","filiere":"IDE","phone":"0171873459","code":"DZ459"},
+{"id":778,"name":"AMBEU ADON JEAN ERIC","filiere":"IDE","phone":"0716446774","code":"AA774"},
+{"id":779,"name":"BOH LOU LINDA PULCHÉRIE","filiere":"IDE","phone":"0767585388","code":"BL388"},
+{"id":780,"name":"HIEN YERI MIMINA","filiere":"SFM","phone":"0546983021","code":"HY021"},
+{"id":781,"name":"ADJE ADON ANGE LIDWINE","filiere":"SFM","phone":"0170383773","code":"AA773"},
+{"id":782,"name":"ANEZ KOKOLA CONSTANT","filiere":"IDE","phone":"0768695541","code":"AK541"},
+{"id":783,"name":"ADOUOBOU TIEMELE MEDA","filiere":"IDE","phone":"0709317797","code":"AT797"},
+{"id":784,"name":"KOUAME YABA TATIANA MARIE LOUISE","filiere":"IDE","phone":"0767060735","code":"KY735"},
+{"id":785,"name":"ANVO ANEY FRANCOIS","filiere":"IDE","phone":"0709447132","code":"AA132"},
+{"id":786,"name":"ADJE N'DAYAH PRISCA NICOLE","filiere":"SFM","phone":"0797560110","code":"AN110"},
+{"id":787,"name":"OVO BOKA JONATHAN","filiere":"IDE","phone":"0545172272","code":"OB272"},
+{"id":788,"name":"KOFFI KOBENAN RAYMOND","filiere":"IDE","phone":"0720395610","code":"KK610"},
+{"id":789,"name":"TAH CHIA PAULE ORLANE","filiere":"IDE","phone":"0768488222","code":"TC222"},
+{"id":790,"name":"KOBENA ATTA GASPARD","filiere":"IDE","phone":"0759195240","code":"KA240","secondaryPhones":["0758195240"]},
+{"id":791,"name":"ADRO ASSOVIE ARTHUR GHISLAIN","filiere":"IDE","phone":"0789274966","code":"AA966"},
+{"id":792,"name":"N'DRI JOËL","filiere":"IDE","phone":"0768695965","code":"NJ965"},
+{"id":793,"name":"TOURÉ AMADOU GO","filiere":"IDE","phone":"0714055316","code":"TA316"},
+{"id":794,"name":"TETE LETRO EDWIGE","filiere":"SFM","phone":"0708512668","code":"TL668"},
+{"id":795,"name":"SIB ERI PRISCA CAROLINE","filiere":"SFM","phone":"0759710022","code":"SE022"},
+{"id":796,"name":"KRA KOUADIO TEHUA THOMAS","filiere":"IDE","phone":"0747188498","code":"KK498"},
+{"id":797,"name":"BOUA ERIC ARNAUD","filiere":"IDE","phone":"0708421711","code":"BE711"},
+{"id":798,"name":"YAPI CLOVIS SERGE ALAIN","filiere":"IDE","phone":"0797280009","code":"YC009"},
+{"id":799,"name":"AKA AHOU EMMANUELLA LISETTE INNOCENTE","filiere":"IDE","phone":"0586130277","code":"AA277","secondaryPhones":["078972680"]},
+{"id":800,"name":"KOFFI AMOIN MARINA","filiere":"SFM","phone":"0708221145","code":"KA145"},
+{"id":801,"name":"KOUASSI FARGASSE BEDIE","filiere":"IDE","phone":"0759707056","code":"KF056"},
+{"id":802,"name":"KONAN ELIE ABETI SYLVERE","filiere":"IDE","phone":"0707244344","code":"KE344"},
+{"id":803,"name":"KONIAN AYA LAURENCE EUPHRASIE","filiere":"IDE","phone":"0787769031","code":"KA031"},
+{"id":804,"name":"YAO BROUTE MARIE JOSEE","filiere":"IDE","phone":"0712582487","code":"YB487"},
+{"id":805,"name":"ALLEPO CHO CARINE","filiere":"SFM","phone":"0574119449","code":"AC449"},
+{"id":806,"name":"AGNESS GNAGNE YANNICK PRIVAT STOPPYRA","filiere":"IDE","phone":"0151944657","code":"AG657"},
+{"id":807,"name":"KOUADIO KOFFI BERNADIN","filiere":"IDE","phone":"0788656476","code":"KK476"},
+{"id":808,"name":"TEHUA SABINE","filiere":"SFM","phone":"0141156575","code":"TS575"},
+{"id":809,"name":"ADOUAN ADAN EMMANUEL","filiere":"IDE","phone":"0701639706","code":"AA706"},
+{"id":810,"name":"KACOU MARIE PAULE GLADYS","filiere":"SFM","phone":"0789092871","code":"KM871"},
+{"id":811,"name":"SEKA PATRICK JUDICAEL","filiere":"IDE","phone":"0102618213","code":"SP213"},
+{"id":812,"name":"SOHOU ANNE PRICILE","filiere":"SFM","phone":"0747837409","code":"SA409","secondaryPhones":["07478374090544522781"]},
+{"id":813,"name":"YAO ATTA HERMANN HERVÉ","filiere":"IDE","phone":"0779178823","code":"YA823"},
+{"id":814,"name":"AKEI SOPIE SEVERINE FRANCIA","filiere":"SFM","phone":"0710548562","code":"AS562"},
+{"id":815,"name":"ASSANDE ANEY AUDE VERLAINE","filiere":"IDE","phone":"0759992913","code":"AA913"},
+{"id":816,"name":"OUATTARA MONOHOSSAO","filiere":"IDE","phone":"0506764783","code":"OM783"},
+{"id":817,"name":"ABDOURAMANE ALOUA HERMANCE GWLADYS","filiere":"IDE","phone":"0779339027","code":"AA027"},
+{"id":818,"name":"KOUADIO SAKI MARIE RÉGINA","filiere":"SFM","phone":"0798306530","code":"KS530"},
+{"id":819,"name":"KOUASSI BLE N'DRI AFFOUE N'GBIN JEANNE","filiere":"IDE","phone":"0103539638","code":"KB638"},
+{"id":820,"name":"BILE ADAYE AXEL JUNIOR","filiere":"IDE","phone":"0758927195","code":"BA195"},
+{"id":821,"name":"KOUADIO ANOUM GILLES ROSTAND TANKOUA","filiere":"IDE","phone":"0778499743","code":"KA743"},
+{"id":822,"name":"KROU ASSOUMOU DEGAUL","filiere":"IDE","phone":"0787873777","code":"KA777"},
+{"id":823,"name":"N'DA AMENAN VASTHIE","filiere":"IDE","phone":"0142208625","code":"NA625"},
+{"id":824,"name":"N'GUESSAN KOUAKOU GUY SERGE","filiere":"IDE","phone":"0759788902","code":"NK902"},
+{"id":825,"name":"ASSAMOI AKA FRANÇOIS","filiere":"IDE","phone":"0555131114","code":"AA114"},
+{"id":826,"name":"MARIAM OUATTARA","filiere":"IDE","phone":"0565050069","code":"MO069"},
+{"id":827,"name":"KOUADIO WAKOUO CARINE","filiere":"IDE","phone":"0565156547","code":"KW547"},
+{"id":828,"name":"OYOUROU ORO BORIS","filiere":"IDE","phone":"0788716214","code":"OO214"},
+{"id":829,"name":"GNONDJUI ASSI SERGE ÉRIC","filiere":"SFM","phone":"0555583630","code":"GA630"},
+{"id":830,"name":"KANATE RAMATOU","filiere":"IDE","phone":"0759895064","code":"KR064"},
+{"id":831,"name":"KOUADIO N'GORAN PRISCA","filiere":"IDE","phone":"0503827779","code":"KN779"},
+{"id":832,"name":"N'DJOMON AGOUA GINETTE","filiere":"IDE","phone":"0716671636","code":"NA636"},
+{"id":833,"name":"KONAN KOUADIO MANTESSOU JEAN MARC","filiere":"IDE","phone":"0767756749","code":"KK749"},
+{"id":834,"name":"FANNY SIBIRI DIT DRAMANE","filiere":"IDE","phone":"0507044327","code":"FS327"},
+{"id":835,"name":"MARIKO FLAMOUSSO","filiere":"SFM","phone":"0749781152","code":"MF152"},
+{"id":836,"name":"AKA KOUADJO RENE","filiere":"IDE","phone":"0759678408","code":"AK408"},
+{"id":837,"name":"TIZRA ANGE FREJUS","filiere":"IDE","phone":"0556593801","code":"TA801"},
+{"id":838,"name":"OUATTARA KADARI YEDIDIA MONDESIR","filiere":"IDE","phone":"0564273752","code":"OK752"},
+{"id":839,"name":"KONAN REINE ÉLODIE N'GUESSAN","filiere":"SFM","phone":"0576861342","code":"KR342"},
+{"id":840,"name":"AKOUN SOPIE LAURENCE","filiere":"IDE","phone":"0787867642","code":"AS642","secondaryPhones":["07878676"]},
+{"id":841,"name":"ASSI EMILIE DELICE","filiere":"IDE","phone":"0769797344","code":"AE344"},
+{"id":842,"name":"DALI KOUSSOU AUDREY ARLETTE","filiere":"SFM","phone":"0574677613","code":"DK613"},
+{"id":843,"name":"YAO ESSE EDWIGE MICHELLE","filiere":"IDE","phone":"0103331835","code":"YE835","secondaryPhones":["0585126218"]},
+{"id":844,"name":"KOUAME AFFOUA PRINCIA FLORE","filiere":"SFM","phone":"0757633734","code":"KA734"},
+{"id":845,"name":"KOUADIO KOUAME NOEL","filiere":"IDE","phone":"0708192500","code":"KK500"},
+{"id":846,"name":"YAPO SEKA GUY MARTIAL","filiere":"IDE","phone":"0141973158","code":"YS158"},
+{"id":847,"name":"N'CHO STEPHANIE LAURETTE","filiere":"IDE","phone":"0748670420","code":"NS420"},
+{"id":848,"name":"GOUAMENE OBOU SAMUELA","filiere":"IDE","phone":"0101932382","code":"GO382"},
+{"id":849,"name":"RAM AÏCHA RUTH","filiere":"IDE","phone":"0707402571","code":"RA571"},
+{"id":850,"name":"EHOUMAN ADJO ANGE CADET LEOCORDINE","filiere":"IDE","phone":"0717433727","code":"EA727"},
+{"id":851,"name":"LAKABO N'GUESSAN CYNTHIA ANNETTE","filiere":"IDE","phone":"0789399560","code":"LN560"},
+{"id":852,"name":"TIGORI KOFFI ARISTIDE","filiere":"IDE","phone":"0708187209","code":"TK209"},
+{"id":853,"name":"TANO MARIE JEANNE ALIKA","filiere":"SFM","phone":"0171420931","code":"TM931"},
+{"id":854,"name":"ADOU ELODIE KEVINE","filiere":"SFM","phone":"0768970439","code":"AE439"},
+{"id":855,"name":"NANDO DENON DOMINIQUE VANESSA","filiere":"SFM","phone":"0757576831","code":"ND831"},
+{"id":856,"name":"KOSSONOU DJAFO LARISSA FLEUR","filiere":"IDE","phone":"0141514021","code":"KD021"},
+{"id":857,"name":"KONE MADOUSSOU","filiere":"SFM","phone":"0787754255","code":"KM255"},
+{"id":858,"name":"EKOUMANOH DJAGONDON AUDREY-EDWIGE TENA","filiere":"SFM","phone":"0777522299","code":"ED299"},
+{"id":859,"name":"ASSANVO EDJA MOÏSE","filiere":"IDE","phone":"0500057612","code":"AE612"},
+{"id":860,"name":"BOLAI BINTOU ANNE","filiere":"SFM","phone":"0556429407","code":"BB407"},
+{"id":861,"name":"ACHO GERTRUDE","filiere":"SFM","phone":"0767441935","code":"AG935"},
+{"id":862,"name":"AHOUZI BENIE ALICE DIANE","filiere":"IDE","phone":"0768746947","code":"AB947"},
+{"id":863,"name":"ASSOUA MARIE ANDRÉA SYNTICHE","filiere":"IDE","phone":"0566052809","code":"AM809"},
+{"id":864,"name":"NOUMGBRE AYA JOCELINE OLGA","filiere":"SFM","phone":"0748093898","code":"NA898"},
+{"id":865,"name":"AHOZI ATTOUBE LINDA MARIE NOËLLE","filiere":"IDE","phone":"0788190561","code":"AA561"},
+{"id":866,"name":"BONI KOUADIO DOMINIQUE","filiere":"IDE","phone":"0704245038","code":"BK038","nameAliases":["BONO KOUADIO DOMINIQUE"]},
+{"id":867,"name":"AKISSI JAURES DERRICK","filiere":"IDE","phone":"0708725397","code":"AJ397"},
+{"id":868,"name":"OUATTARA NAZATA","filiere":"SFM","phone":"0150421070","code":"ON070"},
+{"id":869,"name":"KOUA KESSE ABO CALIXTE","filiere":"IDE","phone":"0768863404","code":"KK404"},
+{"id":870,"name":"ZIDA LOUISE MARIE","filiere":"IDE","phone":"0777747881","code":"ZL881"},
+{"id":871,"name":"KICHIEDOU KISSIEDOU FRANCK JACOB","filiere":"IDE","phone":"0748992023","code":"KK023"},
+{"id":872,"name":"GUINDO BRAHIMA","filiere":"IDE","phone":"0505497549","code":"GB549"},
+{"id":873,"name":"ASSI CHIA LAURÈNE CHRISTIANA","filiere":"SFM","phone":"0769127919","code":"AC919"},
+{"id":874,"name":"YODE LAH GONSAN GUILLAUME","filiere":"IDE","phone":"0717557559","code":"YL559"},
+{"id":875,"name":"YAO AYA EDITH GENEVIEVE","filiere":"IDE","phone":"0749450433","code":"YA433"},
+{"id":876,"name":"KOUAME AKISSI OLY JENNIFER","filiere":"SFM","phone":"0712250970","code":"KA970","secondaryPhones":["0715419283"]},
+{"id":877,"name":"TAH LOU BENAN CHRISTELLE","filiere":"SFM","phone":"0787614242","code":"TL242"},
+{"id":878,"name":"ASSIE ESSO HERMANN","filiere":"IDE","phone":"0161779837","code":"AE837"},
+{"id":879,"name":"GBADI ULRICH","filiere":"IDE","phone":"0584355098","code":"GU098"},
+{"id":880,"name":"N'GUESSAN ANGOUA WILSON","filiere":"IDE","phone":"0768857593","code":"NG593"},
+{"id":881,"name":"YAPI CYRILLE TERESSA","filiere":"IDE","phone":"0714497051","code":"YC051"},
+{"id":882,"name":"BROU TANO JACOB","filiere":"IDE","phone":"0708379965","code":"BT965"},
+{"id":883,"name":"YAO N'DELY KOUAKOU ALEXIS","filiere":"IDE","phone":"0706991665","code":"YN665"},
+{"id":884,"name":"BOUSSOU KOUADIO TAKIA BLANCHE EDWIGE","filiere":"SFM","phone":"0707949768","code":"BK768"},
+{"id":885,"name":"DJEDOU KOUADIO THÉODORE","filiere":"IDE","phone":"0704028695","code":"DK695"},
+{"id":886,"name":"BADO DJAKARIDJA","filiere":"IDE","phone":"0757023451","code":"BD451"},
+{"id":887,"name":"BODE YAPO GERMAIN","filiere":"SFM","phone":"0554223917","code":"BY917"},
+{"id":888,"name":"KOUASSI AMOUAN RUTH","filiere":"SFM","phone":"0504608557","code":"KA557"},
+{"id":889,"name":"ASSE KOUADJO ARIEL KAN BAULEAUD","filiere":"IDE","phone":"0779812994","code":"AK994"},
+{"id":890,"name":"AMAN YEMOLE NAOMIE","filiere":"IDE","phone":"0708131994","code":"AY994"},
+{"id":891,"name":"OUREGA GNONSIOR GRÂCE","filiere":"SFM","phone":"0757897800","code":"OG800"},
+{"id":892,"name":"IRIE LOU FAIYE AUDREY","filiere":"SFM","phone":"0788260397","code":"IL397"},
+{"id":893,"name":"TRAORE MOUHAMADOU","filiere":"IDE","phone":"0749140278","code":"TM278"},
+{"id":894,"name":"AKEI JEAN FREDDY LÉANDRE","filiere":"IDE","phone":"0140621162","code":"AJ162"},
+{"id":895,"name":"ASSALE YEBY FRANCK DANIEL","filiere":"IDE","phone":"0709833646","code":"AY646"},
+{"id":896,"name":"EDI STÉPHANE LOÏS","filiere":"IDE","phone":"0799507291","code":"ES291"},
+{"id":897,"name":"KOUADIO ADJOUA ANNA MARIANA","filiere":"IDE","phone":"0777132042","code":"KA042"},
+{"id":898,"name":"DAHO SALIMATA","filiere":"SFM","phone":"0596271238","code":"DS238"},
+{"id":899,"name":"KOUADIO AMENAN MARIELLE SIDOINE","filiere":"SFM","phone":"0758290766","code":"KA766"},
+{"id":900,"name":"MORO MAGNE ANGE SEPHORA","filiere":"SFM","phone":"0788391951","code":"MM951"},
+{"id":902,"name":"KOUAME APIE FERNANDEZ","filiere":"SFM","phone":"0747250257","code":"KA257"},
+{"id":903,"name":"KOUAKOU BOUSSOU AMENAN NINA","filiere":"IDE","phone":"0758741804","code":"KB804"},
+{"id":904,"name":"KRA KOSSIA HONORINE","filiere":"IDE","phone":"0748760757","code":"KK757"},
+{"id":905,"name":"OUATTARA YAH ABIBA NEKOH","filiere":"IDE","phone":"0717219522","code":"OY522"},
+{"id":906,"name":"EKAZA EKAZA HYPOLITE","filiere":"IDE","phone":"0757623158","code":"EE158"},
+{"id":907,"name":"TANOH JEAN HUGUES MARTIAL","filiere":"IDE","phone":"0704056503","code":"TJ503"},
+{"id":908,"name":"OUATTARA ANZIATA","filiere":"SFM","phone":"0705815875","code":"OA875"},
+{"id":909,"name":"KRA YA VANESSA ESTELLE ANDREA","filiere":"IDE","phone":"0757420328","code":"KY328"},
+{"id":910,"name":"KANGA ADJA ROSINE","filiere":"IDE","phone":"0758029326","code":"KA326"},
+{"id":911,"name":"AKON YAVO CHARLÈNE SHELLA","filiere":"IDE","phone":"0707320405","code":"AY405"},
+{"id":912,"name":"ALLE GUY-JAURES","filiere":"IDE","phone":"0150909931","code":"AG931"},
+{"id":913,"name":"COULIBALY FERIMAN MALIDJATOU","filiere":"SFM","phone":"0702902281","code":"CF281"},
+{"id":914,"name":"GNOLEBA ERIC ARMAND","filiere":"IDE","phone":"0153957551","code":"GE551"},
+{"id":915,"name":"SEHI LINDA MEGANE","filiere":"IDE","phone":"0748592587","code":"SL587"},
+{"id":916,"name":"GBOKO AKOUA FOKOUO NATHALIA","filiere":"IDE","phone":"0717563549","code":"GA549"},
+{"id":917,"name":"KAKOU AHOU MARINA DIVINE","filiere":"IDE","phone":"0576747411","code":"KA411"},
+{"id":918,"name":"DAGOUAGA ZIWONNON EUPHRASIE","filiere":"SFM","phone":"0797386461","code":"DZ461A"},
+{"id":919,"name":"AKRE PETEY ROHON HELENE","filiere":"SFM","phone":"0544155440","code":"AP440","nameAliases":["akre helene"]},
+{"id":920,"name":"KASSI TCHOUWA MARIE JOSEE COLOMBE","filiere":"IDE","phone":"0747912305","code":"KT305"},
+{"id":922,"name":"KOUAME N'DA","filiere":"SFM","phone":"0777362459","code":"KN459"},
+{"id":923,"name":"KONAN N’GUESSAN NADINE","filiere":"IDE","phone":"0574226543","code":"KN543"},
+{"id":924,"name":"DRABO KOROTOUM","filiere":"SFM","phone":"0789954328","code":"DK328"},
+{"id":925,"name":"KADJO KOFFI FRANCK","filiere":"IDE","phone":"0749561522","code":"KK522"},
+{"id":926,"name":"YAO KOBENAN KOSSIA MARIE JOSÉE","filiere":"SFM","phone":"0554813080","code":"YK080","nameAliases":["YAO KOBENAN KOSSIA"]},
+{"id":927,"name":"DOUMBIA SALI","filiere":"IDE","phone":"0717305174","code":"DS174"},
+{"id":928,"name":"GUY SARRAH","filiere":"SFM","phone":"0140010620","code":"GS620"},
+{"id":929,"name":"N'CHOU ESTHER ANNE-MARI","nameAliases":["N'CHOU ESTHER"],"filiere":"SFM","phone":"0507791533","code":"NE533","secondaryPhones":["0747673667"]},
+{"id":930,"name":"DAHOU KADIDJATA","filiere":"IDE","phone":"0768198445","code":"DK445"},
+{"id":931,"name":"KOUABLAN AKO COLETTE","filiere":"SFM","phone":"0749934694","code":"KC694"},
+{"id":932,"name":"SEKA FLORENCIA","filiere":"SFM","phone":"0788778447","code":"SF447"},
+{"id":933,"name":"DJAN CHRISTELLE","filiere":"SFM","phone":"0757100010","code":"DC010"},
+{"id":934,"name":"DIARASSOUBA KHALIL AZIZ","filiere":"IDE","phone":"0789250316","code":"DK316"},
+{"id":935,"name":"BLEDOU AMANOUA SAMUELLE","filiere":"IDE","phone":"0102880087","code":"BA087"},
+{"id":936,"name":"KOUAME ALFRED","filiere":"IDE","phone":"0769979936","code":"KA936"},
+{"id":937,"name":"TEHOUA JEAN EMMANUEL BROU","filiere":"IDE","phone":"0748730785","code":"TJ785"},
+{"id":938,"name":"KOUA ANGB0MAN SIMONE","filiere":"SFM","phone":"0757933832","code":"KA832"},
+{"id":939,"name":"BROU CHIA THULIA PARIANA","filiere":"SFM","phone":"0716943811","code":"BC811"},
+{"id":940,"name":"OUATTARA AKOUA ROSALIE","filiere":"IDE","phone":"0707756635","code":"OA635"},
+{"id":941,"name":"KOUASSI AHOU TATIANA MARIE LAURE","filiere":"SFM","phone":"0707619853","code":"KA853"},
+{"id":942,"name":"KANGA JEAN MARC PATERNE","filiere":"IDE","phone":"0708034597","code":"KJ597"},
+{"id":943,"name":"M'BE KOUSSO DORINE PRISCA","filiere":"IDE","phone":"0799706416","code":"MK416"},
+{"id":944,"name":"KOSSONOU ADJIA N'GUETTIA JOCELINE","filiere":"SFM","phone":"0585341470","code":"KA470"},
+{"id":945,"name":"ASSAMOI BEDY CHANTAL DEBORAH","filiere":"IDE","phone":"0789191661","code":"AB161"},
+{"id":946,"name":"NOHON ALAIN","filiere":"IDE","phone":"0749553008","code":"NA008"},
+{"id":947,"name":"OUATTARA ARMELLE ROSE ESPERENCE ADJA","filiere":"IDE","phone":"0777518662","code":"OA662"},
+{"id":948,"name":"GOULE SOLANGE","filiere":"IDE","phone":"0787055531","code":"GS531"},
+{"id":949,"name":"AKESSE JIMMY HERBERT MESSOU","filiere":"IDE","phone":"0778611463","code":"AJ463"},
+{"id":950,"name":"YAPI AYA EMMANUELA LESLY","filiere":"SFM","phone":"0150212571","code":"YA571"},
+{"id":951,"name":"OUATTARA AMADOU","filiere":"IDE","phone":"0748036438","code":"OA438"},
+{"id":952,"name":"KOUAME AKO ISABELLE VALERIE","filiere":"SFM","phone":"0584643637","code":"KA637"},
+{"id":953,"name":"NENE BO ZIVOR BENJAMIN","nameAliases":["NENE BI","NENE ZIVOR"],"filiere":"IDE","phone":"0757008443","code":"NB443"},
+{"id":954,"name":"N'GUESSAN AMENAN MARINA","filiere":"SFM","phone":"0788039504","code":"NA504"},
+{"id":955,"name":"KOUASSI AMOIN JEANNE","filiere":"IDE","phone":"0748799155","code":"KA155"},
+{"id":956,"name":"SORO FOUNGOGNON PÉLAGIE","filiere":"IDE","phone":"0749727044","code":"SF044"},
+{"id":957,"name":"DAKOI JEAN KOUAME","filiere":"IDE","phone":"0748823167","code":"DJ167"},
+{"id":958,"name":"GOHI-BI RICHARD WILLIAMS","filiere":"IDE","phone":"0779845543","code":"GR543"},
+{"id":959,"name":"KOUACOU AKA","filiere":"IDE","phone":"0749347557","code":"KA557A"},
+{"id":960,"name":"N'ZI BOREL","filiere":"IDE","phone":"0596565125","code":"NZ125"},
+{"id":961,"name":"GNAMIEN YOMALAN FLORENTINE","filiere":"IDE","phone":"0769431945","code":"GY945"},
+{"id":962,"name":"KOUASSI BI FILIACE","filiere":"IDE","phone":"0788629676","code":"KB676"},
+{"id":963,"name":"OUATTARA DJINANBOU","filiere":"SFM","phone":"0779236909","code":"OD909"},
+{"id":964,"name":"YAO N'GUETTIA BERENGER","filiere":"IDE","phone":"0758717100","code":"YN100"},
+{"id":965,"name":"GBALOU JONATHAN DESIR","filiere":"IDE","phone":"0102681730","code":"GJ730"},
+{"id":966,"name":"KOMAN AGNISSAN CYRIAC","filiere":"IDE","phone":"0141951395","code":"KA395"},
+{"id":967,"name":"KOUASSI ADJA DIANE DOROTHÉE","filiere":"SFM","phone":"0749199207","code":"KA207"},
+{"id":968,"name":"AMAN MOULOUA AGNES","filiere":"SFM","phone":"0758164197","code":"AM197"},
+{"id":969,"name":"OUSSELE NDRY CHRISTINE FABIENNE","filiere":"SFM","phone":"0767181302","code":"ON302"},
+{"id":970,"name":"NIAMIEN YAH ROSALIE","filiere":"IDE","phone":"234862IABG","code":"NYABG"},
+{"id":971,"name":"MONNEY BEDA FRANCK","filiere":"IDE","phone":"0715849290","code":"MB290"},
+{"id":972,"name":"KOTCHI AIMÉE DÉSIRÉE","filiere":"IDE","phone":"0152632101","code":"KA101"},
+{"id":973,"name":"ASSANDE KOUADIO JEAN ARNAUD","filiere":"IDE","phone":"0566604605","code":"AK605"},
+{"id":974,"name":"KONE BINTOU ROSINE","filiere":"IDE","phone":"0767648324","code":"KB324"},
+{"id":975,"name":"KOFFI YAH EMELINE","filiere":"IDE","phone":"0779855004","code":"KY004"},
+{"id":976,"name":"KAMAGATE MARIAM","filiere":"IDE","phone":"0777105598","code":"KM598"},
+{"id":977,"name":"KOFFI YAH IRENE","filiere":"IDE","phone":"0748944046","code":"KY046A"},
+{"id":978,"name":"KOUAKOU AFFOUE MARIE -JEANNE","filiere":"IDE","phone":"0777247597","code":"KA597"},
+{"id":979,"name":"N'TAMON EDY JOEL","filiere":"IDE","phone":"0142714943","code":"NT943"},
+{"id":980,"name":"KOUASSI AFFOUA SYNTHIA","filiere":"IDE","phone":"0778488583","code":"KA583"},
+{"id":981,"name":"MANOUAN EUGENE","filiere":"IDE","phone":"0787819983","code":"ME983"},
+{"id":982,"name":"COMOE KABLAN ARSENE","filiere":"IDE","phone":"0749086618","code":"CK618"},
+{"id":983,"name":"KOFFI N'GORAN FABRICE","filiere":"IDE","phone":"0747115106","code":"KN106"},
+{"id":984,"name":"ZAYORO JEAN URIEL METHSCHAEL","filiere":"SFM","phone":"0705457577","code":"ZJ577","secondaryPhones":["0778684072"]},
+{"id":985,"name":"ASSI AMANDINE","filiere":"IDE","phone":"0172228790","code":"AA790"},
+{"id":986,"name":"TRAORÉ FATOUMATA","filiere":"IDE","phone":"0787042994","code":"TF994"}
+];
+/* ===== FIN CODES D’ACCÈS COMMUNS ===== */
+</script>
+    <script>
+/* ===== SESSION COMMUNE — intégré directement dans la page ===== */
+// Authentification commune à tous les espaces de la plateforme.
+(() => {
+  'use strict';
+
+  const HUB_SESSION_KEY = 'revision-hub-session-v1';
+  const LEGACY_SESSION_KEY = 'unified-site-session-v1';
+
+  const normalizeCode = value => String(value || '')
+    .trim()
+    .replace(/\s+/g, '')
+    .toUpperCase();
+
+  function safeParse(value) {
+    try { return JSON.parse(value || 'null'); } catch (_) { return null; }
+  }
+
+  function getCreatedAccounts() {
+    try {
+      const rows = JSON.parse(localStorage.getItem('quizPromoCreatedStudents') || '[]');
+      if (!Array.isArray(rows)) return [];
+      return rows.map((row, index) => ({
+        id: `local-${index}-${normalizeCode(row.code || row.matricule || row.id)}`,
+        name: row.nom || row.nomPrenoms || row.name || row.fullName || 'Étudiant',
+        phone: row.telephone || row.numero || row.phone || row.tel || '',
+        code: normalizeCode(row.code || row.matricule || row.id)
+      })).filter(row => row.code);
+    } catch (_) {
+      return [];
+    }
+  }
+
+  function accountCodes(account) {
+    const values = [account && account.code, ...(Array.isArray(account && account.codeAliases) ? account.codeAliases : [])];
+    return [...new Set(values.map(normalizeCode).filter(Boolean))];
+  }
+
+  function accountHasCode(account, code) {
+    const normalized = normalizeCode(code);
+    return Boolean(normalized && accountCodes(account).includes(normalized));
+  }
+
+  function getAccounts() {
+    const baseAccounts = Array.isArray(window.SHARED_SITE_ACCOUNTS)
+      ? window.SHARED_SITE_ACCOUNTS
+      : [];
+    const map = new Map();
+    [...baseAccounts, ...getCreatedAccounts()].forEach(account => {
+      const code = normalizeCode(account.code);
+      if (code && !map.has(code)) {
+        const aliases = Array.isArray(account.codeAliases)
+          ? [...new Set(account.codeAliases.map(normalizeCode).filter(alias => alias && alias !== code))]
+          : [];
+        map.set(code, { ...account, code, ...(aliases.length ? { codeAliases: aliases } : {}) });
+      }
+    });
+    return Array.from(map.values());
+  }
+
+  function findAccount(code) {
+    const normalized = normalizeCode(code);
+    if (!normalized) return null;
+    return getAccounts().find(account => accountHasCode(account, normalized)) || null;
+  }
+
+  function sessionFromAccount(account, previous = null, requestedCode = '') {
+    const primaryCode = normalizeCode(account && account.code);
+    if (!primaryCode) return null;
+    const candidate = normalizeCode(requestedCode || (previous && previous.code));
+    const sessionCode = accountHasCode(account, candidate) ? candidate : primaryCode;
+    return {
+      id: account.id || (previous && previous.id) || primaryCode,
+      name: account.name || account.nom || account.nomPrenoms || (previous && previous.name) || 'Étudiant',
+      phone: account.phone || account.telephone || (previous && previous.phone) || '',
+      code: sessionCode,
+      createdAt: Number(previous && previous.createdAt) || Date.now(),
+      updatedAt: Date.now()
+    };
+  }
+
+  function removeLegacySessions() {
+    localStorage.removeItem(LEGACY_SESSION_KEY);
+    localStorage.removeItem('quizPromoSession');
+    sessionStorage.removeItem(LEGACY_SESSION_KEY);
+    sessionStorage.removeItem('quizPromoSession');
+    sessionStorage.removeItem('sp-site-access-v3');
+    sessionStorage.removeItem('sp-site-account-v3');
+  }
+
+  function saveSession(account, requestedCode = '') {
+    const previous = safeParse(localStorage.getItem(HUB_SESSION_KEY));
+    const session = sessionFromAccount(account, previous, requestedCode);
+    if (!session) return null;
+    localStorage.setItem(HUB_SESSION_KEY, JSON.stringify(session));
+    removeLegacySessions();
+    return session;
+  }
+
+  function findLegacySession() {
+    const unified = safeParse(localStorage.getItem(LEGACY_SESSION_KEY))
+      || safeParse(sessionStorage.getItem(LEGACY_SESSION_KEY));
+    if (unified && unified.code) return unified;
+
+    const quizCode = normalizeCode(
+      localStorage.getItem('quizPromoSession') || sessionStorage.getItem('quizPromoSession')
+    );
+    if (quizCode) return { code: quizCode };
+
+    const spAccount = safeParse(sessionStorage.getItem('sp-site-account-v3'));
+    if (spAccount) {
+      const account = getAccounts().find(item => String(item.id) === String(spAccount.id));
+      if (account) return { code: account.code };
+    }
+    return null;
+  }
+
+  function getSession() {
+    try {
+      let stored = safeParse(localStorage.getItem(HUB_SESSION_KEY));
+      if (!stored || !stored.code) stored = findLegacySession();
+      if (!stored || !stored.code) return null;
+
+      const account = findAccount(stored.code);
+      if (!account) return null;
+
+      const refreshed = sessionFromAccount(account, stored, stored.code);
+      localStorage.setItem(HUB_SESSION_KEY, JSON.stringify(refreshed));
+      removeLegacySessions();
+      return refreshed;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function clearSession() {
+    localStorage.removeItem(HUB_SESSION_KEY);
+    sessionStorage.removeItem(HUB_SESSION_KEY);
+    removeLegacySessions();
+  }
+
+  window.RevisionHub = Object.freeze({
+    HUB_SESSION_KEY,
+    normalizeCode,
+    getAccounts,
+    findAccount,
+    saveSession,
+    getSession,
+    clearSession
+  });
+})();
+/* ===== FIN SESSION COMMUNE ===== */
+</script>
+    <script src="prepa-de-2026-octobre.js"></script>
+    <script src="prepa-de-2026-deuxieme-lot.js"></script>
+    <script src="prepa-de-2026-troisieme-lot.js"></script>
+    <script src="quiz-promo-p8.js"></script>
+    <script>
+/* ===== LIAISON AVEC LE PORTAIL — intégré directement dans la page ===== */
+// Liaison du Quiz Promo P8 avec l'unique session du portail.
+(() => {
+  'use strict';
+
+  function addHubControls() {
+    if (document.getElementById('hub-switch-site')) return;
+    const header = document.querySelector('.app-header');
+    if (!header) return;
+
+    const switchLink = document.createElement('a');
+    switchLink.id = 'hub-switch-site';
+    switchLink.href = 'index.html';
+    switchLink.textContent = 'Choisir un autre site';
+    switchLink.style.cssText = 'display:inline-block;margin-top:10px;padding:9px 12px;border-radius:10px;background:#fff;color:#0c4a6e;text-decoration:none;font-weight:800;';
+
+    const logout = document.createElement('button');
+    logout.type = 'button';
+    logout.textContent = 'Déconnexion';
+    logout.style.cssText = 'margin-left:8px;padding:9px 12px;border:1px solid rgba(255,255,255,.7);border-radius:10px;background:transparent;color:#fff;font-weight:800;cursor:pointer;';
+    logout.addEventListener('click', () => {
+      if (window.RevisionHub) RevisionHub.clearSession();
+      location.replace('index.html');
+    });
+
+    const wrap = document.createElement('div');
+    wrap.appendChild(switchLink);
+    wrap.appendChild(logout);
+    header.appendChild(wrap);
+
+    const backButton = document.getElementById('back-subjects-btn');
+    if (backButton) {
+      backButton.textContent = '← Choisir un autre site';
+      backButton.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        location.href = 'index.html';
+      }, true);
+    }
+
+    const originalLogout = document.getElementById('logout-btn');
+    if (originalLogout) {
+      originalLogout.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        if (window.RevisionHub) RevisionHub.clearSession();
+        location.replace('index.html');
+      }, true);
+    }
+  }
+
+  function connectFromHub() {
+    addHubControls();
+    const session = window.RevisionHub && RevisionHub.getSession();
+    if (!session) {
+      location.replace('index.html');
+      return;
+    }
+    // restoreSession() appartient au Quiz et restaure directement l'espace étudiant.
+    if (typeof restoreSession === 'function') restoreSession();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', connectFromHub, { once: true });
+  } else {
+    connectFromHub();
+  }
+})();
+/* ===== FIN LIAISON AVEC LE PORTAIL ===== */
+</script>
+
+<script>
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js?v=20261008-troisieme-lot-prepa')
+      .then(registration => registration.update())
+      .catch(console.error);
+  }, { once: true });
+}
+</script>
+  <script src="avertissement.js"></script>
+</body>
+</html>

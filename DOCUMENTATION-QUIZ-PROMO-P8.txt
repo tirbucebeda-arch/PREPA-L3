@@ -1,0 +1,992 @@
+QUIZ TOF - DOCUMENTATION CONSOLIDEE
+===================================
+
+OPTIMISATION DU 12 JUILLET 2026
+- Les quatre scripts actifs ont ete fusionnes dans quiz-site.js.
+- Les anciennes copies JavaScript non chargees par index.html ont ete retirees.
+- Les feuilles de style redondantes ont ete reduites a apparence-quiz.css.
+- Les rapports et historiques ont ete regroupes dans ce document.
+- Les bibliotheques externes XLSX et jsPDF restent chargees depuis leurs CDN.
+
+
+==============================================================================
+ANCIEN FICHIER : RAPPORT_AJOUT_ACCES_09JUILLET2026.txt
+==============================================================================
+RAPPORT D'AJOUT DES ACCÈS - 09 JUILLET 2026
+
+Fichier modifié : liste-acces.js
+Méthode : ajout des utilisateurs manquants dans ACCESS_RECOVERY_LIST. Les codes sont ensuite pris automatiquement par code.js.
+
+Accès ajoutés :
+- DOUMBIA MARIAM | Téléphone : 0778216164 | Code : DM164
+- KOBENAN YAWA AGNES | Téléphone : 0708782456 | Code : KY456
+- AHOUSSY FIDEL | Téléphone : 0709221536 | Code : AF536
+
+Accès déjà présents / non dupliqués :
+- ZAHUI NATACHA HELENE | Téléphone : 0709668765 | Code : ZN765
+
+==============================================================================
+ANCIEN FICHIER : RAPPORT_AJOUT_NOUVELLE_LISTE_08JUILLET2026.txt
+==============================================================================
+RAPPORT AJOUT NOUVELLE LISTE - 08 JUILLET 2026
+
+Fichier modifié : liste-acces.js
+Règle utilisée : 2 initiales du nom + 3 derniers chiffres du téléphone.
+
+Entrées reçues : 20
+Entrées uniques traitées : 19
+Nouveaux codes ajoutés : 11
+Entrées déjà présentes / doublons ignorés : 8
+Entrées existantes corrigées/complétées : 8
+
+Codes ajoutés :
+- MENZAN AKOUA HÉLÈNE | IDE | 0779697569 | MA569
+- ATSE ATSE GUY SERGE | IDE | 0143277147 | AA147
+- N'GUETTA YAH NELLY GRACE | IDE | 0747515924 | NY924
+- YEBOUA ANGE TATIANA | IDE | 0707630054 | YA054
+- ASSOUMOU MEA BLA FELICITE | IDE | 0596407055 | AM055
+- BOUATINI Affoua | SFM | 0707932760 | BA760
+- GUELAPOHO RUTH PARFAITE | IDE | 0769573472 | GR472
+- OUATTARA ZILEBAHE AMADOU | IDE | 0506477347 | OZ347
+- KOFFI ALEXANDRINE MIREILLE | IDE | 0574732774 | KA774
+- Titi LOBO madeleine ANDREYA | IDE | 0709755301 | TL301
+- ANE ASSOUMOU TITE | IDE | 0749861658 | AA658
+
+Déjà présents ou doublons :
+- YACOUBA AKA DANIEL | 0101105943 | YA943 (code déjà présent)
+- KOFFI AGNON JULIETTE ÉLODIE | 0584378628 | KA628 (code déjà présent)
+- ZADE TINKPON NADEGE | 0545403668 | ZT668 (code déjà présent)
+- KOUADIO JEAN MODESTE | 0596879106 | KJ106 (code déjà présent)
+- KOSSONOU KOUAKOU DOMINIQUE | 0708253546 | KK546 (code déjà présent)
+- KOUADIO JEAN MODESTE | 0596879106 | KJ106 (doublon dans la liste fournie)
+- TOKOU TAKI SIMONE | 0709566340 | TT340 (code déjà présent)
+- KODJO BOMO PAULINE | 0709550405 | KB405 (code déjà présent)
+
+Corrections/compléments :
+- YACOUBA AKA DANIEL | YA943 : filière ajoutée (IDE)
+- KOFFI AGNON JULIETTE ÉLODIE | KA628 : filière ajoutée (IDE)
+- ZADE TINKPON NADEGE | ZT668 : filière ajoutée (IDE)
+- ESSI YAO KRA THIERRY MARTIAL | EY289 : téléphone 0545855289 -> 0545835289
+- KOUADIO JEAN MODESTE | KJ106 : filière ajoutée (IDE)
+- KOSSONOU KOUAKOU DOMINIQUE | KK546 : filière ajoutée (IDE)
+- TOKOU TAKI SIMONE | TT340 : filière ajoutée (SFM)
+- KODJO BOMO PAULINE | KB405 : filière ajoutée (IDE)
+
+==============================================================================
+ANCIEN FICHIER : RAPPORT_AJOUT_PREPARATION_DE.txt
+==============================================================================
+Ajout effectué dans la partie Préparation D.E uniquement.
+- PREPA D.E NATIONALE 2026 GYNÉCOLOGIE-OBSTÉTRIQUE SFM SUJET 1
+- Matière : Gynécologie
+- Nombre de questions : 57
+- Source : CORRECTION PREPA D.E NATIONALE 2026 GYNÉCOLOGIE-OBSTÉTRIQUE SFM SUJET 1.pdf
+Remarque : le mot CORRECTION a été retiré du titre affiché dans l’application.
+
+==============================================================================
+ANCIEN FICHIER : RAPPORT_AJOUT_PREPARATION_DE_21JUIN2026.txt
+==============================================================================
+Sujets ajoutés dans Préparation D.E uniquement
+
+- Pédiatrie : PREPA D.E NATIONALE 2026 PÉDIATRIE IDE/SFM SUJET 1
+  Questions intégrées : 30
+  Première : Q1. L’hyperglycémie est une complication de la malnutrition aiguë.
+  Dernière : Q30. Le nourrisson est :
+
+- Médecine : PREPA D.E NATIONALE 2026 MÉDECINE IDE SUJET 1
+  Questions intégrées : 40
+  Première : Q1. Au cours de la méningite purulente, trois signes constituent le trépied méningitique. Lesquels ?
+  Dernière : Q40. Les buts poursuivis par les soins palliatifs sont les suivants, sauf un. Lequel ?
+
+- Santé Publique : PREPA D.E NATIONALE 2026 SANTÉ PUBLIQUE IDE-SFM SUJET 2
+  Questions intégrées : 50
+  Première : Q1. Parmi les composantes ci-après, une seule fait partie des huit composantes essentielles des SSP.
+  Dernière : Q50. La quantité à commander du vaccin BCG est :
+
+- Planification Familiale / SR : PREPA D.E NATIONALE 2026 SSR/PF SFM SUJET 1
+  Questions intégrées : 45
+  Première : Q1. La santé de la reproduction est un état de bien-être général… en l’absence de maladies ou d’infirmités.
+  Dernière : Q45. Les implants contraceptifs contiennent :
+
+- Planification Familiale / SR : PREPA D.E NATIONALE 2026 SSR/PF SFM SUJET 2
+  Questions intégrées : 48
+  Première : Q1. Le mystère qui entoure les questions sexuelles est un obstacle à la planification familiale.
+  Dernière : Q48. Après un avortement spontané non septique, s’il y a un désir de grossesse, quel contraceptif doit-on proscrire ?
+
+==============================================================================
+ANCIEN FICHIER : RAPPORT_AJOUT_PREPA_DE_NATIONALE_2026_SUJETS_MANQUANTS.txt
+==============================================================================
+RAPPORT - AJOUT DES SUJETS MANQUANTS PREPARATION DE NATIONALE 2026
+
+Sujets ajoutés dans la partie Préparation DE :
+- Gynécologie : PREPA D.E NATIONALE 2026 GYNÉCOLOGIE-OBSTÉTRIQUE SFM SUJET 2 (40 questions)
+- Médecine : PREPA D.E NATIONALE 2026 MÉDECINE IDE SUJET 2 (44 questions)
+
+Fichiers modifiés/ajoutés :
+- index.html : ajout du script prepa-de-national-2026-ajouts.js
+- preparation-de-subjects.js : ajout des titres dans la configuration Préparation DE
+- prepa-de-national-2026-ajouts.js : questions, réponses et explications extraites des PDF
+
+Les sujets déjà présents n’ont pas été dupliqués.
+
+==============================================================================
+ANCIEN FICHIER : RAPPORT_AJOUT_UTILISATEURS_08JUILLET2026.txt
+==============================================================================
+RAPPORT AJOUT UTILISATEURS - 08 JUILLET 2026
+
+Fichier modifié principalement : liste-acces.js
+Utilisateurs dans le fichier texte fourni : 652
+Utilisateurs ajoutés (codes absents) : 18
+Entrées déjà existantes ou doublons ignorés : 634
+Entrées mal formées corrigées/supprimées : 2
+
+Améliorations techniques :
+- Les codes contenant des espaces internes sont maintenant normalisés à la connexion.
+- La liste ACCESS_RECOVERY_LIST est aussi exposée sur window pour les fonctions admin/récupération.
+
+Utilisateurs ajoutés :
+- BOYÉ LOU | 0709711395 | B395 (ligne source 167)
+- KOUASSI DELIMA | 0759181892 | K892 (ligne source 388)
+- DOSSO ALIMA | 0757224972 | DA972 (ligne source 627)
+- ANOH ANOH PENIEL JUNIOR | 0788262862 | AA862 (ligne source 628)
+- OUATTARA MARIAM | 0544079243 | OM243 (ligne source 629)
+- SORO TCHAKOUNGO | 0748717096 | ST096 (ligne source 630)
+- ANOUGBA NIANKON JEANNE MIREILLE | 0757419987 | AN987 (ligne source 632)
+- TIA WONSEU EUNICE ANDREE | 0787974395 | TW395 (ligne source 634)
+- KONAN KOUADIO ANGE SEVERIN | 0777217097 | KK097 (ligne source 635)
+- YAO KOUTÉ AKISSI REINE ÉPOUSE SEA | 0708190886 | YK886 (ligne source 638)
+- SALIA N’DA ROSINE | 0564807208 | SN208 (ligne source 639)
+- N'DOLY AFFOUA AMESSAH | 0709810427 | NA427 (ligne source 640)
+- ADOPO CHO HERMINE DEBORAH | 0585774025 | AC025 (ligne source 645)
+- COULIBALY KADY MYRIAM | 0777461382 | CK382 (ligne source 646)
+- ESSAN KOUAME HERVE DELMAS | 0173037703 | EK703 (ligne source 647)
+- EDJA DIBY HÉLÈNE | 0748467873 | ED873 (ligne source 649)
+- GBOCHO CHI-ADOU DOMINIQUE NANCY | 0503679428 | GC428 (ligne source 652)
+- YAO AFFOUE DÉBORAH | 0708761647 | YA647 (ligne source 653)
+
+==============================================================================
+ANCIEN FICHIER : RAPPORT_AJOUT_UTILISATEURS_08JUILLET2026_COMPLEMENT.txt
+==============================================================================
+RAPPORT - AJOUT UTILISATEURS COMPLEMENTAIRES (08 JUILLET 2026)
+
+Fichier modifié : liste-acces.js
+
+Utilisateur(s) ajouté(s) :
+- EBA ANGE | Téléphone : 0777196166 | Code : EB166
+
+Utilisateur(s) déjà présent(s), non dupliqué(s) :
+- Demandé : ANGORA FRANCK | 0747955950 | AF950
+  Présent : ANGORA FRANCK KOFFI ANDERSON | 0747955950 | AF950
+
+Contrôle : les codes EB166 et AF950 sont acceptés par code.js via ACCESS_RECOVERY_LIST.
+
+==============================================================================
+ANCIEN FICHIER : RAPPORT_AJOUT_UTILISATEURS_10JUILLET2026.txt
+==============================================================================
+RAPPORT - AJOUT DE COMPTES (10 JUILLET 2026)
+
+Fichiers mis à jour :
+- utilisateurs-quiz.js (fichier utilisé par index.html)
+- liste-acces.js (liste source conservée à jour)
+
+Comptes ajoutés :
+- AKA AHOU | Téléphone : 0709382961 | Code : AA961
+- AKA TEWA THIERRY STÉPHANE | Téléphone : 0748849147 | Code : AT147
+- AHUA AFFOUA DELPHINE TATIANA | Téléphone : 0777166344 | Code : AA344
+
+Compte déjà présent, non dupliqué :
+- N'DRI KOUAO ZACHARI | Téléphone : 0501091600 | Code : NK600
+
+Contrôle : les trois nouveaux codes et le compte existant sont présents dans la liste active.
+
+==============================================================================
+ANCIEN FICHIER : RAPPORT_CORRECTION_CAMERA.txt
+==============================================================================
+CORRECTION CAMERA - 21 JUIN 2026
+
+Modifications effectuees :
+1. Apres connexion, l'etudiant arrive maintenant sur la page camera, pas directement sur les matieres.
+2. La photo est obligatoire avant de commencer une composition.
+3. Si l'etudiant tente de commencer sans photo, il est renvoye vers la page camera.
+4. La fonction Activer la camera a ete rendue plus robuste : HTTPS/localhost verifie, camera frontale demandee, fallback video simple, lecture video forcee avec playsinline.
+5. Apres la prise de photo, le flux camera est ferme proprement pour eviter les blocages sur telephone.
+
+Fichiers modifies :
+- app.js
+- index.html
+
+==============================================================================
+ANCIEN FICHIER : RAPPORT_CORRECTION_CAMERA_COMMENCER.txt
+==============================================================================
+Correction du parcours caméra
+
+- La caméra ne s’ouvre plus directement après la connexion.
+- Après connexion, l’étudiant arrive d’abord sur le choix matière / sujet / mode d’affichage.
+- Quand l’étudiant appuie sur Commencer, la page caméra s’affiche.
+- L’étudiant active la caméra, prend la photo, puis la composition démarre automatiquement.
+- Après chaque composition, la photo est réinitialisée afin d’être redemandée pour la composition suivante.
+- Le bouton retour de la page caméra ramène au choix du sujet sans lancer le quiz.
+
+==============================================================================
+ANCIEN FICHIER : RAPPORT_CORRECTION_CODES_ACCES_08JUILLET2026.txt
+==============================================================================
+RAPPORT CORRECTION CODES D'ACCES - 08 JUILLET 2026
+
+Probleme constate :
+- Certains codes d'acces ne passaient pas lorsque l'utilisateur entrait le code attendu au format : deux initiales + les 3 derniers chiffres du telephone.
+
+Corrections effectuees :
+1. app.js
+- Ajout d'une verification souple des codes d'acces.
+- Le site accepte maintenant :
+  * le code enregistre dans liste-acces.js ;
+  * la variante calculee avec deux initiales + les 3 derniers chiffres du telephone ;
+  * la variante avec les 2 derniers chiffres pour les anciens codes ;
+  * les noms avec apostrophe, par exemple N'GUESSAN : NAxxx et NGxxx sont acceptes quand ils correspondent au meme utilisateur.
+- Les espaces saisis dans un code sont ignores. Exemple : KD 892 devient KD892.
+
+2. liste-acces.js
+- BOYÉ LOU : B395 corrige en BL395.
+- KOUASSI DELIMA : K892 corrige en KD892.
+
+Tests effectues :
+- BL395 : accepte.
+- KD892 : accepte.
+- AA697 et AA97 : acceptes pour les anciens codes.
+- NA905 et NG905 : acceptes pour les noms avec apostrophe.
+
+Conseil apres mise en ligne :
+- Si un telephone garde l'ancienne version en cache, actualiser la page ou vider le cache du navigateur.
+
+==============================================================================
+ANCIEN FICHIER : RAPPORT_CORRECTION_SANTE_PUBLIQUE_SUJET1_09JUILLET2026.txt
+==============================================================================
+RAPPORT - CORRECTION SANTÉ PUBLIQUE PRÉPA D.E NATIONALE 2026 SUJET 1
+
+Titre conservé selon la structure déjà présente sur le site :
+PREPA D.E NATIONALE 2026 SANTÉ PUBLIQUE IDE-SFM SUJET 1
+
+Fichier modifié :
+- quiz-data.js
+
+Travail effectué :
+- Remplacement du contenu du sujet Santé Publique Sujet 1 par le questionnaire apporté.
+- Conservation de la structure existante du site : question, options, answer, explanation.
+- Ajout/organisation des 51 questions dans l’ordre du formulaire transmis.
+- Ajout des bonnes réponses et d’une explication courte pour chaque question.
+- Conservation du titre dans preparation-de-subjects.js sans création de doublon.
+
+Validation :
+- 51 questions présentes.
+- Syntaxe JavaScript vérifiée avec node --check.
+
+==============================================================================
+ANCIEN FICHIER : RAPPORT_CORRECTION_TITRE_SANTE_PUBLIQUE.txt
+==============================================================================
+Correction effectuée :
+- Ancien titre : Prepa National 2026 Santé Publique Sujet 1
+- Nouveau titre : PREPA D.E NATIONALE 2026 SANTÉ PUBLIQUE IDE-SFM SUJET 1
+
+Le titre a été corrigé dans preparation-de-subjects.js et quiz-data.js pour correspondre au style du Sujet 2.
+
+==============================================================================
+ANCIEN FICHIER : RAPPORT_INTEGRATION_DE_BLANC.txt
+==============================================================================
+RAPPORT INTEGRATION DE BLANC 2025
+Source : infas document 2 (1).pdf
+Ajout : de-blanc-2025-data.js charge apres quiz-data.js
+
+Chirurgie
+  - DE BLANC Abengourou - Chirurgie: 51 questions
+  - DE BLANC Abidjan - Chirurgie Groupe 1: 63 questions
+  - DE BLANC Abidjan - Chirurgie Groupe 2: 52 questions
+  - DE BLANC Aboisso - Chirurgie: 54 questions
+  - DE BLANC Agboville - Chirurgie: 59 questions
+  - DE BLANC Bouaké - Chirurgie: 45 questions
+  - DE BLANC Daloa - Chirurgie: 37 questions
+  - DE BLANC Korhogo - Chirurgie: 60 questions
+  - DE BLANC Man - Chirurgie: 41 questions
+Médecine
+  - DE BLANC Abengourou - Médecine: 49 questions
+  - DE BLANC Abidjan - Médecine Groupe 1: 21 questions
+  - DE BLANC Abidjan - Médecine Groupe 2: 21 questions
+  - DE BLANC Aboisso - Médecine: 50 questions
+  - DE BLANC Agboville - Médecine: 59 questions
+  - DE BLANC Bouaké - Médecine: 58 questions
+  - DE BLANC Daloa - Médecine: 41 questions
+  - DE BLANC Korhogo - Médecine: 57 questions
+  - DE BLANC Man - Médecine: 48 questions
+Pédiatrie
+  - DE BLANC Abengourou - Pédiatrie: 54 questions
+  - DE BLANC Abidjan - Pédiatrie Groupe 1: 57 questions
+  - DE BLANC Abidjan - Pédiatrie Groupe 2: 59 questions
+  - DE BLANC Aboisso - Pédiatrie: 58 questions
+  - DE BLANC Agboville - Pédiatrie: 55 questions
+  - DE BLANC Bouaké - Pédiatrie: 51 questions
+  - DE BLANC Daloa - Pédiatrie: 50 questions
+  - DE BLANC Korhogo - Pédiatrie: 50 questions
+Santé Publique
+  - DE BLANC Abengourou - Santé Publique: 44 questions
+  - DE BLANC Abidjan - Santé Publique Groupe 1: 44 questions
+  - DE BLANC Abidjan - Santé Publique Groupe 2: 46 questions
+  - DE BLANC Aboisso - Santé Publique: 46 questions
+  - DE BLANC Agboville - Santé Publique: 57 questions
+  - DE BLANC Bouaké - Santé Publique N°1: 52 questions
+  - DE BLANC Bouaké - Santé Publique N°2: 53 questions
+  - DE BLANC Daloa - Santé Publique: 58 questions
+  - DE BLANC Korhogo - Santé Publique: 45 questions
+  - DE BLANC Man - Santé Publique: 41 questions
+
+Total sujets ajoutes : 36
+Total questions ajoutees : 1786
+
+NB : Les questions ont ete extraites du PDF corrige et les reponses ont ete identifiees a partir des lettres A/B et des surlignages jaunes du corrigé. Les explications ont ete ajoutees sous chaque question.
+
+MISE A JOUR TITRES : ajout du mot 'antenne' dans les titres des sujets DEB.
+Exemple : DEB Pédiatrie 2025 antenne Abengourou.
+
+
+MISE A JOUR SERIES : remplacement des titres Série par antennes.
+Série 1 = antenne Abengourou
+Série 2 = antenne Abidjan
+Série 3 = antenne Aboisso
+Série 4 = antenne Daloa
+Série 5 = antenne Man
+Série 6 = antenne Bouaké
+Série 7 = antenne Korhogo
+
+
+MISE A JOUR QUESTIONS : suppression du titre du sujet au début des questions.
+Exemple : 'DEB Pédiatrie 2025 antenne Abengourou - Q1...' devient 'Q1...'.
+
+
+MISE A JOUR CORRECTION NORMALE : amélioration des explications.
+Les explications génériques ont été remplacées par des explications pédagogiques par matière, avec justification médicale, chirurgicale, pédiatrique ou de santé publique.
+Nombre d'explications mises à jour : 1786.
+
+==============================================================================
+ANCIEN FICHIER : RAPPORT_SUPPRESSION_COURS_PDF_12JUILLET2026.txt
+==============================================================================
+SUPPRESSION DES COURS PDF DU SITE
+Date : 12 juillet 2026
+
+Modifications effectuées :
+- suppression de la page cours.html ;
+- suppression des 12 fichiers de cours au format PDF ;
+- conservation des quiz, des utilisateurs et des fonctions d’administration ;
+- conservation du bouton d’export PDF des statistiques administrateur, qui ne correspond pas aux cours PDF.
+
+==============================================================================
+ANCIEN FICHIER : README.md
+==============================================================================
+# QUIZ-TOF
+
+==============================================================================
+ANCIEN FICHIER : historique-projet.txt
+==============================================================================
+HISTORIQUE ET DOCUMENTATION DU PROJET QUIZ-TOF
+========================================================================
+Les rapports d’origine ont été regroupés dans ce fichier unique.
+Le fichier historique subjects.js, non chargé par index.html dans la version précédente,
+est conservé à la fin pour traçabilité et ne fait pas partie du fonctionnement actif.
+
+
+========================================================================
+DEBUT : documentation/README.md
+========================================================================
+# QUIZ-TOF
+FIN : documentation/README.md
+
+========================================================================
+DEBUT : documentation/rapports/RAPPORT_AJOUT_ACCES_09JUILLET2026.txt
+========================================================================
+RAPPORT D'AJOUT DES ACCÈS - 09 JUILLET 2026
+
+Fichier modifié : liste-acces.js
+Méthode : ajout des utilisateurs manquants dans ACCESS_RECOVERY_LIST. Les codes sont ensuite pris automatiquement par code.js.
+
+Accès ajoutés :
+- DOUMBIA MARIAM | Téléphone : 0778216164 | Code : DM164
+- KOBENAN YAWA AGNES | Téléphone : 0708782456 | Code : KY456
+- AHOUSSY FIDEL | Téléphone : 0709221536 | Code : AF536
+
+Accès déjà présents / non dupliqués :
+- ZAHUI NATACHA HELENE | Téléphone : 0709668765 | Code : ZN765
+FIN : documentation/rapports/RAPPORT_AJOUT_ACCES_09JUILLET2026.txt
+
+========================================================================
+DEBUT : documentation/rapports/RAPPORT_AJOUT_CODES_UTILISATEURS_10JUILLET2026.txt
+========================================================================
+RAPPORT AJOUT CODES UTILISATEURS - 10 JUILLET 2026
+
+Fichier modifié : assets/js/data/liste-acces.js
+Règle utilisée : deux initiales du nom + les 3 derniers chiffres du téléphone.
+
+Lignes reçues : 14
+Utilisateurs uniques : 13
+Doublon ignoré dans la liste reçue : SALIA N’DA ROSINE
+Nouveaux utilisateurs ajoutés : 5
+Utilisateurs existants complétés/corrigés : 8
+Doublons erronés retirés : 1
+
+Codes d’accès :
+- DOUMBIA MARIAM | SFM | 0778216164 | DM164
+- ZAHUI NATACHA HELENE | SFM | 0709668765 | ZN765
+- KOBENAN YAWA AGNES | IDE | 0708782456 | KY456
+- N'CHO AYA EDWIGE | IDE | 0708102201 | NA201
+- TRAORE MARIAM | IDE | 0768185639 | TM639
+- KONAN KOUAKOU OLIVIER | IDE | 0576606971 | KK971
+- KOUAME YAO MOKAN AURELIE | SFM | 0748367660 | KY660
+- N'DRI ALLICO SIMPLICE | IDE | 0709302546 | NA546
+- SALIA N’DA ROSINE | SFM | 0564807208 | SN208
+- DOLLO ANGODO JORESSE | IDE | 0708436545 | DA545
+- ATSE KOUSSO SYLVIANE | SFM | 0758212431 | AK431
+- KOUADIO YEDIDIA | IDE | 0153892966 | KY966
+- N'GUESSAN AMENAN ALBERTINE | IDE | 0709028581 | NA581
+
+Correction ciblée :
+- ATSE KOUSSO SYLVIANE : correction du nom et du téléphone, code AK431 conservé.
+- N'GUESSAN AMENAN ALBERTINE : doublon avec numéro erroné retiré, code NA581 conservé.
+
+Aucun fichier de sujet, question ou réponse n’a été modifié.
+FIN : documentation/rapports/RAPPORT_AJOUT_CODES_UTILISATEURS_10JUILLET2026.txt
+
+========================================================================
+DEBUT : documentation/rapports/RAPPORT_AJOUT_NOUVELLE_LISTE_08JUILLET2026.txt
+========================================================================
+RAPPORT AJOUT NOUVELLE LISTE - 08 JUILLET 2026
+
+Fichier modifié : liste-acces.js
+Règle utilisée : 2 initiales du nom + 3 derniers chiffres du téléphone.
+
+Entrées reçues : 20
+Entrées uniques traitées : 19
+Nouveaux codes ajoutés : 11
+Entrées déjà présentes / doublons ignorés : 8
+Entrées existantes corrigées/complétées : 8
+
+Codes ajoutés :
+- MENZAN AKOUA HÉLÈNE | IDE | 0779697569 | MA569
+- ATSE ATSE GUY SERGE | IDE | 0143277147 | AA147
+- N'GUETTA YAH NELLY GRACE | IDE | 0747515924 | NY924
+- YEBOUA ANGE TATIANA | IDE | 0707630054 | YA054
+- ASSOUMOU MEA BLA FELICITE | IDE | 0596407055 | AM055
+- BOUATINI Affoua | SFM | 0707932760 | BA760
+- GUELAPOHO RUTH PARFAITE | IDE | 0769573472 | GR472
+- OUATTARA ZILEBAHE AMADOU | IDE | 0506477347 | OZ347
+- KOFFI ALEXANDRINE MIREILLE | IDE | 0574732774 | KA774
+- Titi LOBO madeleine ANDREYA | IDE | 0709755301 | TL301
+- ANE ASSOUMOU TITE | IDE | 0749861658 | AA658
+
+Déjà présents ou doublons :
+- YACOUBA AKA DANIEL | 0101105943 | YA943 (code déjà présent)
+- KOFFI AGNON JULIETTE ÉLODIE | 0584378628 | KA628 (code déjà présent)
+- ZADE TINKPON NADEGE | 0545403668 | ZT668 (code déjà présent)
+- KOUADIO JEAN MODESTE | 0596879106 | KJ106 (code déjà présent)
+- KOSSONOU KOUAKOU DOMINIQUE | 0708253546 | KK546 (code déjà présent)
+- KOUADIO JEAN MODESTE | 0596879106 | KJ106 (doublon dans la liste fournie)
+- TOKOU TAKI SIMONE | 0709566340 | TT340 (code déjà présent)
+- KODJO BOMO PAULINE | 0709550405 | KB405 (code déjà présent)
+
+Corrections/compléments :
+- YACOUBA AKA DANIEL | YA943 : filière ajoutée (IDE)
+- KOFFI AGNON JULIETTE ÉLODIE | KA628 : filière ajoutée (IDE)
+- ZADE TINKPON NADEGE | ZT668 : filière ajoutée (IDE)
+- ESSI YAO KRA THIERRY MARTIAL | EY289 : téléphone 0545855289 -> 0545835289
+- KOUADIO JEAN MODESTE | KJ106 : filière ajoutée (IDE)
+- KOSSONOU KOUAKOU DOMINIQUE | KK546 : filière ajoutée (IDE)
+- TOKOU TAKI SIMONE | TT340 : filière ajoutée (SFM)
+- KODJO BOMO PAULINE | KB405 : filière ajoutée (IDE)
+FIN : documentation/rapports/RAPPORT_AJOUT_NOUVELLE_LISTE_08JUILLET2026.txt
+
+========================================================================
+DEBUT : documentation/rapports/RAPPORT_AJOUT_PARAMETRES_CAMERA_10JUILLET2026.txt
+========================================================================
+RAPPORT D'AJOUT - PARAMETRES CAMERA ETUDIANT
+Date : 10 juillet 2026
+
+MODIFICATIONS REALISEES
+- Ajout d'un bouton « Paramètres » dans l'espace de choix des matières.
+- Ajout d'un interrupteur « Activer la photo avant la révision ».
+- Caméra désactivée par défaut : la révision commence directement sans photo.
+- Si l'étudiant active la caméra, une photo est demandée avant le lancement du quiz.
+- Le choix est mémorisé dans le navigateur séparément pour chaque code étudiant.
+- L'étudiant peut modifier son choix à tout moment avant de commencer une révision.
+- Arrêt automatique du flux caméra lorsqu'elle est désactivée ou lorsque l'utilisateur quitte l'écran photo.
+
+FICHIERS MODIFIES
+- index.html
+- app.js
+- style.css
+FIN : documentation/rapports/RAPPORT_AJOUT_PARAMETRES_CAMERA_10JUILLET2026.txt
+
+========================================================================
+DEBUT : documentation/rapports/RAPPORT_AJOUT_PARAMETRES_REVISION_10JUILLET2026.txt
+========================================================================
+RAPPORT D'AJOUT DES PARAMETRES DE REVISION
+Date : 10 juillet 2026
+
+MODIFICATIONS REALISEES
+
+1. Camera facultative avant la revision.
+2. Validation automatique en quittant la page, activable ou desactivable.
+3. Mode d'affichage prefere : choix manuel, toutes les questions ou question par question.
+4. Limitation du nombre de questions : 10, 20, 30, 50 ou toutes.
+5. Melange facultatif de l'ordre des questions.
+6. Melange facultatif des propositions de reponses avec recalcul automatique des indices des bonnes reponses.
+7. Chronometre activable ou desactivable.
+8. Temps configurable : 15, 30, 45 ou 60 secondes par question.
+9. Affichage ou masquage des explications dans la correction.
+10. Mode sombre.
+11. Taille du texte : petite, normale, grande ou tres grande.
+12. Bouton de reinitialisation des parametres.
+13. Enregistrement separe des parametres pour chaque code etudiant sur l'appareil.
+
+VALEURS PAR DEFAUT CONSERVEES
+
+- Camera : desactivee.
+- Validation automatique en quittant : activee.
+- Mode d'affichage : toujours demander.
+- Nombre de questions : toutes.
+- Melange des questions : active.
+- Melange des propositions : desactive.
+- Chronometre : active.
+- Duree : 30 secondes par question.
+- Explications : affichees.
+- Mode sombre : desactive.
+- Taille du texte : normale.
+
+PROTECTION DES SUJETS
+
+Aucun fichier de sujets, de questions ou de reponses n'a ete modifie.
+Les empreintes SHA-256 des fichiers suivants ont ete comparees avant et apres les changements et sont strictement identiques :
+
+- quiz-data.js
+- de-blanc-2025-data.js
+- prepa-de-national-2026-ajouts.js
+- quiz-subjects.js
+- preparation-de-subjects.js
+- subjects.js
+
+VERIFICATIONS EFFECTUEES
+
+- Syntaxe de tous les fichiers JavaScript : valide.
+- Aucun identifiant HTML en double.
+- Parcours de test : connexion, parametres, limitation a 10 questions, affichage question par question, chronometre desactive, mode sombre et grande police.
+- Test de melange des propositions repete 200 fois : les bonnes reponses restent correctement associees.
+- Les questions originales ne sont jamais modifiees : le site travaille sur une copie temporaire pendant chaque revision.
+FIN : documentation/rapports/RAPPORT_AJOUT_PARAMETRES_REVISION_10JUILLET2026.txt
+
+========================================================================
+DEBUT : documentation/rapports/RAPPORT_AJOUT_PREPARATION_DE.txt
+========================================================================
+Ajout effectué dans la partie Préparation D.E uniquement.
+- PREPA D.E NATIONALE 2026 GYNÉCOLOGIE-OBSTÉTRIQUE SFM SUJET 1
+- Matière : Gynécologie
+- Nombre de questions : 57
+- Source : CORRECTION PREPA D.E NATIONALE 2026 GYNÉCOLOGIE-OBSTÉTRIQUE SFM SUJET 1.pdf
+Remarque : le mot CORRECTION a été retiré du titre affiché dans l’application.
+FIN : documentation/rapports/RAPPORT_AJOUT_PREPARATION_DE.txt
+
+========================================================================
+DEBUT : documentation/rapports/RAPPORT_AJOUT_PREPARATION_DE_21JUIN2026.txt
+========================================================================
+Sujets ajoutés dans Préparation D.E uniquement
+
+- Pédiatrie : PREPA D.E NATIONALE 2026 PÉDIATRIE IDE/SFM SUJET 1
+  Questions intégrées : 30
+  Première : Q1. L’hyperglycémie est une complication de la malnutrition aiguë.
+  Dernière : Q30. Le nourrisson est :
+
+- Médecine : PREPA D.E NATIONALE 2026 MÉDECINE IDE SUJET 1
+  Questions intégrées : 40
+  Première : Q1. Au cours de la méningite purulente, trois signes constituent le trépied méningitique. Lesquels ?
+  Dernière : Q40. Les buts poursuivis par les soins palliatifs sont les suivants, sauf un. Lequel ?
+
+- Santé Publique : PREPA D.E NATIONALE 2026 SANTÉ PUBLIQUE IDE-SFM SUJET 2
+  Questions intégrées : 50
+  Première : Q1. Parmi les composantes ci-après, une seule fait partie des huit composantes essentielles des SSP.
+  Dernière : Q50. La quantité à commander du vaccin BCG est :
+
+- Planification Familiale / SR : PREPA D.E NATIONALE 2026 SSR/PF SFM SUJET 1
+  Questions intégrées : 45
+  Première : Q1. La santé de la reproduction est un état de bien-être général… en l’absence de maladies ou d’infirmités.
+  Dernière : Q45. Les implants contraceptifs contiennent :
+
+- Planification Familiale / SR : PREPA D.E NATIONALE 2026 SSR/PF SFM SUJET 2
+  Questions intégrées : 48
+  Première : Q1. Le mystère qui entoure les questions sexuelles est un obstacle à la planification familiale.
+  Dernière : Q48. Après un avortement spontané non septique, s’il y a un désir de grossesse, quel contraceptif doit-on proscrire ?
+FIN : documentation/rapports/RAPPORT_AJOUT_PREPARATION_DE_21JUIN2026.txt
+
+========================================================================
+DEBUT : documentation/rapports/RAPPORT_AJOUT_PREPA_DE_NATIONALE_2026_SUJETS_MANQUANTS.txt
+========================================================================
+RAPPORT - AJOUT DES SUJETS MANQUANTS PREPARATION DE NATIONALE 2026
+
+Sujets ajoutés dans la partie Préparation DE :
+- Gynécologie : PREPA D.E NATIONALE 2026 GYNÉCOLOGIE-OBSTÉTRIQUE SFM SUJET 2 (40 questions)
+- Médecine : PREPA D.E NATIONALE 2026 MÉDECINE IDE SUJET 2 (44 questions)
+
+Fichiers modifiés/ajoutés :
+- index.html : ajout du script prepa-de-national-2026-ajouts.js
+- preparation-de-subjects.js : ajout des titres dans la configuration Préparation DE
+- prepa-de-national-2026-ajouts.js : questions, réponses et explications extraites des PDF
+
+Les sujets déjà présents n’ont pas été dupliqués.
+FIN : documentation/rapports/RAPPORT_AJOUT_PREPA_DE_NATIONALE_2026_SUJETS_MANQUANTS.txt
+
+========================================================================
+DEBUT : documentation/rapports/RAPPORT_AJOUT_UTILISATEURS_08JUILLET2026.txt
+========================================================================
+RAPPORT AJOUT UTILISATEURS - 08 JUILLET 2026
+
+Fichier modifié principalement : liste-acces.js
+Utilisateurs dans le fichier texte fourni : 652
+Utilisateurs ajoutés (codes absents) : 18
+Entrées déjà existantes ou doublons ignorés : 634
+Entrées mal formées corrigées/supprimées : 2
+
+Améliorations techniques :
+- Les codes contenant des espaces internes sont maintenant normalisés à la connexion.
+- La liste ACCESS_RECOVERY_LIST est aussi exposée sur window pour les fonctions admin/récupération.
+
+Utilisateurs ajoutés :
+- BOYÉ LOU | 0709711395 | B395 (ligne source 167)
+- KOUASSI DELIMA | 0759181892 | K892 (ligne source 388)
+- DOSSO ALIMA | 0757224972 | DA972 (ligne source 627)
+- ANOH ANOH PENIEL JUNIOR | 0788262862 | AA862 (ligne source 628)
+- OUATTARA MARIAM | 0544079243 | OM243 (ligne source 629)
+- SORO TCHAKOUNGO | 0748717096 | ST096 (ligne source 630)
+- ANOUGBA NIANKON JEANNE MIREILLE | 0757419987 | AN987 (ligne source 632)
+- TIA WONSEU EUNICE ANDREE | 0787974395 | TW395 (ligne source 634)
+- KONAN KOUADIO ANGE SEVERIN | 0777217097 | KK097 (ligne source 635)
+- YAO KOUTÉ AKISSI REINE ÉPOUSE SEA | 0708190886 | YK886 (ligne source 638)
+- SALIA N’DA ROSINE | 0564807208 | SN208 (ligne source 639)
+- N'DOLY AFFOUA AMESSAH | 0709810427 | NA427 (ligne source 640)
+- ADOPO CHO HERMINE DEBORAH | 0585774025 | AC025 (ligne source 645)
+- COULIBALY KADY MYRIAM | 0777461382 | CK382 (ligne source 646)
+- ESSAN KOUAME HERVE DELMAS | 0173037703 | EK703 (ligne source 647)
+- EDJA DIBY HÉLÈNE | 0748467873 | ED873 (ligne source 649)
+- GBOCHO CHI-ADOU DOMINIQUE NANCY | 0503679428 | GC428 (ligne source 652)
+- YAO AFFOUE DÉBORAH | 0708761647 | YA647 (ligne source 653)
+FIN : documentation/rapports/RAPPORT_AJOUT_UTILISATEURS_08JUILLET2026.txt
+
+========================================================================
+DEBUT : documentation/rapports/RAPPORT_AJOUT_UTILISATEURS_08JUILLET2026_COMPLEMENT.txt
+========================================================================
+RAPPORT - AJOUT UTILISATEURS COMPLEMENTAIRES (08 JUILLET 2026)
+
+Fichier modifié : liste-acces.js
+
+Utilisateur(s) ajouté(s) :
+- EBA ANGE | Téléphone : 0777196166 | Code : EB166
+
+Utilisateur(s) déjà présent(s), non dupliqué(s) :
+- Demandé : ANGORA FRANCK | 0747955950 | AF950
+  Présent : ANGORA FRANCK KOFFI ANDERSON | 0747955950 | AF950
+
+Contrôle : les codes EB166 et AF950 sont acceptés par code.js via ACCESS_RECOVERY_LIST.
+FIN : documentation/rapports/RAPPORT_AJOUT_UTILISATEURS_08JUILLET2026_COMPLEMENT.txt
+
+========================================================================
+DEBUT : documentation/rapports/RAPPORT_CORRECTION_CAMERA.txt
+========================================================================
+CORRECTION CAMERA - 21 JUIN 2026
+
+Modifications effectuees :
+1. Apres connexion, l'etudiant arrive maintenant sur la page camera, pas directement sur les matieres.
+2. La photo est obligatoire avant de commencer une composition.
+3. Si l'etudiant tente de commencer sans photo, il est renvoye vers la page camera.
+4. La fonction Activer la camera a ete rendue plus robuste : HTTPS/localhost verifie, camera frontale demandee, fallback video simple, lecture video forcee avec playsinline.
+5. Apres la prise de photo, le flux camera est ferme proprement pour eviter les blocages sur telephone.
+
+Fichiers modifies :
+- app.js
+- index.html
+FIN : documentation/rapports/RAPPORT_CORRECTION_CAMERA.txt
+
+========================================================================
+DEBUT : documentation/rapports/RAPPORT_CORRECTION_CAMERA_COMMENCER.txt
+========================================================================
+Correction du parcours caméra
+
+- La caméra ne s’ouvre plus directement après la connexion.
+- Après connexion, l’étudiant arrive d’abord sur le choix matière / sujet / mode d’affichage.
+- Quand l’étudiant appuie sur Commencer, la page caméra s’affiche.
+- L’étudiant active la caméra, prend la photo, puis la composition démarre automatiquement.
+- Après chaque composition, la photo est réinitialisée afin d’être redemandée pour la composition suivante.
+- Le bouton retour de la page caméra ramène au choix du sujet sans lancer le quiz.
+FIN : documentation/rapports/RAPPORT_CORRECTION_CAMERA_COMMENCER.txt
+
+========================================================================
+DEBUT : documentation/rapports/RAPPORT_CORRECTION_CODES_ACCES_08JUILLET2026.txt
+========================================================================
+RAPPORT CORRECTION CODES D'ACCES - 08 JUILLET 2026
+
+Probleme constate :
+- Certains codes d'acces ne passaient pas lorsque l'utilisateur entrait le code attendu au format : deux initiales + les 3 derniers chiffres du telephone.
+
+Corrections effectuees :
+1. app.js
+- Ajout d'une verification souple des codes d'acces.
+- Le site accepte maintenant :
+  * le code enregistre dans liste-acces.js ;
+  * la variante calculee avec deux initiales + les 3 derniers chiffres du telephone ;
+  * la variante avec les 2 derniers chiffres pour les anciens codes ;
+  * les noms avec apostrophe, par exemple N'GUESSAN : NAxxx et NGxxx sont acceptes quand ils correspondent au meme utilisateur.
+- Les espaces saisis dans un code sont ignores. Exemple : KD 892 devient KD892.
+
+2. liste-acces.js
+- BOYÉ LOU : B395 corrige en BL395.
+- KOUASSI DELIMA : K892 corrige en KD892.
+
+Tests effectues :
+- BL395 : accepte.
+- KD892 : accepte.
+- AA697 et AA97 : acceptes pour les anciens codes.
+- NA905 et NG905 : acceptes pour les noms avec apostrophe.
+
+Conseil apres mise en ligne :
+- Si un telephone garde l'ancienne version en cache, actualiser la page ou vider le cache du navigateur.
+FIN : documentation/rapports/RAPPORT_CORRECTION_CODES_ACCES_08JUILLET2026.txt
+
+========================================================================
+DEBUT : documentation/rapports/RAPPORT_CORRECTION_SANTE_PUBLIQUE_SUJET1_09JUILLET2026.txt
+========================================================================
+RAPPORT - CORRECTION SANTÉ PUBLIQUE PRÉPA D.E NATIONALE 2026 SUJET 1
+
+Titre conservé selon la structure déjà présente sur le site :
+PREPA D.E NATIONALE 2026 SANTÉ PUBLIQUE IDE-SFM SUJET 1
+
+Fichier modifié :
+- quiz-data.js
+
+Travail effectué :
+- Remplacement du contenu du sujet Santé Publique Sujet 1 par le questionnaire apporté.
+- Conservation de la structure existante du site : question, options, answer, explanation.
+- Ajout/organisation des 51 questions dans l’ordre du formulaire transmis.
+- Ajout des bonnes réponses et d’une explication courte pour chaque question.
+- Conservation du titre dans preparation-de-subjects.js sans création de doublon.
+
+Validation :
+- 51 questions présentes.
+- Syntaxe JavaScript vérifiée avec node --check.
+FIN : documentation/rapports/RAPPORT_CORRECTION_SANTE_PUBLIQUE_SUJET1_09JUILLET2026.txt
+
+========================================================================
+DEBUT : documentation/rapports/RAPPORT_CORRECTION_TITRE_SANTE_PUBLIQUE.txt
+========================================================================
+Correction effectuée :
+- Ancien titre : Prepa National 2026 Santé Publique Sujet 1
+- Nouveau titre : PREPA D.E NATIONALE 2026 SANTÉ PUBLIQUE IDE-SFM SUJET 1
+
+Le titre a été corrigé dans preparation-de-subjects.js et quiz-data.js pour correspondre au style du Sujet 2.
+FIN : documentation/rapports/RAPPORT_CORRECTION_TITRE_SANTE_PUBLIQUE.txt
+
+========================================================================
+DEBUT : documentation/rapports/RAPPORT_INTEGRATION_DE_BLANC.txt
+========================================================================
+RAPPORT INTEGRATION DE BLANC 2025
+Source : infas document 2 (1).pdf
+Ajout : de-blanc-2025-data.js charge apres quiz-data.js
+
+Chirurgie
+  - DE BLANC Abengourou - Chirurgie: 51 questions
+  - DE BLANC Abidjan - Chirurgie Groupe 1: 63 questions
+  - DE BLANC Abidjan - Chirurgie Groupe 2: 52 questions
+  - DE BLANC Aboisso - Chirurgie: 54 questions
+  - DE BLANC Agboville - Chirurgie: 59 questions
+  - DE BLANC Bouaké - Chirurgie: 45 questions
+  - DE BLANC Daloa - Chirurgie: 37 questions
+  - DE BLANC Korhogo - Chirurgie: 60 questions
+  - DE BLANC Man - Chirurgie: 41 questions
+Médecine
+  - DE BLANC Abengourou - Médecine: 49 questions
+  - DE BLANC Abidjan - Médecine Groupe 1: 21 questions
+  - DE BLANC Abidjan - Médecine Groupe 2: 21 questions
+  - DE BLANC Aboisso - Médecine: 50 questions
+  - DE BLANC Agboville - Médecine: 59 questions
+  - DE BLANC Bouaké - Médecine: 58 questions
+  - DE BLANC Daloa - Médecine: 41 questions
+  - DE BLANC Korhogo - Médecine: 57 questions
+  - DE BLANC Man - Médecine: 48 questions
+Pédiatrie
+  - DE BLANC Abengourou - Pédiatrie: 54 questions
+  - DE BLANC Abidjan - Pédiatrie Groupe 1: 57 questions
+  - DE BLANC Abidjan - Pédiatrie Groupe 2: 59 questions
+  - DE BLANC Aboisso - Pédiatrie: 58 questions
+  - DE BLANC Agboville - Pédiatrie: 55 questions
+  - DE BLANC Bouaké - Pédiatrie: 51 questions
+  - DE BLANC Daloa - Pédiatrie: 50 questions
+  - DE BLANC Korhogo - Pédiatrie: 50 questions
+Santé Publique
+  - DE BLANC Abengourou - Santé Publique: 44 questions
+  - DE BLANC Abidjan - Santé Publique Groupe 1: 44 questions
+  - DE BLANC Abidjan - Santé Publique Groupe 2: 46 questions
+  - DE BLANC Aboisso - Santé Publique: 46 questions
+  - DE BLANC Agboville - Santé Publique: 57 questions
+  - DE BLANC Bouaké - Santé Publique N°1: 52 questions
+  - DE BLANC Bouaké - Santé Publique N°2: 53 questions
+  - DE BLANC Daloa - Santé Publique: 58 questions
+  - DE BLANC Korhogo - Santé Publique: 45 questions
+  - DE BLANC Man - Santé Publique: 41 questions
+
+Total sujets ajoutes : 36
+Total questions ajoutees : 1786
+
+NB : Les questions ont ete extraites du PDF corrige et les reponses ont ete identifiees a partir des lettres A/B et des surlignages jaunes du corrigé. Les explications ont ete ajoutees sous chaque question.
+
+MISE A JOUR TITRES : ajout du mot 'antenne' dans les titres des sujets DEB.
+Exemple : DEB Pédiatrie 2025 antenne Abengourou.
+
+
+MISE A JOUR SERIES : remplacement des titres Série par antennes.
+Série 1 = antenne Abengourou
+Série 2 = antenne Abidjan
+Série 3 = antenne Aboisso
+Série 4 = antenne Daloa
+Série 5 = antenne Man
+Série 6 = antenne Bouaké
+Série 7 = antenne Korhogo
+
+
+MISE A JOUR QUESTIONS : suppression du titre du sujet au début des questions.
+Exemple : 'DEB Pédiatrie 2025 antenne Abengourou - Q1...' devient 'Q1...'.
+
+
+MISE A JOUR CORRECTION NORMALE : amélioration des explications.
+Les explications génériques ont été remplacées par des explications pédagogiques par matière, avec justification médicale, chirurgicale, pédiatrique ou de santé publique.
+Nombre d'explications mises à jour : 1786.
+FIN : documentation/rapports/RAPPORT_INTEGRATION_DE_BLANC.txt
+
+========================================================================
+ARCHIVE TECHNIQUE NON CHARGEE : assets/js/data/subjects.js
+========================================================================
+const SUBJECTS_TO_DISPLAY = [
+  "Imagerie médicale",
+  "Documents normatifs",
+  "Gestion des catastrophes",
+  "Gouvernance et Organisation du Système de Santé Communautaire",
+  "Organisation d’une séance de Vaccination / Sécurité des injections",
+  "Santé sexuelle et reproductive des adolescents et des jeunes / Planification Familiale / IST / VIH-SIDA",
+  "Violences Basées sur Genre / Encadrement (Egalité - Equité)",
+  "Hygiène menstruelle",
+  "Prise en charge des substances psychoactives",
+  "Oncologie",
+  "Neuropsychiatrie / Psychiatrie",
+  "Endocrinologie",
+  "Hépato-gastro-entérologie",
+  "Cardiologie",
+  "Dermatologie",
+  "Néphrologie",
+  "Odonto-Stomatologie",
+  "Ophtalmologie",
+  "Neurochirurgie",
+  "ORL",
+  "Pédiatrie (PCIMNE)",
+  "Gériatrie",
+  "Pathologies gynécologiques III",
+  "Pathologies obstétricales III",
+  "Soins obstétricaux et néonataux d’urgence de base (SONUB)",
+  "Soins obstétricaux et néonataux d’urgence complets (SONUC)",
+  "Soins infirmiers obstétricaux et néonataux",
+  "Consultation Postnatale (CPoN)",
+  "Ventouse obstétricale",
+  "Aspiration Manuelle Intra-Utérine (AMIU) / Soins Post Avortement",
+  "Surveillances thérapeutiques",
+  "Élaboration d’un projet de soins infirmiers",
+  "Mise en œuvre et évaluation d’un projet de soins infirmiers",
+  "Soins infirmiers spécialisés en médecine",
+  "Soins infirmiers spécialisés en chirurgie",
+  "Soins palliatifs",
+  "Présentation de cas cliniques",
+  "Droit administratif / Responsabilité médicale",
+  "Sécurité sociale",
+  "Fonction publique",
+  "Rédaction administrative",
+  "Gestion Hospitalière",
+  "Entrepreneuriat / Gestion de la qualité",
+  "Supervision / Suivi – Evaluation",
+  "Rédaction du document final (Mémoire)",
+  "Processus de mise en stage",
+  "Stage en soins infirmiers et obstétricaux + Rapport",
+  "Stage communautaire + Rapport",
+];
+
+const SUBJECTS_CONFIG = SUBJECTS_TO_DISPLAY.map((subjectName) => ({
+  subjectName,
+  topics: [
+    `Sujet 1 - ${subjectName}`,
+    `Sujet 2 - ${subjectName}`,
+    `Sujet 3 - ${subjectName}`,
+    `Sujet 4 - ${subjectName}`,
+    `Sujet 5 - ${subjectName}`,
+  ],
+}));
+
+// ZONE A MODIFIER:
+// Tu peux renommer les 5 sujets de chaque matiere ici.
+// Exemple:
+// SUBJECTS_CONFIG[0].topics = [
+//   "Introduction a l'imagerie",
+//   "Radiologie conventionnelle",
+//   "Scanner",
+//   "IRM",
+//   "Echographie",
+// ];
+
+
+// ===== Correction historique admin =====
+function saveQuizHistory(entry) {
+    try {
+        const oldData = JSON.parse(localStorage.getItem('quiz_history') || '[]');
+        oldData.unshift(entry);
+        localStorage.setItem('quiz_history', JSON.stringify(oldData));
+
+        if (typeof renderAdminHistory === 'function') {
+            renderAdminHistory();
+        }
+    } catch(e) {
+        console.error(e);
+    }
+}
+
+function renderAdminHistory() {
+    const historyContainer = document.getElementById('admin-history-list');
+    if (!historyContainer) return;
+
+    const data = JSON.parse(localStorage.getItem('quiz_history') || '[]');
+
+    historyContainer.innerHTML = '';
+
+    if (!data.length) {
+        historyContainer.innerHTML = '<p>Aucun historique disponible</p>';
+        return;
+    }
+
+    data.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'history-item';
+        div.innerHTML = `
+            <strong>${item.nom || 'Étudiant'}</strong><br>
+            Score : ${item.score || 0}<br>
+            Date : ${item.date || new Date().toLocaleString()}
+            <hr>
+        `;
+        historyContainer.appendChild(div);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        if (typeof renderAdminHistory === 'function') {
+            renderAdminHistory();
+        }
+    }, 500);
+});
+
+========================================================================
+AJOUT DE COMPTES - 10 JUILLET 2026
+========================================================================
+Ajoutés : AKA AHOU (AA961), AKA TEWA THIERRY STÉPHANE (AT147), AHUA AFFOUA DELPHINE TATIANA (AA344).
+Déjà présent et non dupliqué : N'DRI KOUAO ZACHARI (NK600).

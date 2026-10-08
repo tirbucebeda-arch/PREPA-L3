@@ -1,0 +1,81 @@
+RAPPORT — AJOUT DE COMPTES ET SUPPRESSION DES DOUBLONS
+16 JUILLET 2026
+====================================================================================================
+
+Comptes avant traitement : 853
+Lignes reçues : 41
+Doublons fusionnés dans la liste reçue : 3
+Fiches supprimées comme doublons : 13
+Nouveaux comptes ajoutés : 25
+Comptes existants complétés/corrigés : 12
+Comptes déjà conformes : 1
+Comptes uniques après traitement : 865
+
+NOUVEAUX COMPTES
+----------------------------------------------------------------------------------------------------
+- NANDO DENON DOMINIQUE VANESSA | SFM | 0757576831 | ND831
+- KOSSONOU DJAFO LARISSA FLEUR | IDE | 0141514021 | KD021
+- KONE MADOUSSOU | SFM | 0787754255 | KM255
+- EKOUMANOH DJAGONDON AUDREY-EDWIGE TENA | SFM | 0777522299 | ED299
+- ASSANVO EDJA MOÏSE | IDE | 0500057612 | AE612
+- BOLAI BINTOU ANNE | SFM | 0556429407 | BB407
+- ACHO GERTRUDE | SFM | 0767441935 | AG935
+- AHOUZI BENIE ALICE DIANE | IDE | 0768746947 | AB947
+- ASSOUA MARIE ANDRÉA SYNTICHE | IDE | 0566052809 | AM809
+- NOUMGBRE AYA JOCELINE OLGA | SFM | 0748093898 | NA898
+- AHOZI ATTOUBE LINDA MARIE NOËLLE | IDE | 0788190561 | AA561
+- BONI KOUADIO DOMINIQUE | IDE | 0704245038 | BK038
+- AKISSI JAURES DERRICK | IDE | 0708725397 | AJ397
+- OUATTARA NAZATA | SFM | 0150421070 | ON070
+- KOUA KESSE ABO CALIXTE | IDE | 0768863404 | KK404
+- ZIDA LOUISE MARIE | IDE | 0777747881 | ZL881
+- KICHIEDOU KISSIEDOU FRANCK JACOB | IDE | 0748992023 | KK023
+- GUINDO BRAHIMA | IDE | 0505497549 | GB549
+- ASSI CHIA LAURÈNE CHRISTIANA | SFM | 0769127919 | AC919
+- YODE LAH GONSAN GUILLAUME | IDE | 0717557559 | YL559
+- YAO AYA EDITH GENEVIEVE | IDE | 0749450433 | YA433
+- KOUAME AKISSI OLY JENNIFER | SFM | 0712250970 | KA970
+- TAH LOU BENAN CHRISTELLE | SFM | 0787614242 | TL242
+- ASSIE ESSO HERMANN | IDE | 0161779837 | AE837
+- GBADI ULRICH | IDE | 0584355098 | GU098
+
+COMPTES EXISTANTS MIS À JOUR
+----------------------------------------------------------------------------------------------------
+- ID 632 : ACHOU SOPIE ADELINE | SFM | 0778985976 | AS976
+- ID 374 : KOUAME AGNÈS DÉSIRÉE ROSINE | SFM | 0101287855 | KA855
+- ID 431 : NASREDINE EMILE | IDE | 0708909497 | NE497
+- ID 714 : SALIA N’DA ROSINE | SFM | 0564807208 | SN208
+- ID 271 : KACOU ASSAH MARTINE | SFM | 0787746253 | KA253
+- ID 600 : YAPO APIE VERRAH JUDITH | IDE | 0757767204 | YA204
+- ID 309 : KOFFI MARIE DANIELLE | IDE | 0798659818 | KM818
+- ID 385 : KOUAME N'GUETTA AFFOUA MIREILLE | SFM | 0709582485 | KN485A
+- ID 180 : DAKON AKUA SONIA | IDE | 0503430673 | DA673
+- ID 474 : OBROU JUNIOR | SFM | 0544660024 | OJ024
+- ID 461 : N'GUESSAN YABA ROSE MARINA | SFM | 0103432862 | NY862A
+- ID 273 : KADJO MAGNE MARIE THÉRÈSE | SFM | 0789643741 | KM741
+
+DOUBLONS SUPPRIMÉS
+----------------------------------------------------------------------------------------------------
+- ID 84 : ASSANDE MANOU MARTINE | 0546737090 | AM090 — doublon exact de ID 83
+- ID 86 : ASSANVO KOFFI JEAN BAPTISTE | 0586636101 | AK101 — doublon exact de ID 85
+- ID 276 : Kakou Boris | 0747289798 | KB798 — doublon exact de ID 275
+- ID 283 : KASSI DADO DANIEL | 0719917961 | KD961 — doublon exact de ID 282
+- ID 350 : Koua oi koua franck | 0779285066 | KO066 — doublon exact de ID 349
+- ID 351 : Koua oi koua franck | 0779285066 | KO066 — doublon exact de ID 349
+- ID 435 : N'CHO ORNELA STÉPHANIE VANESSA | 0777981793 | NO793 — doublon exact de ID 434
+- ID 455 : N'GUESSAN AFFOUO IVETTE | 0748769788 | NA788 — doublon exact de ID 429
+- ID 468 : NIKIEMA AICHATOU RAHINATOU | 0708648230 | NA230 — doublon exact de ID 467
+- ID 475 : OBROU JUNIOR | 0544660024 | OJ024 — doublon exact de ID 474
+- ID 496 : Ouattara MARAMAN | 0768626416 | OM416 — doublon exact de ID 495
+- ID 747 : KOUAME AGNÈS DÉSIRÉE ROSINE | 0789652729 | KA729A — doublon corrigé selon la nouvelle liste, fiche conservée ID 374
+- ID 460 : N'GUESSAN YABA ROSE | 0103432862 | NY862 — doublon corrigé selon la nouvelle liste, fiche conservée ID 461
+
+FICHIERS DE COMPTES SYNCHRONISÉS
+----------------------------------------------------------------------------------------------------
+- codes-acces.js
+- comptes.js
+- index.html
+- quiz-promo-p8.html
+- sante-publique-quiz.html
+- sante-publique.html
+- shared-accounts.js

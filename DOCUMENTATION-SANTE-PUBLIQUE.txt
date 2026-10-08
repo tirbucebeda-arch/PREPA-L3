@@ -1,0 +1,40 @@
+SANTÉ PUBLIQUE — DOCUMENTATION DU PROJET
+=========================================
+
+# SantePublique
+
+SITE SANTÉ PUBLIQUE L3 — ACCÈS ET HISTORIQUE DES NOTES
+
+CODE D’ACCÈS
+- Accès réservé aux 751 comptes de la liste fournie
+- Le code est valable pour les pages de cours et de quiz.
+- Le bouton « Verrouiller » ferme volontairement l’accès.
+- La protection est une protection HTML/JavaScript adaptée à un site statique.
+
+HISTORIQUE DES NOTES
+- Chaque quiz terminé est enregistré dans le navigateur de l’étudiant.
+- L’étudiant peut consulter :
+  • le nombre de quiz terminés ;
+  • sa moyenne générale ;
+  • sa meilleure note ;
+  • sa progression ou la baisse de ses résultats ;
+  • un graphique des 10 dernières notes ;
+  • le détail des 25 dernières tentatives.
+- L’historique reste lié à l’appareil et au navigateur utilisés.
+- Le bouton « Effacer » supprime l’historique et les meilleurs scores locaux.
+
+MODES DU QUIZ
+1. Question par question.
+2. Afficher toutes les questions sur une page.
+
+UTILISATION
+1. Décompressez le fichier ZIP.
+2. Envoyez tout le dossier sur l’hébergement.
+3. Ouvrez index.html.
+4. Saisissez votre nom complet ou téléphone, puis votre code personnel
+
+OPTIMISATION EFFECTUÉE
+- access.css intégré dans index.html et quiz.html.
+- accounts.js et access.js fusionnés dans site-access.js.
+- quiz-data.js intégré directement dans quiz.html.
+- Les pages index.html, quiz.html, le PDF, le manifeste et le service worker sont conservés.

@@ -1,0 +1,54 @@
+PORTAIL PROMO 8 — VERSION PRÊTE POUR LA RACINE DE GITHUB PAGES
+================================================================
+
+Noms affichés
+1. Santé Publique L3 de M. Dion
+2. Révision L3 toutes les matières
+
+CONTENU DE L’ARCHIVE
+====================
+Cette archive ne contient pas de dossier principal supplémentaire.
+Après décompression, index.html, portal.css, portal.js et les autres éléments apparaissent directement.
+
+Les dossiers internes « sante-publique » et « quiz-medical » doivent rester en place :
+ils protègent la structure originale de chaque site et évitent les conflits entre les fichiers qui portent le même nom.
+Les supprimer ou mélanger leurs fichiers risquerait de casser les quiz, les images, les PDF, les scripts et la connexion.
+
+Fonctionnement
+- Une seule page de connexion : index.html à la racine.
+- Après validation du code, l’étudiant choisit le site sur lequel il veut s’exercer.
+- Le code n’est pas redemandé dans le site choisi.
+- Le bouton « Changer de site » permet de revenir au portail.
+- La déconnexion ferme la session commune.
+- Les comptes sont synchronisés dans les deux espaces.
+
+MISE EN LIGNE SUR GITHUB PAGES
+==============================
+1. Décompressez l’archive ZIP.
+2. Créez ou ouvrez votre dépôt GitHub.
+3. Envoyez directement à la RACINE du dépôt tous les fichiers et dossiers décompressés :
+   - index.html
+   - portal.css
+   - portal.js
+   - shared-accounts.js
+   - .nojekyll
+   - sante-publique/
+   - quiz-medical/
+4. Dans GitHub, ouvrez Settings > Pages.
+5. Dans Build and deployment, choisissez :
+   - Source : Deploy from a branch
+   - Branch : main
+   - Dossier : /(root)
+6. Enregistrez.
+
+Important
+- N’envoyez pas l’archive ZIP elle-même dans GitHub : décompressez-la d’abord.
+- Ouvrez toujours l’adresse principale du portail.
+- Ne renommez pas les dossiers internes sans modifier les liens correspondants.
+- GitHub Pages étant statique, les codes conservés dans JavaScript ne constituent pas une sécurité forte.
+
+
+CORRECTION GITHUB PAGES - CHOIX DU SITE
+---------------------------------------
+Cette version transfère la session dans sessionStorage ET localStorage, prépare la session propre à chaque site avant l'ouverture et contourne les anciens fichiers mis en cache.
+Après remplacement des fichiers sur GitHub, rechargez la page avec Ctrl+F5 ou videz une fois le cache du navigateur.

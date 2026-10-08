@@ -1,0 +1,44 @@
+PLATEFORME DE REVISION DE LA L3 — VERSION HORS CONNEXION
+
+INSTALLATION SUR L’HEBERGEMENT
+1. Décompressez l’archive.
+2. Téléversez TOUS les fichiers au même niveau, sans créer de dossier.
+3. Ouvrez index.html depuis l’adresse HTTPS de votre site.
+
+ACTIVATION DU MODE HORS CONNEXION
+1. Lors de la première utilisation, ouvrez la plateforme avec Internet.
+2. Laissez la page se charger complètement, puis ouvrez une fois chacun des trois espaces.
+3. Sur téléphone, utilisez « Ajouter à l’écran d’accueil » ou « Installer l’application ».
+4. Après cette première installation, la connexion, les codes, les cours et les quiz fonctionnent sans Internet.
+
+IMPORTANT
+- Le mode hors connexion fonctionne seulement après une première ouverture réussie en ligne.
+- L’hébergement doit utiliser HTTPS pour permettre l’installation du service worker.
+- Les résultats sont sauvegardés localement dans le navigateur quand Internet est coupé.
+- La synchronisation Firebase reste facultative et reprend lorsque la connexion revient.
+- Le bouton « Exporter Excel » produit un fichier CSV compatible avec Excel, sans Internet.
+- Le bouton « Exporter PDF » ouvre l’impression : choisissez « Enregistrer au format PDF ».
+- Ne renommez aucun fichier.
+- En cas de mise à jour, remplacez tous les anciens fichiers puis rechargez avec Ctrl + F5.
+
+
+NOUVEL ESPACE AJOUTÉ
+--------------------
+PEDIATRIE L1-L2-L3 : 749 questions objectives, 30 QROC, une étude de cas et le livre PDF.
+
+NOUVEAUX CODES AJOUTÉS
+----------------------
+MADOU MARIE-FRANCE : MM414
+AUHOU FREJUS : AF624
+MAM MICHELE : MM957
+KOUAME AGNÈS DÉSIRÉE ROSINE : KAD729
+KPRIE KOUASSI DESTHER ARTHUR : KK735
+N'GORAN KOUASSI AIME : NK351
+YAO NATHALIE : YN271
+IRIÉ LOU TRANAN NADÈGE : IL626
+
+DÉJÀ PRÉSENTS DANS LA PLATEFORME
+--------------------------------
+AHOUA BROU JEAN : AB404
+DJAHA N' GUESSAN VIRGINIE : DN556
+COULIBALY MADJOUMA : CM910

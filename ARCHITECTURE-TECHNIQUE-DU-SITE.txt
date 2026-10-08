@@ -1,0 +1,388 @@
+PLATEFORME DE RÉVISION DE LA L3
+ARCHITECTURE TECHNIQUE ET GUIDE DE MAINTENANCE
+================================================
+
+OBJET DE CE FICHIER
+-------------------
+Ce document explique la composition et le fonctionnement du site afin qu’une
+personne ayant accès aux fichiers sources puisse le comprendre, le maintenir
+ou le modifier sans casser la plateforme.
+
+Ce fichier est volontairement invisible dans le site :
+- aucun bouton ni lien HTML ne pointe vers lui ;
+- il n’est pas déclaré dans manifest.webmanifest ;
+- il n’est pas ajouté à la liste du cache dans sw.js ;
+- il apparaît seulement dans les fichiers de l’hébergement ou de l’archive ZIP.
+
+
+1. STRUCTURE GÉNÉRALE
+---------------------
+La plateforme est un site statique fonctionnant entièrement avec HTML, CSS et
+JavaScript. Elle ne nécessite pas de serveur PHP, de base MySQL ni de dossier.
+Tous les fichiers doivent rester au même niveau à la racine de l’hébergement.
+
+Point d’entrée principal :
+- index.html
+
+La plateforme donne accès à trois espaces :
+1. SANTÉ PUBLIQUE L1-L2-L3
+2. QUIZ L3 TOUTE LES MATIERE (DE, DEB, PREPA NATIONAL)
+3. PEDIATRIE L1-L2-L3
+
+Parcours normal de l’utilisateur :
+1. ouverture de index.html ;
+2. saisie du code personnel ;
+3. vérification du code dans la liste des comptes ;
+4. création d’une session valable pendant 12 heures ;
+5. affichage des trois choix ;
+6. ouverture de l’espace sélectionné ;
+7. possibilité de revenir au portail ou de se déconnecter.
+
+
+2. FICHIERS DU PORTAIL COMMUN
+-----------------------------
+
+index.html
+- Page d’accueil et page de saisie du code.
+- Contient les cartes permettant d’ouvrir les trois espaces.
+- Contient également une copie intégrée de la liste des comptes afin que la
+  connexion reste possible même si un fichier JavaScript séparé est mal chargé.
+- Enregistre le service worker pour le fonctionnement hors connexion.
+
+plateforme.css
+- Mise en forme du portail : écran de connexion, cartes des trois espaces,
+  boutons, adaptation téléphone et ordinateur.
+
+portail.js
+- Gère le formulaire de connexion du portail.
+- Recherche le compte correspondant au code saisi.
+- Affiche le choix des sites après une connexion réussie.
+- Gère le bouton de déconnexion.
+
+session-plateforme.js
+- Centralise la session commune aux trois sites.
+- Clé principale utilisée dans localStorage : revision-hub-session-v1
+- Durée actuelle de la session : 12 heures.
+- Normalise les codes en supprimant les espaces et en mettant les lettres en
+  majuscules.
+- Supprime aussi les anciennes sessions propres aux autres espaces lors de la
+  déconnexion.
+
+codes-acces.js
+- Copie autonome de la liste des comptes autorisés.
+- Expose les comptes au JavaScript du site.
+
+comptes.js
+- Deuxième copie de sécurité de la liste des comptes.
+- Elle est conservée pour compatibilité avec les anciennes versions du site.
+
+IMPORTANT SUR LES COMPTES
+La liste des comptes est volontairement copiée dans plusieurs fichiers/pages
+pour éviter qu’un hébergement statique ou un cache ancien bloque la connexion.
+Lorsqu’un utilisateur est ajouté, supprimé ou corrigé, vérifier les fichiers :
+- codes-acces.js
+- comptes.js
+- index.html
+- sante-publique.html
+- sante-publique-quiz.html
+- quiz-promo-p8.html
+
+Les pages de pédiatrie ne contiennent pas la liste complète : elles vérifient la
+session commune déjà créée par index.html.
+
+
+3. COMPOSITION DES CODES D’ACCÈS
+--------------------------------
+Règle unique utilisée pour créer un code :
+- première lettre du premier mot du nom complet ;
+- première lettre du deuxième mot du nom complet ;
+- trois derniers chiffres du numéro de téléphone.
+
+Exemple :
+KONAN FRANÇOIS LE DUR, téléphone 0708193558 -> KF558
+
+Avant d’ajouter un nouveau compte :
+1. saisir le nom complet dans l’ordre normal ;
+2. saisir le numéro de téléphone ;
+3. prendre exactement les deux premières initiales ;
+4. prendre exactement les trois derniers chiffres du numéro ;
+5. ne pas ajouter une troisième initiale et ne pas réduire le suffixe à deux chiffres ;
+6. reporter exactement le même compte dans toutes les copies indiquées plus haut.
+
+Pour un nom ne contenant qu’un seul mot, les deux premières lettres de ce mot sont utilisées.
+Si deux personnes obtiennent le même code avec cette formule, leurs noms et numéros doivent être vérifiés avant toute autre correction.
+
+
+4. ESPACE SANTÉ PUBLIQUE L1-L2-L3
+---------------------------------
+
+sante-publique.html
+- Page principale du cours de santé publique.
+- Contient le contenu textuel du cours et les liens de navigation par parties.
+- Ouvre le livret PDF de santé publique.
+- Contient une copie de la liste des comptes et la protection d’accès.
+
+sante-publique-quiz.html
+- Page des exercices et quiz de santé publique.
+- Contient les questions, réponses, corrections et logique du quiz directement
+  dans le fichier HTML.
+- Sauvegarde les résultats dans le navigateur.
+- Contient une copie de la liste des comptes.
+
+document-sante-publique.pdf
+- Livret PDF complet de santé publique.
+
+sante-publique-acces.js
+- Protection propre à l’espace santé publique.
+- Accepte la session commune du portail.
+- Peut également afficher une page de saisie du code si l’espace est ouvert
+  directement.
+- Clés de session temporaires :
+  sp-site-access-v3
+  sp-site-account-v3
+
+illustration-page-004.png
+illustration-page-007.png
+illustration-page-036.png
+illustration-page-037.png
+illustration-page-054.png
+illustration-page-055.png
+illustration-page-092.png
+illustration-page-093.png
+- Illustrations extraites de pages du livret de santé publique et utilisées dans
+  le cours ou les exercices.
+
+
+5. ESPACE QUIZ L3 TOUTE LES MATIERE
+-----------------------------------
+
+quiz-promo-p8.html
+- Interface principale de connexion et de sélection des matières/sujets.
+- Contient une copie de la liste des comptes.
+- Charge le gros fichier de données et de logique quiz-promo-p8.js.
+
+quiz-promo-p8.css
+- Apparence de l’espace Quiz L3 : écrans, boutons, tableaux, cartes, formulaires,
+  mode téléphone et impression.
+
+quiz-promo-p8.js
+- Fichier principal et le plus volumineux de la plateforme.
+- Contient la logique de l’application, les matières, les sujets, les questions,
+  les corrections, les résultats et les outils administratifs.
+- Éviter de le modifier manuellement sans effectuer une copie de sauvegarde.
+
+quiz-promo-p8-liaison.js
+- Relie l’ancien système de connexion du quiz à la session du portail commun.
+- Connecte automatiquement l’étudiant après son passage par index.html.
+- Ajoute les boutons « Choisir un autre site » et « Déconnexion ».
+
+Les résultats et certaines informations de cet espace sont stockés localement
+dans le navigateur. Une partie des anciennes fonctions peut utiliser la clé
+quizPromoSession.
+
+
+6. ESPACE PEDIATRIE L1-L2-L3
+----------------------------
+
+pediatrie.html
+- Page d’accueil de la pédiatrie.
+- Présente les différentes parties de révision.
+- Contient le lecteur du livret PDF, les boutons d’ouverture et de téléchargement.
+- Contrôle l’existence de la session commune avant d’afficher la page.
+
+pediatrie-quiz.html
+- Contient les 749 questions objectives et toute la logique du quiz.
+- Les données sont directement intégrées dans le fichier HTML.
+- Propose les modes entraînement/examen, les thèmes, le temps et les corrections.
+- Historique local principal : pedQuizHistory
+
+pediatrie-qroc.html
+- Contient les 30 QROC avec leurs corrections.
+- Peut ouvrir le livret PDF à la partie correspondante.
+
+pediatrie-cas.html
+- Contient l’étude de cas et sa correction.
+- Peut ouvrir le livret PDF à la partie correspondante.
+
+document-pediatrie.pdf
+- Livret PDF complet de pédiatrie, actuellement composé de 155 pages.
+- Le nom exact doit rester document-pediatrie.pdf.
+- Si le nom change, tous les liens présents dans les quatre pages de pédiatrie
+  doivent être corrigés.
+
+Protection de la pédiatrie :
+- les quatre pages lisent directement la session revision-hub-session-v1 ;
+- si la session est absente ou expirée, elles renvoient vers index.html ;
+- elles ne possèdent pas leur propre liste complète de codes.
+
+
+7. APPLICATION INSTALLABLE ET MODE HORS CONNEXION
+-------------------------------------------------
+
+manifest.webmanifest
+- Décrit la plateforme comme une application web installable (PWA).
+- Définit le nom, le thème, la page de démarrage et les trois raccourcis.
+- Utilise les deux icônes de la plateforme.
+
+icone-l3-192.png
+icone-l3-512.png
+- Icônes utilisées pour l’installation sur téléphone et l’écran d’accueil.
+
+sw.js
+- Service worker chargé du fonctionnement hors connexion.
+- La constante CACHE_NAME identifie la version du cache.
+- Le tableau APP_FILES contient tous les fichiers indispensables à enregistrer.
+- Lors d’une mise à jour importante, changer le nom du cache, par exemple :
+  revision-l3-hors-ligne-v6
+- Ajouter à APP_FILES tout nouveau fichier indispensable au fonctionnement du site.
+- Ne pas y ajouter ce document d’architecture si l’on souhaite qu’il reste un
+  simple fichier technique non distribué par l’application hors connexion.
+
+Fonctionnement du cache :
+1. première ouverture avec Internet et sur une adresse HTTPS ;
+2. installation de sw.js ;
+3. téléchargement des fichiers listés dans APP_FILES ;
+4. ouverture ultérieure possible sans Internet ;
+5. suppression automatique des anciens caches quand CACHE_NAME change.
+
+Après une mise à jour sur l’hébergement :
+1. remplacer tous les anciens fichiers ;
+2. modifier CACHE_NAME dans sw.js ;
+3. ouvrir le site avec Internet ;
+4. effectuer Ctrl + F5 sur ordinateur ou vider le cache du site sur téléphone ;
+5. rouvrir une fois les trois espaces.
+
+
+8. DOCUMENTS TECHNIQUES DÉJÀ PRÉSENTS
+-------------------------------------
+
+LISEZ-MOI.txt
+- Instructions simples d’installation et d’utilisation.
+- Liste les derniers comptes ajoutés.
+
+DOCUMENTATION-SANTE-PUBLIQUE.txt
+- Ancienne documentation spécifique au module Santé publique.
+
+DOCUMENTATION-QUIZ-PROMO-P8.txt
+- Historique détaillé des ajouts et corrections de l’espace Quiz L3.
+- Peut contenir des informations héritées d’anciennes structures de fichiers.
+
+ARCHITECTURE-TECHNIQUE-DU-SITE.txt
+- Le présent document.
+- Documentation générale actuelle de toute la plateforme.
+- N’est affiché dans aucune page du site.
+
+
+9. PROCÉDURE POUR AJOUTER UN NOUVEL ESPACE
+------------------------------------------
+1. Placer tous les nouveaux fichiers au même niveau que index.html.
+2. Utiliser des noms uniques pour éviter d’écraser un fichier existant.
+3. Ajouter une nouvelle carte de choix dans index.html.
+4. Protéger la page avec la session revision-hub-session-v1.
+5. Ajouter les nouveaux fichiers indispensables dans APP_FILES de sw.js.
+6. Ajouter éventuellement un raccourci dans manifest.webmanifest.
+7. Changer CACHE_NAME dans sw.js.
+8. Tester en ligne, puis couper Internet et tester de nouveau.
+9. Tester sur téléphone et sur ordinateur.
+
+
+10. PROCÉDURE POUR AJOUTER OU MODIFIER UNE MATIÈRE
+--------------------------------------------------
+Avant toute modification, faire une copie de sauvegarde de l’archive complète.
+
+- Santé publique : modifier sante-publique.html ou sante-publique-quiz.html.
+- Quiz L3 toutes matières : modifier principalement quiz-promo-p8.js.
+- Pédiatrie : modifier pediatrie-quiz.html, pediatrie-qroc.html ou
+  pediatrie-cas.html selon le type d’exercice.
+- Livret : remplacer le PDF en conservant exactement son nom actuel, sauf si tous
+  les liens sont volontairement modifiés.
+
+Après toute modification :
+- vérifier les erreurs JavaScript dans la console du navigateur ;
+- tester les liens « Choisir un autre site » et « Déconnexion » ;
+- tester un code valide et un code invalide ;
+- tester le PDF ;
+- tester le quiz ;
+- changer CACHE_NAME dans sw.js ;
+- tester hors connexion.
+
+
+11. CONTRAINTES IMPORTANTES DE L’HÉBERGEMENT
+--------------------------------------------
+- Aucun dossier n’est utilisé : tous les fichiers sont à la racine.
+- Ne pas renommer un fichier sans corriger tous les liens vers ce fichier.
+- Les noms sont sensibles aux différences de majuscules/minuscules sur certains
+  hébergements.
+- Les fichiers PDF et quiz-promo-p8.js sont lourds : leur envoi doit aller jusqu’à
+  la fin avant de tester le site.
+- Le service worker exige normalement HTTPS, sauf sur localhost.
+
+
+12. NOTE DE SÉCURITÉ
+--------------------
+La plateforme est un site statique. Les codes d’accès sont vérifiés par
+JavaScript dans le navigateur et sont donc présents dans les fichiers sources.
+Ce système convient pour limiter l’accès courant à une plateforme de révision,
+mais ne constitue pas une authentification serveur sécurisée pour des données
+confidentielles ou financières.
+
+Pour une sécurité forte, il faudrait un serveur avec une base de données, des
+mots de passe chiffrés et une authentification côté serveur.
+
+
+13. RÉSUMÉ RAPIDE DES FICHIERS ESSENTIELS
+-----------------------------------------
+Portail :
+- index.html
+- plateforme.css
+- portail.js
+- session-plateforme.js
+- codes-acces.js
+- comptes.js
+
+Hors connexion :
+- sw.js
+- manifest.webmanifest
+- icone-l3-192.png
+- icone-l3-512.png
+
+Santé publique :
+- sante-publique.html
+- sante-publique-quiz.html
+- sante-publique-acces.js
+- document-sante-publique.pdf
+- illustrations PNG
+
+Quiz L3 :
+- quiz-promo-p8.html
+- quiz-promo-p8.css
+- quiz-promo-p8.js
+- quiz-promo-p8-liaison.js
+
+Pédiatrie :
+- pediatrie.html
+- pediatrie-quiz.html
+- pediatrie-qroc.html
+- pediatrie-cas.html
+- document-pediatrie.pdf
+
+Fin du document.
+
+
+============================================================
+DROITS D’AUTEUR ET AVERTISSEMENT
+============================================================
+
+Fichiers ajoutés :
+- droits-auteur.html : page visible présentant les droits d’auteur, les limites d’utilisation et la procédure de retrait.
+- droits-auteur-avertissement.pdf : document PDF fourni par l’administrateur.
+- avertissement.css : styles communs de la page légale, du lien flottant et du message initial.
+- avertissement.js : ajoute le lien « Droits d’auteur » à toutes les pages et affiche l’avertissement lors de la première ouverture du portail.
+
+Fonctionnement :
+- Le lien vers la page légale apparaît sur les pages du site.
+- Un avertissement est affiché à la première ouverture du portail.
+- L’acceptation est mémorisée dans le navigateur avec la clé localStorage : revision-l3-legal-ack-v1.
+- Ces fichiers sont inclus dans sw.js afin de rester disponibles hors connexion.
+
+Important : les droits revendiqués sur la structure, le code et l’interface restent distincts des droits appartenant aux auteurs des cours, sujets, images et PDF intégrés.

@@ -1,0 +1,23 @@
+MISE À JOUR — PARAMÈTRES DE COMPOSITION
+
+Les espaces Santé publique et Pédiatrie disposent maintenant des mêmes réglages principaux que Quiz L3 toutes les matières :
+- photo avant composition ;
+- validation automatique lors d’une sortie de page, d’un appel, d’un changement d’application ou de fenêtre ;
+- mode question par question ou toutes les questions ;
+- nombre de questions ;
+- mélange des questions ;
+- mélange des propositions ;
+- chronomètre et temps par question ;
+- affichage de la correction ;
+- mode sombre ;
+- taille du texte.
+
+Les réglages sont enregistrés par code d’accès sur l’appareil utilisé.
+La Pédiatrie possède désormais aussi un véritable mode « Toutes les questions ».
+
+Fichiers ajoutés :
+- composition-settings.css
+- composition-settings.js
+- pediatrie-quiz-app.js
+
+Le service worker a été mis à jour pour conserver ces fichiers hors connexion.

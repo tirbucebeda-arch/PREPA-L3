@@ -1,0 +1,49 @@
+{
+  "id": "./index.html",
+  "name": "PLATEFORME DE REVISION DE LA L3",
+  "short_name": "Révision L3",
+  "description": "Portail commun donnant accès à Santé publique, au D.E. blanc 2024-2025, à la PREPA D.E. nationale 2026 et à la Pédiatrie.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#edf4f6",
+  "theme_color": "#0c4a6e",
+  "lang": "fr",
+  "shortcuts": [
+    {
+      "name": "SANTÉ PUBLIQUE L1-L2-L3",
+      "short_name": "SANTÉ PUBLIQUE",
+      "url": "./sante-publique.html"
+    },
+    {
+      "name": "DIPLÔME D'ÉTAT BLANC 2024-2025-2026",
+      "short_name": "D.E. BLANC",
+      "url": "./quiz-promo-p8.html?portal=de-blanc"
+    },
+    {
+      "name": "PREPA D.E. NATIONALE 2026",
+      "short_name": "PREPA D.E. 2026",
+      "url": "./quiz-promo-p8.html?portal=prepa-national"
+    },
+    {
+      "name": "PEDIATRIE L1-L2-L3",
+      "short_name": "PEDIATRIE L1-L2-L3",
+      "url": "./pediatrie.html"
+    }
+  ],
+  "icons": [
+    {
+      "src": "./icone-l3-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icone-l3-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "prefer_related_applications": false
+}

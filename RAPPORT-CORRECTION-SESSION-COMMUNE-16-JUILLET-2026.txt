@@ -1,0 +1,24 @@
+CORRECTION DE LA SESSION COMMUNE — 16 JUILLET 2026
+
+Objectif
+- Le code d'accès est saisi une seule fois sur le portail.
+- Santé publique, Quiz Promo P8 et les autres pages utilisent la même session.
+- La session ne s'arrête plus automatiquement après 12 heures.
+
+Corrections appliquées
+1. Session unique : revision-hub-session-v1 dans localStorage.
+2. Suppression de la session séparée quizPromoSession pour les nouvelles connexions.
+3. Suppression de la session séparée sp-site-access-v3 / sp-site-account-v3 pour les nouvelles connexions.
+4. Migration automatique des anciennes sessions vers la session commune.
+5. restoreSession() du Quiz restaure automatiquement l'espace étudiant.
+6. Santé publique ne présente plus un deuxième formulaire de code : sans session, retour au portail.
+7. Service worker version v14 : réseau prioritaire pour HTML, JavaScript, CSS et manifest ; cache en secours hors connexion.
+8. Les anciens caches sont supprimés lors de l'activation du nouveau service worker.
+
+Comportement attendu
+- Après connexion sur index.html, l'utilisateur peut ouvrir chaque espace sans ressaisir son code.
+- Le code sera redemandé uniquement après une déconnexion volontaire, un effacement des données du navigateur, un changement de navigateur/appareil, ou l'utilisation d'une autre adresse de domaine.
+
+Déploiement
+- Remplacer tous les anciens fichiers du site par ceux de cette archive.
+- Après la mise en ligne, ouvrir le portail avec Internet puis actualiser une fois afin d'installer le nouveau service worker.

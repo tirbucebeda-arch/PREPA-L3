@@ -1,0 +1,3 @@
+Aucun code n'est désormais partagé par deux fiches distinctes.
+Lorsqu'un code calculé existait déjà, le second compte a reçu le suffixe A.
+Les éventuelles répétitions restantes sont uniquement des copies strictement identiques de la même fiche.

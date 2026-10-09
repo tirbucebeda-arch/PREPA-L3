@@ -17,19 +17,14 @@
 .revision-hub-pediatrie .hub-left,.revision-hub-pediatrie .hub-right{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.revision-hub-pediatrie a,.revision-hub-pediatrie button{border:1px solid rgba(255,255,255,.55);border-radius:9px;padding:7px 10px;background:#fff;color:#075985;text-decoration:none;font:inherit;font-weight:800;cursor:pointer}.revision-hub-pediatrie button{background:transparent;color:#fff}.revision-hub-pediatrie .hub-user{font-weight:800}@media(max-width:640px){.revision-hub-pediatrie{align-items:flex-start;flex-direction:column}.revision-hub-pediatrie .hub-left,.revision-hub-pediatrie .hub-right{width:100%}.revision-hub-pediatrie a,.revision-hub-pediatrie button{flex:1;text-align:center}}
 </style>
   <link rel="stylesheet" href="avertissement.css">
-</head><body>
+</head><body><script src="session-bridge.js"></script>
 <script id="revision-hub-pediatrie-guard">
 (function(){
   'use strict';
   const KEY='revision-hub-session-v1';
   let session=null;
-  try{session=JSON.parse(localStorage.getItem(KEY)||'null')}catch(_){session=null}
-  if(!session||!session.code){
-    localStorage.removeItem(KEY);
-    location.replace('index.html');
-    return;
-  }
-  window.PEDIATRIE_HUB_SESSION=session;
+  session=window.RevisionSessionBridge?.getSession()||null;
+  window.PEDIATRIE_HUB_SESSION=session||{name:'Étudiant',code:'ACCES-ACCUEIL'};
 })();
 </script>
 <div class="revision-hub-pediatrie" id="revisionHubPediatrie">

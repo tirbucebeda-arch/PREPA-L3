@@ -1,4 +1,4 @@
-const CACHE_NAME = 'revision-l3-hors-ligne-v27-troisieme-lot-prepa-08-octobre-2026';
+const CACHE_NAME = 'revision-l3-hors-ligne-v43-comptes-09-octobre-2026';
 const APP_FILES = [
   './',
   './index.html',
@@ -16,6 +16,7 @@ const APP_FILES = [
   './codes-acces.js',
   './comptes.js',
   './session-plateforme.js',
+  './session-bridge.js',
   './portail.js',
   './sante-publique.html',
   './sante-publique-quiz.html',
@@ -32,6 +33,7 @@ const APP_FILES = [
   './quiz-promo-p8.html',
   './quiz-promo-p8.css',
   './quiz-promo-p8.js',
+  './de-blanc-2026-quiz-data.js',
   './prepa-de-2026-octobre.js',
   './prepa-de-2026-deuxieme-lot.js',
   './prepa-de-2026-troisieme-lot.js',
@@ -40,7 +42,20 @@ const APP_FILES = [
   './pediatrie-quiz.html',
   './pediatrie-qroc.html',
   './pediatrie-cas.html',
-  './document-pediatrie.pdf'
+  './document-pediatrie.pdf',
+  './chirurgie.html',
+  './chirurgie-data.js',
+  './document-chirurgie.pdf',
+  './chirurgie-quiz.html',
+  './chirurgie-quiz-app.js',
+  './chirurgie-quiz-data.js'
+  ,'./de-blanc-2026-sujets.html'
+  ,'./de-blanc-2026-agboville-ide.pdf'
+  ,'./de-blanc-2026-agboville-sfm.pdf'
+  ,'./de-blanc-2026-daloa-ide.pdf'
+  ,'./de-blanc-2026-daloa-sfm.pdf'
+  ,'./de-blanc-2026-korhogo-ide.pdf'
+  ,'./de-blanc-2026-korhogo-sfm.pdf'
 ];
 
 async function cacheAll(progressClient) {

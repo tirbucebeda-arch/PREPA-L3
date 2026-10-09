@@ -18,19 +18,13 @@
 </style>
   <link rel="stylesheet" href="composition-settings.css">
   <link rel="stylesheet" href="avertissement.css">
-</head><body>
+</head><body><script src="session-bridge.js"></script>
 <script id="revision-hub-pediatrie-guard">
 (function(){
   'use strict';
   const KEY='revision-hub-session-v1';
-  let session=null;
-  try{session=JSON.parse(localStorage.getItem(KEY)||'null')}catch(_){session=null}
-  if(!session||!session.code){
-    localStorage.removeItem(KEY);
-    location.replace('index.html');
-    return;
-  }
-  window.PEDIATRIE_HUB_SESSION=session;
+  const session=window.RevisionSessionBridge?.getSession()||null;
+  window.PEDIATRIE_HUB_SESSION=session||{name:'Étudiant',code:'ACCES-ACCUEIL'};
 })();
 </script>
 <div class="revision-hub-pediatrie" id="revisionHubPediatrie">
@@ -48,6 +42,7 @@ document.addEventListener('DOMContentLoaded',function(){
     localStorage.removeItem('quizPromoSession');
     sessionStorage.removeItem('sp-site-access-v3');
     sessionStorage.removeItem('sp-site-account-v3');
+    window.RevisionSessionBridge?.clear();
     location.href='index.html';
   });
 });

@@ -86,12 +86,14 @@
     sessionStorage.removeItem('sp-site-account-v3');
   }
 
+  let memorySession = null;
   function saveSession(account, requestedCode = '') {
-    const previous = safeParse(localStorage.getItem(HUB_SESSION_KEY));
+    let previous = memorySession;
+    try { previous = safeParse(localStorage.getItem(HUB_SESSION_KEY)) || previous; } catch (_) {}
     const session = sessionFromAccount(account, previous, requestedCode);
     if (!session) return null;
-    localStorage.setItem(HUB_SESSION_KEY, JSON.stringify(session));
-    removeLegacySessions();
+    memorySession = session;
+    try { localStorage.setItem(HUB_SESSION_KEY, JSON.stringify(session)); removeLegacySessions(); } catch (_) {}
     return session;
   }
 
@@ -114,27 +116,24 @@
   }
 
   function getSession() {
-    try {
-      let stored = safeParse(localStorage.getItem(HUB_SESSION_KEY));
-      if (!stored || !stored.code) stored = findLegacySession();
-      if (!stored || !stored.code) return null;
-
-      const account = findAccount(stored.code);
-      if (!account) return null;
-
-      const refreshed = sessionFromAccount(account, stored, stored.code);
-      localStorage.setItem(HUB_SESSION_KEY, JSON.stringify(refreshed));
-      removeLegacySessions();
-      return refreshed;
-    } catch (_) {
-      return null;
+    let stored = memorySession;
+    try { stored = safeParse(localStorage.getItem(HUB_SESSION_KEY)) || stored; } catch (_) {}
+    stored = stored || window.RevisionSessionBridge?.getSession();
+    if (!stored || !stored.code) {
+      try { stored = findLegacySession(); } catch (_) {}
     }
+    if (!stored || !stored.code) return null;
+    const account = findAccount(stored.code);
+    if (!account) return null;
+    memorySession = sessionFromAccount(account, stored, stored.code);
+    try { localStorage.setItem(HUB_SESSION_KEY, JSON.stringify(memorySession)); removeLegacySessions(); } catch (_) {}
+    return memorySession;
   }
 
   function clearSession() {
-    localStorage.removeItem(HUB_SESSION_KEY);
-    sessionStorage.removeItem(HUB_SESSION_KEY);
-    removeLegacySessions();
+    memorySession = null;
+    window.RevisionSessionBridge?.clear();
+    try { localStorage.removeItem(HUB_SESSION_KEY); sessionStorage.removeItem(HUB_SESSION_KEY); removeLegacySessions(); } catch (_) {}
   }
 
   window.RevisionHub = Object.freeze({

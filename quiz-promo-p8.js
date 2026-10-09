@@ -213228,8 +213228,10 @@ const portalSubtitle = document.getElementById("portal-subtitle");
 if (portalSubtitle) {
   portalSubtitle.textContent = PORTAL_VARIANT === "prepa-national"
     ? "Choisis une matière, puis un sujet de la PREPA D.E. nationale 2026."
-    : "Choisis une matière, puis un sujet de D.E. blanc 2024 ou 2025.";
+    : "Choisis une matière, puis un sujet de D.E. blanc 2024, 2025 ou 2026.";
 }
+const deBlanc2026Documents = document.getElementById("de-blanc-2026-documents");
+if (deBlanc2026Documents && PORTAL_VARIANT === "de-blanc") deBlanc2026Documents.classList.remove("hidden");
 
 let currentQuestions = [];
 let score = 0;
@@ -213737,7 +213739,6 @@ async function waitForFirebaseReady(maxWaitMs = 5000) {
 function cleanQuestionText(text) {
   return String(text || "")
     .replace(/^(QCM|QCD|Cas clinique|Cas pratique|Vrai\/Faux)\s*\d*\s*/i, "")
-    .replace(/\([^)]*\)\s*:?\s*/, "")
     .replace(/^[:：]\s*/, "")
     .trim();
 }
@@ -213916,6 +213917,8 @@ function resetSubjectSelection() {
 }
 
 function updateBeginQuizButtonState() {
+  if (displayModeChoiceSelect) displayModeChoiceSelect.disabled = false;
+  beginQuizBtn.textContent = "Commencer";
   const hasDisplayMode = displayModeChoiceSelect ? Boolean(displayModeChoiceSelect.value) : true;
   selectedDisplayMode = displayModeChoiceSelect ? displayModeChoiceSelect.value : "all";
   const shouldShow = Boolean(selectedMode && selectedSubjectName && selectedTopicName && hasDisplayMode);
@@ -214142,7 +214145,7 @@ function setRecoverCodeMessage(message, isError = false) {
 function openRecoverCodePage() {
   if (!recoverCodeCard) return;
   if (authCard) authCard.classList.add("hidden");
-  recoverCodeCard.classList.remove("hidden");
+  recoverCodeCard.classList.add("hidden");
   if (recoverFullNameInput) recoverFullNameInput.value = "";
   if (recoverPhoneInput) recoverPhoneInput.value = "";
   setRecoverCodeMessage("");
@@ -214151,7 +214154,7 @@ function openRecoverCodePage() {
 
 function closeRecoverCodePage() {
   if (recoverCodeCard) recoverCodeCard.classList.add("hidden");
-  if (authCard) authCard.classList.remove("hidden");
+  if (authCard) authCard.classList.add("hidden");
   setRecoverCodeMessage("");
   if (recoverLoginBtn) recoverLoginBtn.classList.add("hidden");
 }
@@ -214191,7 +214194,7 @@ function loginWithRecoveredCode() {
     return;
   }
   if (recoverCodeCard) recoverCodeCard.classList.add("hidden");
-  if (authCard) authCard.classList.remove("hidden");
+  if (authCard) authCard.classList.add("hidden");
   loginStudent();
 }
 
@@ -214253,7 +214256,7 @@ async function restoreSession() {
     // La session a deja ete validee par le portail commun. La liste interne du
     // Quiz ne doit jamais annuler cette connexion si Firebase est lent ou si
     // ses donnees locales ne sont pas encore synchronisees.
-    const student = await findStudentByAccessCode(hubSession.code) || {
+    const student = getAllStudentsLocalOnly().find(student => studentMatchesAccessCode(student, hubSession.code)) || {
       code: normalizeStudentCode(hubSession.code),
       nom: hubSession.name || "Etudiant",
       telephone: hubSession.phone || ""
@@ -214313,17 +214316,47 @@ function getTopicsForSubjectFromData(subjectName) {
   });
 }
 
+const DE_BLANC_2026_DOCUMENTS = {"D.E. BLANC 2026 — Chirurgie — Agboville — IDE": {"subject": "Chirurgie", "url": "de-blanc-2026-agboville-ide.pdf#page=1"}, "D.E. BLANC 2026 — Chirurgie — Daloa — IDE": {"subject": "Chirurgie", "url": "de-blanc-2026-daloa-ide.pdf#page=1"}, "D.E. BLANC 2026 — Chirurgie — Korhogo — IDE": {"subject": "Chirurgie", "url": "de-blanc-2026-korhogo-ide.pdf#page=1"}, "D.E. BLANC 2026 — Médecine — Agboville — IDE": {"subject": "Médecine", "url": "de-blanc-2026-agboville-ide.pdf#page=4"}, "D.E. BLANC 2026 — Médecine — Daloa — IDE": {"subject": "Médecine", "url": "de-blanc-2026-daloa-ide.pdf#page=11"}, "D.E. BLANC 2026 — Médecine — Korhogo — IDE": {"subject": "Médecine", "url": "de-blanc-2026-korhogo-ide.pdf#page=11"}, "D.E. BLANC 2026 — Pédiatrie — Agboville — IDE": {"subject": "Pédiatrie", "url": "de-blanc-2026-agboville-ide.pdf#page=9"}, "D.E. BLANC 2026 — Pédiatrie — Agboville — SFM": {"subject": "Pédiatrie", "url": "de-blanc-2026-agboville-sfm.pdf#page=5"}, "D.E. BLANC 2026 — Pédiatrie — Daloa — IDE": {"subject": "Pédiatrie", "url": "de-blanc-2026-daloa-ide.pdf#page=17"}, "D.E. BLANC 2026 — Pédiatrie — Daloa — SFM": {"subject": "Pédiatrie", "url": "de-blanc-2026-daloa-sfm.pdf#page=1"}, "D.E. BLANC 2026 — Pédiatrie — Korhogo — IDE": {"subject": "Pédiatrie", "url": "de-blanc-2026-korhogo-ide.pdf#page=17"}, "D.E. BLANC 2026 — Pédiatrie — Korhogo — SFM": {"subject": "Pédiatrie", "url": "de-blanc-2026-korhogo-sfm.pdf#page=10"}, "D.E. BLANC 2026 — Santé Publique — Agboville — IDE": {"subject": "Santé Publique", "url": "de-blanc-2026-agboville-ide.pdf#page=13"}, "D.E. BLANC 2026 — Santé Publique — Agboville — SFM": {"subject": "Santé Publique", "url": "de-blanc-2026-agboville-sfm.pdf#page=12"}, "D.E. BLANC 2026 — Santé Publique — Daloa — IDE": {"subject": "Santé Publique", "url": "de-blanc-2026-daloa-ide.pdf#page=21"}, "D.E. BLANC 2026 — Santé Publique — Daloa — SFM": {"subject": "Santé Publique", "url": "de-blanc-2026-daloa-sfm.pdf#page=5"}, "D.E. BLANC 2026 — Santé Publique — Korhogo — IDE": {"subject": "Santé Publique", "url": "de-blanc-2026-korhogo-ide.pdf#page=23"}, "D.E. BLANC 2026 — Santé Publique — Korhogo — SFM": {"subject": "Santé Publique", "url": "de-blanc-2026-korhogo-sfm.pdf#page=16"}, "D.E. BLANC 2026 — Gynécologie — Agboville — SFM": {"subject": "Gynécologie", "url": "de-blanc-2026-agboville-sfm.pdf#page=1"}, "D.E. BLANC 2026 — Gynécologie — Korhogo — SFM": {"subject": "Gynécologie", "url": "de-blanc-2026-korhogo-sfm.pdf#page=1"}, "D.E. BLANC 2026 — Planification Familiale / SR — Agboville — SFM": {"subject": "Planification Familiale / SR", "url": "de-blanc-2026-agboville-sfm.pdf#page=9"}, "D.E. BLANC 2026 — Planification Familiale / SR — Korhogo — SFM": {"subject": "Planification Familiale / SR", "url": "de-blanc-2026-korhogo-sfm.pdf#page=23"}};
+function formatSubjectTitle(title) {
+  const raw = String(title || '').trim();
+  if (!raw) return raw;
+  const subjects = {
+    'CHIRURGIE': 'Chirurgie', 'MÉDECINE': 'Médecine', 'PÉDIATRIE': 'Pédiatrie',
+    'SANTÉ PUBLIQUE': 'Santé publique', 'GYNÉCOLOGIE': 'Gynécologie-obstétrique',
+    'GYNÉCOLOGIE-OBSTÉTRIQUE': 'Gynécologie-obstétrique',
+    'SSR/PF': 'SSR / Planification familiale',
+    'PLANIFICATION FAMILIALE / SR': 'SSR / Planification familiale'
+  };
+  const subjectLabel = name => subjects[name.trim().toUpperCase()] || name.trim();
+  const pdf = raw.match(/^D\.E\. BLANC (\d{4}) — (.+?) — (.+?) — (IDE|SFM)$/i);
+  if (pdf) return `D.E. BLANC ${pdf[1]} — ${subjectLabel(pdf[2])} — Antenne ${pdf[3]} — ${pdf[4]}`;
+  const deb = raw.match(/^DEB (.+?) (\d{4}) antenne (.+)$/i);
+  if (deb) {
+    let city = deb[3].replace(/\s+N°\s*(\d+)$/i, ' — Sujet $1').replace(/\s+Groupe\s+(\d+)$/i, ' — Groupe $1');
+    return `D.E. BLANC ${deb[2]} — ${subjectLabel(deb[1])} — Antenne ${city}`;
+  }
+  const prep = raw.match(/^PREPA D\.E\.? NATIONALE (\d{4}) (.+?) (IDE(?:[\/-]SFM)?|SFM) SUJET\s*(\d+)$/i);
+  if (prep) return `PRÉPA D.E. NATIONALE ${prep[1]} — ${subjectLabel(prep[2])} — ${prep[3].replace('IDE-SFM', 'IDE/SFM')} — Sujet ${prep[4]}`;
+  return raw;
+}
+
 function getPreparationSubjectsWithQuestions() {
   const prepConfig = typeof PREPARATION_DE_CONFIG !== "undefined" && Array.isArray(PREPARATION_DE_CONFIG) ? PREPARATION_DE_CONFIG : [];
   const prepLabels = typeof PREPARATION_DE_SUBJECTS !== "undefined" && Array.isArray(PREPARATION_DE_SUBJECTS) ? PREPARATION_DE_SUBJECTS : [];
   const labelBySubject = new Map(prepLabels.map((item) => [item.subjectName, item.label || item.subjectName]));
 
-  return prepConfig
+  const available = prepConfig
     .filter((subject) => {
       const topics = Array.isArray(subject.topics) ? subject.topics : [];
       return topics.some((topicName) => isTopicForActivePortal(topicName) && (getQuizData()[subject.subjectName]?.[topicName] || []).length > 0);
     })
     .map((subject) => ({ ...subject, displayName: labelBySubject.get(subject.subjectName) || subject.subjectName }));
+  if (PORTAL_VARIANT === "de-blanc") {
+    for (const doc of Object.values(DE_BLANC_2026_DOCUMENTS)) {
+      if (!available.some(item => item.subjectName === doc.subject)) available.push({ subjectName: doc.subject, displayName: doc.subject, topics: [] });
+    }
+  }
+  return available;
 }
 
 function isTopicForActivePortal(topicName) {
@@ -214429,10 +214462,13 @@ function renderTopicsForSelectedSubject(subjectName) {
       topics = subjectConfig?.topics || [];
     }
 
+    if (PORTAL_VARIANT === "de-blanc" && selectedMode === "preparation") {
+      topics = topics.sort((a, b) => Number(b.includes("BLANC 2026")) - Number(a.includes("BLANC 2026")));
+    }
     topics.forEach((topic) => {
       const option = document.createElement("option");
       option.value = topic;
-      option.textContent = topic;
+      option.textContent = formatSubjectTitle(topic);
       topicChoiceSelect.appendChild(option);
     });
   }
@@ -214564,10 +214600,16 @@ function buildQuestionElement(q, questionIndex) {
   wrapper.className = "review-item question-block";
   const title = document.createElement("strong");
   title.textContent = `${questionIndex + 1}. ${cleanQuestionText(q.question)}`;
+  title.style.whiteSpace = "pre-wrap";
   wrapper.appendChild(title);
+  if (q.correctionAuthor) {
+    const hint = document.createElement("p");
+    hint.textContent = q.neutralized ? "Question non notée — explication après validation." : q.multiple ? "Plusieurs réponses possibles : sélectionner toutes les réponses pertinentes." : "Une réponse à sélectionner.";
+    wrapper.appendChild(hint);
+  }
 
   const expectedAnswers = Array.isArray(q.answer) ? q.answer : [q.answer];
-  const isMultipleAnswer = expectedAnswers.length > 1;
+  const isMultipleAnswer = q.ungraded ? Boolean(q.multiple) : expectedAnswers.length > 1;
   const savedAnswer = userAnswers[questionIndex];
   const savedAnswers = Array.isArray(savedAnswer)
     ? savedAnswer
@@ -214677,42 +214719,39 @@ function finalizeQuizSubmission({ allowIncomplete = false, reason = "" } = {}) {
   let unanswered = 0;
   answersReview.length = 0;
 
+  let gradedTotal = 0;
+  let rawPoints = 0;
   currentQuestions.forEach((q, questionIndex) => {
     const chosenAnswer = userAnswers[questionIndex];
-    const expectedAnswers = Array.isArray(q.answer) ? [...q.answer].sort((a, b) => a - b) : [q.answer];
+    const expectedAnswers = q.answer == null ? [] : Array.isArray(q.answer) ? [...q.answer].sort((a, b) => a - b) : [q.answer];
     const chosenAnswers = Array.isArray(chosenAnswer)
       ? [...chosenAnswer].sort((a, b) => a - b)
-      : chosenAnswer === null
-      ? []
-      : [chosenAnswer];
-    const isCorrect =
-      chosenAnswers.length === expectedAnswers.length &&
+      : chosenAnswer == null ? [] : [chosenAnswer];
+    const neutralized = Boolean(q.ungraded || q.neutralized || expectedAnswers.length === 0);
+    const isCorrect = !neutralized && chosenAnswers.length === expectedAnswers.length &&
       chosenAnswers.every((answer, index) => answer === expectedAnswers[index]);
-    
-    if (isCorrect) {
-      goodAnswers += 1;
-    } else if (chosenAnswer === null) {
-      unanswered += 1;
-    } else {
-      badAnswers += 1;
+    const isQCD = q.type === "QCD" || (!q.type && q.options.length === 2 &&
+      q.options.every(option => /^(?:[AB]\.\s*)?(vrai|faux)$/i.test(option.trim())));
+    if (!neutralized) {
+      gradedTotal += 1;
+      if (isCorrect) { goodAnswers += 1; rawPoints += 1; }
+      else if (chosenAnswers.length === 0) unanswered += 1;
+      else { badAnswers += 1; if (isQCD) rawPoints -= 1; }
     }
-
     answersReview.push({
-      question: cleanQuestionText(q.question),
-      isCorrect,
-      explanation: q.explanation,
-      goodAnswer: expectedAnswers.map((answerIndex) => q.options[answerIndex]).join(" / "),
-      userAnswer: chosenAnswers.length === 0
-        ? "Non repondu"
-        : chosenAnswers.map((answerIndex) => q.options[answerIndex]).join(" / "),
+      question: cleanQuestionText(q.question), isCorrect, neutralized,
+      explanation: q.explanation, source: q.correctionSource || q.source || "",
+      references: q.references || [], questionSource: q.questionSource || "",
+      correctionAuthor: q.correctionAuthor || "", revisionNotes: q.revisionNotes || [],
+      originalQuestion: q.originalQuestion || "", originalOptions: q.originalOptions || [],
+      goodAnswer: neutralized ? "Question exclue de la note" : expectedAnswers.map(i => q.options[i]).join(" / "),
+      userAnswer: chosenAnswers.length ? chosenAnswers.map(i => q.options[i]).join(" / ") : "Non répondu"
     });
   });
-
-  // Calcul du score: (bonnes reponses - mauvaises reponses) * 20 / total
-  const total = currentQuestions.length;
-  score = Math.max(0, Math.round(((goodAnswers - badAnswers) * 20) / total));
-
-  showResults(reason, goodAnswers, badAnswers, unanswered, total);
+  // Each valid question is worth one point. Only a wrong QCD loses one point.
+  // Neutralized questions never enter the denominator or the penalty.
+  score = gradedTotal ? Math.max(0, Math.round(rawPoints * 20 / gradedTotal * 100) / 100) : null;
+  showResults(reason, goodAnswers, badAnswers, unanswered, gradedTotal);
 }
 
 function autoSubmitQuiz(reason) {
@@ -214731,42 +214770,49 @@ function autoSubmitQuiz(reason) {
 function showResults(reason = "", goodAnswers = 0, badAnswers = 0, unanswered = 0, total = 0) {
   quizCard.classList.add("hidden");
   resultCard.classList.remove("hidden");
-
-  const goodPercent = Math.round((goodAnswers / total) * 100);
-  const badPercent = Math.round((badAnswers / total) * 100);
-  
-  let resultDetails = `
-    <div style="background: #f0f9ff; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-      <h3 style="margin-top: 0; color: #0369a1;">Détails du Score</h3>
-      <p><strong>Score:</strong> ${score}/20</p>
-      <p><strong>Bonnes réponses:</strong> ${goodAnswers}/${total} (${goodPercent}%)</p>
-      <p><strong>Mauvaises réponses:</strong> ${badAnswers}/${total} (${badPercent}%)</p>
-      <p><strong>Non répondues:</strong> ${unanswered}/${total}</p>
-    </div>
-  `;
-  
-  finalMessage.innerHTML = reason
-    ? `${currentUser}, ton devoir a ete envoye automatiquement (${reason}).${resultDetails}`
-    : `${currentUser}, tu as termine le quiz.${resultDetails}`;
-
+  const excluded = answersReview.filter(item => item.neutralized).length;
+  const authored = currentQuestions.some(q => q.correctionAuthor);
+  finalMessage.innerHTML = "";
+  const status = document.createElement("p");
+  status.textContent = reason ? `Quiz envoyé automatiquement (${reason}).` : "Quiz terminé.";
+  finalMessage.appendChild(status);
+  const details = document.createElement("div");
+  details.style.cssText = "background:#f0f9ff;padding:15px;border-radius:8px;margin-bottom:20px";
+  const lines = [total ? `Note : ${score}/20` : "Note non calculée : aucune question notée.",
+    `Bonnes réponses : ${goodAnswers}/${total} ; mauvaises : ${badAnswers}/${total} ; non répondues : ${unanswered}/${total}.`,
+    "Barème par question : réponse exacte +1 ; QCM faux ou incomplet 0 ; QCD faux −1 ; sans réponse 0. Note ramenée sur 20, minimum 0."];
+  if (excluded) lines.push(`${excluded} question(s) exclue(s) de la note : voir les explications ci-dessous.`);
+  if (authored) lines.push("Corrigé pédagogique rédigé par ChatGPT, non officiel. Les énoncés rectifiés et les références sont indiqués dans la correction.");
+  lines.forEach(text => { const p = document.createElement("p"); p.textContent = text; details.appendChild(p); });
+  finalMessage.appendChild(details);
   reviewList.innerHTML = "";
   const showExplanations = getCurrentStudentSettings().showExplanations;
-  answersReview.forEach((item) => {
+  answersReview.forEach(item => {
     const div = document.createElement("div");
-    div.className = `review-item ${item.isCorrect ? "good" : "bad"}`;
-    const explanationHtml = showExplanations && item.explanation
-      ? `<br/><em>${item.explanation}</em>`
-      : "";
-    div.innerHTML = `
-      <strong>${item.question}</strong><br/>
-      Ta reponse: ${item.userAnswer}<br/>
-      Bonne reponse: ${item.goodAnswer}${explanationHtml}
-    `;
+    div.className = `review-item ${item.neutralized ? "neutralized" : item.isCorrect ? "good" : "bad"}`;
+    const heading = document.createElement("strong"); heading.textContent = item.question; heading.style.whiteSpace = "pre-wrap"; div.appendChild(heading);
+    const line = text => { const p = document.createElement("p"); p.textContent = text; div.appendChild(p); };
+    line(`Ta réponse : ${item.userAnswer}`);
+    line(`${item.neutralized ? "Statut" : "Bonne réponse"} : ${item.goodAnswer}`);
+    if ((showExplanations || item.correctionAuthor || item.neutralized) && item.explanation) line(item.explanation);
+    if (item.source) line(`Fondement du corrigé : ${item.source}`);
+    if (item.questionSource) line(`Sujet d’origine : ${item.questionSource}`);
+    item.references.forEach(ref => {
+      if (!/^https:\/\//.test(ref.url)) return;
+      const p = document.createElement("p"), a = document.createElement("a");
+      a.href = ref.url; a.textContent = ref.title; a.target = "_blank"; a.rel = "noopener noreferrer"; p.appendChild(a); div.appendChild(p);
+    });
+    if (item.revisionNotes.length) {
+      line(item.revisionNotes.join(" "));
+      const disclosure = document.createElement("details"), summary = document.createElement("summary");
+      summary.textContent = "Voir l’énoncé et les choix avant rectification"; disclosure.appendChild(summary);
+      const original = document.createElement("p"); original.textContent = item.originalQuestion; original.style.whiteSpace = "pre-wrap"; disclosure.appendChild(original);
+      item.originalOptions.forEach((text, i) => { const p = document.createElement("p"); p.textContent = `${String.fromCharCode(65+i)}. ${text}`; disclosure.appendChild(p); });
+      div.appendChild(disclosure);
+    }
     reviewList.appendChild(div);
   });
-
-  saveScore(currentUser, score);
-  renderLeaderboard();
+  if (total) { saveScore(currentUser, score); renderLeaderboard(); }
 }
 
 
@@ -214831,7 +214877,7 @@ function saveScore(name, score) {
     mode: lastAutoSubmitReason ? "automatique" : "manuel",
     reason: lastAutoSubmitReason || "",
     matiere: selectedSubjectName || "",
-    sujet: selectedTopicName || "",
+    sujet: formatSubjectTitle(selectedTopicName),
     type: selectedMode || "",
     displayMode: selectedDisplayMode || "",
     device: getDeviceLabel()
@@ -215186,7 +215232,7 @@ async function renderAdminTables(results, connections) {
       <td>${escapeHtml(row.code || "")}</td>
       <td>${escapeHtml(row.nom || "")}</td>
       <td>${escapeHtml(row.matiere || row.subject || "-")}</td>
-      <td>${escapeHtml(row.sujet || row.topic || "-")}</td>
+      <td>${escapeHtml(formatSubjectTitle(row.sujet || row.topic || "-"))}</td>
       <td>${row.score !== undefined && row.score !== null ? escapeHtml(row.score) + "/20" : "-"}</td>
       <td>${escapeHtml(row.mode || "-")}</td>
     </tr>`).join("");
@@ -215395,7 +215441,7 @@ function exportAdminPDF() {
       <td>${escapePrintHtml(row.code || "")}</td>
       <td>${escapePrintHtml(row.nom || "")}</td>
       <td>${escapePrintHtml(row.matiere || row.subject || "")}</td>
-      <td>${escapePrintHtml(row.sujet || row.topic || "")}</td>
+      <td>${escapePrintHtml(formatSubjectTitle(row.sujet || row.topic || ""))}</td>
       <td>${escapePrintHtml(row.score !== undefined && row.score !== null ? `${row.score}/20` : "")}</td>
       <td>${escapePrintHtml(row.mode || "")}</td>
     </tr>`).join("") || '<tr><td colspan="7">Aucun resultat enregistre.</td></tr>';
@@ -215646,6 +215692,7 @@ if (typeof window.installSecondPrepaBatch === "function") {
 if (typeof window.installThirdPrepaBatch === "function") {
   window.installThirdPrepaBatch();
 }
+if (typeof window.installDEBlanc2026QuizData === "function") window.installDEBlanc2026QuizData();
 ensureAllowedUsers();
 renderLeaderboard();
 restoreSession().then((restored) => {
@@ -215670,7 +215717,7 @@ function saveQuizHistory(entry) {
       createdAtText: entry.createdAtText || entry.date || nowText,
       type: entry.type || selectedMode || "quiz",
       matiere: entry.matiere || selectedSubjectName || "",
-      sujet: entry.sujet || selectedTopicName || "",
+      sujet: formatSubjectTitle(entry.sujet || selectedTopicName),
       mode: entry.mode || (lastAutoSubmitReason ? "automatique" : "manuel"),
       reason: entry.reason || lastAutoSubmitReason || "",
       device: entry.device || getDeviceLabel()

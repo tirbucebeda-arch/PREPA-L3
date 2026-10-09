@@ -15,13 +15,14 @@
   });
   const STORE='revision-composition-settings-v2';
   const SITE=document.documentElement.dataset.compositionSite || (location.pathname.includes('pediatrie')?'pediatrie':'sante-publique');
+  const PED_LIKE = SITE === 'pediatrie' || SITE === 'chirurgie';
   let stream=null;
   let pendingStart=null;
   let exitLocked=false;
 
   function safeParse(value,fallback){try{return JSON.parse(value)}catch(_){return fallback}}
   function session(){
-    const hub=safeParse(localStorage.getItem('revision-hub-session-v1')||'null',null);
+    const hub=window.RevisionSessionBridge?.getSession() || safeParse(localStorage.getItem('revision-hub-session-v1')||'null',null);
     return hub&&hub.code?hub:null;
   }
   function userCode(){
@@ -49,7 +50,7 @@
     };
   }
   function all(){return safeParse(localStorage.getItem(STORE)||'{}',{})||{}}
-  function get(){return normalize(all()[key()]||{})}
+  function get(){const rows=all();return normalize(rows[key()]||(SITE==='chirurgie'?rows[`pediatrie:${userCode()}`]:null)||{})}
   function save(settings){const rows=all();rows[key()]=normalize(settings);localStorage.setItem(STORE,JSON.stringify(rows));apply(rows[key()]);syncSetup(rows[key()]);return rows[key()]}
   function apply(settings=get()){
     document.body.classList.toggle('composition-dark',settings.darkMode);
@@ -57,11 +58,11 @@
     document.body.classList.add(`composition-font-${settings.fontSize}`);
   }
   function syncSetup(settings=get()){
-    const display=document.getElementById(SITE==='pediatrie'?'display':'displayMode');
-    if(display&&settings.defaultDisplayMode){display.value=settings.defaultDisplayMode==='one'?(SITE==='pediatrie'?'one':'single'):'all';display.dispatchEvent(new Event('change',{bubbles:true}));}
-    const count=document.getElementById(SITE==='pediatrie'?'count':'questionCount');
-    if(count){const wanted=settings.questionLimit==='all'?(SITE==='pediatrie'?'ALL':'all'):settings.questionLimit;if([...count.options].some(o=>o.value===wanted||o.textContent.trim()===wanted)){count.value=wanted;count.dispatchEvent(new Event('change',{bubbles:true}));}}
-    const time=document.getElementById(SITE==='pediatrie'?'time':'questionTime');
+    const display=document.getElementById(PED_LIKE?'display':'displayMode');
+    if(display&&settings.defaultDisplayMode){display.value=settings.defaultDisplayMode==='one'?(PED_LIKE?'one':'single'):'all';display.dispatchEvent(new Event('change',{bubbles:true}));}
+    const count=document.getElementById(PED_LIKE?'count':'questionCount');
+    if(count){const wanted=settings.questionLimit==='all'?(PED_LIKE?'ALL':'all'):settings.questionLimit;if([...count.options].some(o=>o.value===wanted||o.textContent.trim()===wanted)){count.value=wanted;count.dispatchEvent(new Event('change',{bubbles:true}));}}
+    const time=document.getElementById(PED_LIKE?'time':'questionTime');
     if(time){const wanted=settings.timerEnabled?String(settings.secondsPerQuestion):'0';if([...time.options].some(o=>o.value===wanted)){time.value=wanted;time.dispatchEvent(new Event('change',{bubbles:true}));}}
   }
   function stopCamera(){if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}const video=document.getElementById('compositionCameraVideo');if(video)video.srcObject=null}
@@ -114,7 +115,7 @@
   function fill(settings=get()){const map={csCamera:settings.cameraEnabled,csExit:settings.autoSubmitOnExit,csShuffleQ:settings.shuffleQuestions,csShuffleO:settings.shuffleOptions,csTimer:settings.timerEnabled,csExplain:settings.showExplanations,csDark:settings.darkMode};Object.entries(map).forEach(([id,v])=>{const e=document.getElementById(id);if(e)e.checked=v});[['csDisplay',settings.defaultDisplayMode],['csCount',settings.questionLimit],['csSeconds',String(settings.secondsPerQuestion)],['csFont',settings.fontSize]].forEach(([id,v])=>{const e=document.getElementById(id);if(e)e.value=v});const sec=document.getElementById('csSeconds');if(sec)sec.disabled=!settings.timerEnabled}
   function init(){
     document.body.insertAdjacentHTML('beforeend',settingsMarkup());
-    const nav=document.querySelector(SITE==='pediatrie'?'.topnav':'.nav-actions');
+    const nav=document.querySelector(PED_LIKE?'.topnav, .nav':'.nav-actions');
     if(nav){const btn=document.createElement('button');btn.type='button';btn.id='compositionSettingsOpen';btn.className='composition-settings-btn';btn.textContent='⚙ Paramètres';nav.prepend(btn)}
     const open=()=>{fill();document.getElementById('compositionSettingsModal').classList.remove('hidden')};const close=()=>document.getElementById('compositionSettingsModal').classList.add('hidden');
     document.getElementById('compositionSettingsOpen')?.addEventListener('click',open);document.getElementById('compositionSettingsClose').addEventListener('click',close);document.getElementById('compositionDone').addEventListener('click',()=>{save(controlsToSettings());document.getElementById('compositionSaveStatus').textContent='Paramètres enregistrés.';setTimeout(close,250)});
@@ -123,7 +124,7 @@
     document.getElementById('compositionCameraClose').addEventListener('click',closeCamera);document.getElementById('compositionEnableCamera').addEventListener('click',enableCamera);document.getElementById('compositionTakePhoto').addEventListener('click',takePhoto);
     apply();syncSetup();
   }
-  function exitSubmit(reason){if(exitLocked||!get().autoSubmitOnExit)return;const fn=SITE==='pediatrie'?window.PedQuizAutoSubmit:window.SPQuizAutoSubmit;if(typeof fn==='function'){exitLocked=true;try{fn(reason)}finally{setTimeout(()=>{exitLocked=false},1200)}}}
+  function exitSubmit(reason){if(exitLocked||!get().autoSubmitOnExit)return;const fn=SITE==='chirurgie'?window.ChirQuizAutoSubmit:SITE==='pediatrie'?window.PedQuizAutoSubmit:window.SPQuizAutoSubmit;if(typeof fn==='function'){exitLocked=true;try{fn(reason)}finally{setTimeout(()=>{exitLocked=false},1200)}}}
   document.addEventListener('visibilitychange',()=>{if(document.hidden)exitSubmit('sortie de la page')});window.addEventListener('blur',()=>exitSubmit('appel, notification ou changement de fenêtre'));window.addEventListener('pagehide',()=>exitSubmit('fermeture ou changement de page'));window.addEventListener('beforeunload',()=>exitSubmit('fermeture ou actualisation'));
   window.CompositionSettings=Object.freeze({get,save,apply,syncSetup,requestStart,shuffleArray,shuffleSpQuestion,shufflePedQuestion,shouldShowExplanations:()=>get().showExplanations});
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();

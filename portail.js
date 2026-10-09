@@ -51,7 +51,7 @@
   if (session) showChooser(session); else showLogin();
 
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
-    navigator.serviceWorker.register('sw.js?v=20261008-troisieme-lot-prepa')
+    navigator.serviceWorker.register('sw.js?v=20261009-portails-sans-redirection-v14')
       .then(registration => registration.update())
       .catch(() => {});
   }

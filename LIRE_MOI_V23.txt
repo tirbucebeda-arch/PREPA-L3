@@ -1,0 +1,13 @@
+VERSION 23 — AJOUT ET MISE À JOUR DES COMPTES
+
+Ouvrir index.html, puis CHIRURGIE L1-L2-L3. Le bouton Paramètres est disponible dans le document et le quiz. Les mêmes réglages que dans Pédiatrie sont proposés : photo facultative avant composition, validation automatique à la sortie, affichage question par question ou toutes les questions, nombre de questions, mélange des questions et des propositions, chronomètre, explications, mode sombre et taille du texte.
+
+À défaut de réglages propres à la chirurgie, les préférences de pédiatrie enregistrées pour le même code et le même navigateur servent de point de départ. Les réglages de chirurgie sont ensuite enregistrés séparément. Les modes entraînement et examen et l’historique sont disponibles. Les QCM à plusieurs bonnes réponses sont conservés, y compris après mélange des choix.
+
+Le quiz de pédiatrie est rétabli depuis la version complète : 749 questions. Les 1 121 comptes et les 22 quiz D.E. blanc 2026 corrigés de la version 21 sont conservés. Les corrigés 2026 sont pédagogiques, non officiels ; 182 questions indéterminables restent exclues de la note.
+
+Le code est demandé à l’entrée de la plateforme. Les portails réutilisent la session jusqu’à déconnexion volontaire.
+
+Pour mettre à jour le site hébergé, remplacer ses fichiers par le contenu complet de cette archive. L’archive n’est pas une publication automatique. Le cache hors ligne a été actualisé.
+
+La liste demandée a été intégrée. Les codes sont indiqués dans COMPTES_MIS_A_JOUR_V23.txt.

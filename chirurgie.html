@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr" data-composition-site="chirurgie">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#7f1d1d">
+  <title>CHIRURGIE L1-L2-L3</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icone-l3-192.png" type="image/png">
+  <style>
+    :root{--ink:#302526;--muted:#766768;--bg:#f6f1f1;--paper:#fff;--red:#7f1d1d;--red2:#b91c1c;--gold:#b7791f;--line:#e6d8d8;--shadow:0 14px 36px rgba(73,24,24,.13);--radius:18px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}button,input{font:inherit}button,a{touch-action:manipulation}.hidden{display:none!important}
+    .hub{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 14px;background:#450a0a;color:#fff;font-size:13px}.hub>div{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.hub a,.hub button{border:1px solid rgba(255,255,255,.5);border-radius:9px;padding:7px 10px;background:#fff;color:#7f1d1d;text-decoration:none;font-weight:800;cursor:pointer}.hub button{background:transparent;color:#fff}
+    .topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:12px;padding:10px 18px;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}.brand{display:flex;align-items:center;gap:10px}.logo{display:grid;place-items:center;width:43px;height:43px;border-radius:13px;background:linear-gradient(135deg,var(--red),var(--red2));color:#fff;font-weight:950}.brand strong{display:block;color:var(--red)}.brand small{display:block;color:var(--muted)}
+    .wrap{width:min(1220px,100%);margin:auto;padding:22px}.hero{padding:28px;border-radius:24px;background:linear-gradient(135deg,#641414,#b91c1c 70%,#b7791f);color:#fff;box-shadow:var(--shadow);margin-bottom:18px}.hero h1{margin:0 0 9px;font-size:clamp(28px,5vw,45px)}.hero p{margin:0;max-width:850px;line-height:1.6}.stats{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}.stat{padding:8px 11px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.13);border-radius:999px;font-weight:800;font-size:14px}
+    .layout{display:grid;grid-template-columns:310px minmax(0,1fr);gap:16px}.panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}.side{position:sticky;top:78px;align-self:start;max-height:calc(100vh - 94px);overflow:auto}.side h2{margin-top:0;font-size:20px}.subject{display:block;width:100%;text-align:left;border:0;background:transparent;padding:9px 10px;border-radius:9px;color:var(--ink);cursor:pointer;line-height:1.35}.subject:hover,.subject.active{background:#fee2e2;color:#7f1d1d}.subject b{color:var(--red)}
+    .field{display:grid;gap:6px}.field label{font-size:13px;font-weight:850;color:var(--muted)}.field input{width:100%;border:1px solid #ccbaba;border-radius:11px;padding:11px 12px;outline:none}.field input:focus{border-color:var(--red2);box-shadow:0 0 0 3px rgba(185,28,28,.12)}.results{display:grid;gap:7px;margin-top:9px;max-height:280px;overflow:auto}.result{border:1px solid var(--line);border-radius:10px;padding:9px;background:#fffafa;cursor:pointer;text-align:left}.result:hover{border-color:var(--red2)}.result b{color:var(--red)}.result small{display:block;color:var(--muted);margin-top:4px}
+    .tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px}.btn{border:1px solid var(--line);background:#fff;border-radius:11px;padding:9px 11px;text-decoration:none;font-weight:750;color:var(--ink);cursor:pointer}.btn:hover{border-color:var(--red2)}.btn.primary{background:var(--red);border-color:var(--red);color:#fff}.page-input{width:86px!important;padding:9px!important}.stage{overflow:auto;text-align:center;background:#dfd6d6;border-radius:14px;padding:12px}.stage iframe{display:block;width:100%;height:78vh;min-height:580px;border:0;background:#fff;border-radius:8px}.muted{color:var(--muted);font-size:13px;line-height:1.5}
+    @media(max-width:900px){.layout{grid-template-columns:1fr}.side{position:static;max-height:none}.stage{padding:6px}.stage iframe{height:70vh;min-height:480px}}
+    @media(max-width:640px){.hub{align-items:flex-start;flex-direction:column}.hub>div{width:100%}.hub a,.hub button{flex:1;text-align:center}.topbar{padding:8px 10px}.brand small{display:none}.wrap{padding:12px}.hero{padding:21px}.panel{padding:14px}.tools .btn{font-size:13px;padding:8px}}
+  </style>
+  <link rel="stylesheet" href="avertissement.css">
+<link rel="stylesheet" href="composition-settings.css"></head>
+<body><script src="session-bridge.js"></script>
+<script>
+(function(){window.CHIRURGIE_SESSION=window.RevisionSessionBridge?.getSession()||{name:'Étudiant',code:'ACCES-ACCUEIL'}})();
+</script>
+<div class="hub"><div><a href="index.html">← Choisir un autre site</a><strong id="hubUser">Étudiant</strong></div><div><button id="logout" type="button">Déconnexion</button></div></div>
+<header class="topbar"><div class="brand"><div class="logo">CH</div><div><strong>CHIRURGIE L1-L2-L3</strong><small>Préparation D.E. - 19 sujets</small></div></div><nav class="nav" style="margin-left:auto;display:flex;gap:8px"><a class="btn primary" href="chirurgie.html">Document</a><a class="btn" href="chirurgie-quiz.html">Quiz corrigé</a></nav></header>
+<main class="wrap">
+  <section class="hero"><h1>CHIRURGIE L1-L2-L3</h1><p>Révise les principaux chapitres de chirurgie à partir du recueil PREPA D.E. 2024 de l’INFAS Bouaké.</p><div class="stats"><span class="stat">68 pages</span><span class="stat">19 sujets</span><span class="stat">≈ 1 152 questions</span><span class="stat">Disponible hors connexion</span></div></section>
+  <div class="layout">
+    <aside class="panel side"><h2>Les 19 sujets</h2><div id="subjects"></div><hr style="border:0;border-top:1px solid var(--line);margin:15px 0"><div class="field"><label for="search">Rechercher dans le recueil</label><input id="search" type="search" placeholder="Ex. appendicite, fracture…"></div><div id="results" class="results"></div></aside>
+    <section><div class="panel"><div class="tools"><button class="btn" id="prev">← Précédente</button><label for="page">Page</label><input class="page-input" id="page" type="number" min="1" max="68" value="1"><button class="btn" id="next">Suivante →</button><a class="btn primary" id="openPdf" href="document-chirurgie.pdf#page=1" target="_blank" rel="noopener">Ouvrir le PDF</a><a class="btn" href="document-chirurgie.pdf" download="Chirurgie-L1-L2-L3-PREPA-DE-2024.pdf">Télécharger</a></div><p id="label" class="muted"></p></div><div class="stage"><iframe id="frame" title="Recueil de chirurgie" src="document-chirurgie.pdf#page=1&view=FitH"></iframe><p class="muted">Si le document ne s’affiche pas, utilise « Ouvrir le PDF » ou « Télécharger ».</p></div></section>
+  </div>
+</main>
+<script src="chirurgie-data.js"></script>
+<script>
+(function(){
+ const data=window.CHIRURGIE_DATA, frame=document.getElementById('frame'), pageInput=document.getElementById('page'), label=document.getElementById('label'), list=document.getElementById('subjects'), results=document.getElementById('results');let page=1;
+ document.getElementById('hubUser').textContent='👤 '+(window.CHIRURGIE_SESSION?.name||'Étudiant');
+ document.getElementById('logout').onclick=()=>{localStorage.removeItem('revision-hub-session-v1');localStorage.removeItem('quizPromoSession');window.RevisionSessionBridge?.clear();location.href='index.html'};
+ function activeSection(p){return [...data.sections].reverse().find(s=>s.page<=p)||data.sections[0]}
+ function go(p){page=Math.max(1,Math.min(data.meta.pageCount,Number(p)||1));pageInput.value=page;frame.src='document-chirurgie.pdf#page='+page+'&view=FitH';document.getElementById('openPdf').href='document-chirurgie.pdf#page='+page;const s=activeSection(page);label.textContent='Page '+page+' sur '+data.meta.pageCount+(s?' — Sujet '+s.number+' : '+s.title:'');document.querySelectorAll('.subject').forEach(b=>b.classList.toggle('active',Number(b.dataset.page)===s?.page))}
+ data.sections.forEach(s=>{const b=document.createElement('button');b.className='subject';b.dataset.page=s.page;b.innerHTML='<b>Sujet '+s.number+'</b> — '+s.title;b.onclick=()=>go(s.page);list.appendChild(b)});
+ document.getElementById('prev').onclick=()=>go(page-1);document.getElementById('next').onclick=()=>go(page+1);pageInput.onchange=()=>go(pageInput.value);
+ document.getElementById('search').addEventListener('input',e=>{const q=e.target.value.trim().toLocaleLowerCase('fr');results.innerHTML='';if(q.length<3)return;data.pages.forEach((text,i)=>{const low=text.toLocaleLowerCase('fr'),at=low.indexOf(q);if(at<0)return;const b=document.createElement('button');b.className='result';b.innerHTML='<b>Page '+(i+1)+'</b><small>…'+text.slice(Math.max(0,at-55),at+q.length+95)+'…</small>';b.onclick=()=>go(i+1);results.appendChild(b)});if(!results.children.length)results.innerHTML='<p class="muted">Aucun résultat.</p>'});
+ go(1);
+ if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js?v=20261009-comptes-v23').catch(()=>{});
+})();
+</script>
+<script src="composition-settings.js?v=22"></script><script src="avertissement.js"></script>
+</body></html>
